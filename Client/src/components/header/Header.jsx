@@ -1,11 +1,18 @@
+import React from "react";
+import { Link } from "react-router";
+
 const Header = (props) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            <img src={props.Logo} alt="Logo bazinga" />
-          </a>
+          <Link
+            to="/"
+            className="navbar-brand d-flex align-items-center pe-4 text-decoration-none"
+          >
+            <img src={props.Logo} alt="Logo" height="40" />
+          </Link>
+
           <button
             className="navbar-toggler"
             type="button"
@@ -18,36 +25,41 @@ const Header = (props) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 flex-grow-1">
               <li className="nav-item">
-                <a className="nav-link  active" aria-current="page" href="#">
+                <Link
+                  to="/"
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#"
+                >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="nav-link" href="#">
-                  Carrinho
-                </a>
+                <Link to="/produtos" className="nav-link">
+                  Produtos
+                </Link>
               </li>
               <li>
-                <a href="#" className="nav-link">
+                <Link to="/canecas" className="nav-link">
                   Canecas
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="nav-link">
+                <Link to="/camisetas" className="nav-link">
                   Camisetas
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="nav-link">
-                  Action Figures
-                </a>
+                <Link to="/adesivos" className="nav-link">
+                  Figures
+                </Link>
               </li>
               <li>
-                <a href="#" className="nav-link">
-                  Posteres
-                </a>
+                <Link to="/contato" className="nav-link">
+                  Pôsteres
+                </Link>
               </li>
             </ul>
 
@@ -58,7 +70,10 @@ const Header = (props) => {
                 placeholder="Buscar Produto"
                 aria-label="Search"
               />
-             <i className="bi bi-search btn btn-outline rounded-3" role="button"></i>
+              <i
+                className="bi bi-search btn btn-outline rounded-3"
+                role="button"
+              ></i>
             </form>
           </div>
         </div>

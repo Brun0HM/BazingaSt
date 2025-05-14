@@ -11,6 +11,11 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/produtos" element={<App />} />
+        <Route path="/canecas" element={<App />} />
+        <Route path="/camisetas" element={<App />} />
+        <Route path="/figures" element={<App />} />
+        <Route path="/posteres" element={<App />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
