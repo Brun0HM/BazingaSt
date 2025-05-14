@@ -1,15 +1,12 @@
 import React from "react";
-
 import "./App.css";
+import Header from "./components/header/Header.jsx";
 
 const App = () => {
   return (
-    <>
-      <div>
-        <p>App</p>
-      </div>
-      <div>osdoiajdojd</div>
-    </>
+    <div>
+      <Header />
+    </div>
   );
 };
 
