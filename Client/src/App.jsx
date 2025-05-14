@@ -4,10 +4,12 @@ import "./App.css";
 import ListaItens from "./pages/ListaItens";
 import ItemCarrinho from "./components/ItemCarrinho";
 
+
 const App = () => {
   return (
-    <>
-      <ItemCarrinho/>    </>
+    <div>
+      <Header />
+    </div>
   );
 };
 
