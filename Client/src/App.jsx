@@ -1,14 +1,11 @@
 import React from "react";
-
+import Cardegoria from "./components/Cardegorias/Cardegoria";
 import "./App.css";
 
 const App = () => {
   return (
     <>
-      <div>
-        <p>App</p>
-      </div>
-      <div>osdoiajdojd</div>
+      <Cardegoria />
     </>
   );
 };
