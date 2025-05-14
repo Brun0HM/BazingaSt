@@ -1,8 +1,8 @@
 .card2 {
   width: 265px;
-  height: 300px;
+  height: 330px;
   border-radius: 15px;
-  background-color: #d9d9d9;
+  background-color: #ffffff;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-decoration: none;
 }
@@ -13,4 +13,10 @@
 
 .card2 a {
   margin-right: 10px;
+}
+.ListaI {
+  background-color: #d84040;
+}
+.CategoriaName{
+    font-size: 60px;
 }
