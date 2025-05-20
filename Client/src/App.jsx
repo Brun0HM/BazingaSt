@@ -6,7 +6,6 @@ import ItemCarrinho from "./components/ItemCarrinho";
 import Categorias from "./pages/Categorias";
 import Header from "./components/header/Header.jsx";
 import Checkout from "./components/Checkout/Checkout";
-import ItemCarrinho from "./components/ItemCarrinho/ItemCarrinho";
 import Cart from "./pages/Cart";
 
 
@@ -15,7 +14,6 @@ const App = () => {
     <div>
       
     </div>
-    <Cart/>
 
   );
 };
