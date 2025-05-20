@@ -1,5 +1,7 @@
 body {
-  background-color: black !important;
+  background-image: url('https://media.discordapp.net/attachments/1211376380747448380/1374382049049448498/Categorias.png?ex=682dd887&is=682c8707&hm=7c49c61ca148d84e46db9b478bf033d3a7ea32be9dcbdb5429ecc24e714146a0&=&format=webp&quality=lossless&width=1376&height=906') !important;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .card2 {
