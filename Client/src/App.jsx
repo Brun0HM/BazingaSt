@@ -3,7 +3,7 @@ import Cardegoria from "./components/Cardegorias/Cardegoria";
 import "./App.css";
 import ListaItens from "./pages/ListaItens";
 import ItemCarrinho from "./components/ItemCarrinho";
-
+import Header from "./components/header/Header.jsx";
 
 const App = () => {
   return (

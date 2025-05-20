@@ -21,6 +21,17 @@ body {
 .ListaI {
   background-color: #d84040;
 }
-.CategoriaName{
-    font-size: 60px;
+.CategoriaName {
+  font-size: 60px;
 }
+
+/* ==========================Header========================== */
+.btnCor {
+  background: #d84040 !important;
+  color: #ffffff !important;
+}
+.tamano {
+  width: 50vw !important;
+  max-width: 100vw !important;
+}
+/* ========================================================== */
