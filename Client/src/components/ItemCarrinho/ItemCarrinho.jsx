@@ -5,7 +5,7 @@ const ItemCarrinho = () => {
   return (
     <div className="my-3">
       <div className="justify-content-center">
-        <div className="d-flex align-items-center Itemcart p-3">
+        <div className="d-flex align-items-center Itemcart">
           <div className="img-container mb-3 mb-md-0">
             <img
               src="https://placehold.co/220x220"
@@ -14,7 +14,7 @@ const ItemCarrinho = () => {
               style={{ maxWidth: "150px" }}
             />
           </div>
-          <div className="ps-md-3 pt-2 d-flex flex-column w-100">
+          <div className="ps-md-3 pt-2 d-flex flex-column">
             <h1 className="fw-bold mb-0 fs-4 fs-md-3">ProtudoNome</h1>
             <p className="fs-5 mb-2">R$00.00</p>
             <div className="quantidade d-flex border rounded-5 justify-content-center align-items-center mb-2">
