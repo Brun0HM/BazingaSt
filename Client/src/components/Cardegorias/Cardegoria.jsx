@@ -1,6 +1,6 @@
 const Cardegorias = () => {
   return (
-    <div className="card2">
+    <div className="card2 border-3 text-decoration-none ">
       <div>
         <img
           className="rounded-top-4"
@@ -22,7 +22,7 @@ const Cardegorias = () => {
             <h3 className="fw-bold m-0">Nome</h3>
             <p className="m-0">R$00.00</p>
           </div>
-          <a className="text-decoration-none" href=""></a>
+          <a className="text-decoration-none " href=""></a>
         </div>
       </div>
     </div>

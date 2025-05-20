@@ -1,7 +1,8 @@
 body {
-  background-color: black !important;
+  background-color: rgb(255, 255, 255) !important;
 }
-
+/* Cardegoria */
+/* ========================================================================================= */
 .card2 {
   width: 265px;
   height: 330px;
@@ -21,6 +22,33 @@ body {
 .ListaI {
   background-color: #d84040;
 }
-.CategoriaName{
-    font-size: 60px;
+.CategoriaName {
+  font-size: 60px;
 }
+/* ========================================================================================= */
+
+/* Checkout
+/* ========================================================================================= */
+.Checkout {
+  background-color: #eeeeee;
+  width: 500px !important;
+}
+.Checkout hr {
+  border: 2px solid #949494 !important;
+}
+.Continuar {
+  background-color: #d9d9d9 !important;
+}
+.Finalizar {
+  background-color: #c3c3c3 !important;
+}
+/* ========================================================================================= */
+
+/* ItemCarrinho
+/* ========================================================================================= */
+.quantidade {
+  width: 70px !important;
+  border: 1px solid #949494 !important;
+}
+/* ========================================================================================= */
+
