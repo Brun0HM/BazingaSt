@@ -10,11 +10,11 @@ const CardCateg = () => {
           <a href="#canecas" className="text-decoration-none">
             <div className="p-3 bg-white rounded-4 shadow text-center loja-box h-100">
               <img
-                src="https://placehold.co/350x307"
+                src="https://i.imgur.com/pU2aEku.png"
                 alt="Caneca World's Best Boss"
                 className="img-fluid mb-2"
               />
-              <h5 className="text-danger fw-bold">CANECAS</h5>
+              <h3 className="text-danger fw-bold">CANECAS</h3>
             </div>
           </a>
         </div>
@@ -24,11 +24,11 @@ const CardCateg = () => {
           <a href="#posteres" className="text-decoration-none">
             <div className="p-3 bg-white rounded-4 shadow text-center loja-box h-100">
               <img
-                src="https://placehold.co/350x307"
+                src="https://i.imgur.com/L1pmpuy.png"
                 alt="Pôster Batman"
                 className="img-fluid mb-2"
               />
-              <h5 className="text-warning fw-bold">PÔSTERES</h5>
+              <h3 className="text-warning fw-bold">PÔSTERES</h3>
             </div>
           </a>
         </div>
@@ -38,11 +38,11 @@ const CardCateg = () => {
           <a href="#figures" className="text-decoration-none">
             <div className="p-3 bg-white rounded-4 shadow text-center loja-box h-100">
               <img
-                src="https://placehold.co/350x307"
+                src="https://i.imgur.com/mb18ClD.png"
                 alt="Figure Miles Morales"
                 className="img-fluid mb-2"
               />
-              <h5 className="text-danger fw-bold">FIGURES!</h5>
+              <h3 className="text-danger fw-bold">FIGURES!</h3>
               <p className="fw-bold text-dark m-0">Confira nossas figures</p>
             </div>
           </a>
@@ -53,11 +53,11 @@ const CardCateg = () => {
           <a href="#roupas" className="text-decoration-none">
             <div className="p-3 bg-white rounded-4 shadow text-center loja-box h-100">
               <img
-                src="https://placehold.co/350x307"
+                src="https://i.imgur.com/sL7heIR.png"
                 alt="Camiseta Evangelion"
                 className="img-fluid mb-2"
               />
-              <h5 className="text-danger fw-bold">ROUPAS</h5>
+              <h3 className="text-danger fw-bold">ROUPAS</h3>
             </div>
           </a>
         </div>
