@@ -8,7 +8,7 @@ const CardCateg = () => {
         {/* CANECAS */}
         <div className="col-md-6">
           <a href="#canecas" className="text-decoration-none">
-            <div className="p-3 bg-white rounded-4 shadow text-center loja-box h-100">
+            <div className="p-3 bg-white rounded-4 shadow text-center h-100">
               <img
                 src="https://i.imgur.com/pU2aEku.png"
                 alt="Caneca World's Best Boss"
@@ -22,7 +22,7 @@ const CardCateg = () => {
         {/* PÔSTERES */}
         <div className="col-md-6">
           <a href="#posteres" className="text-decoration-none">
-            <div className="p-3 bg-white rounded-4 shadow text-center loja-box h-100">
+            <div className="p-3 bg-white rounded-4 shadow text-center h-100">
               <img
                 src="https://i.imgur.com/L1pmpuy.png"
                 alt="Pôster Batman"
@@ -36,7 +36,7 @@ const CardCateg = () => {
         {/* FIGURES */}
         <div className="col-md-8">
           <a href="#figures" className="text-decoration-none">
-            <div className="p-3 bg-white rounded-4 shadow text-center loja-box h-100">
+            <div className="p-3 bg-white rounded-4 shadow text-center h-100">
               <img
                 src="https://i.imgur.com/mb18ClD.png"
                 alt="Figure Miles Morales"
@@ -51,7 +51,7 @@ const CardCateg = () => {
         {/* ROUPAS */}
         <div className="col-md-4">
           <a href="#roupas" className="text-decoration-none">
-            <div className="p-3 bg-white rounded-4 shadow text-center loja-box h-100">
+            <div className="p-3 bg-white rounded-4 shadow text-center h-100">
               <img
                 src="https://i.imgur.com/sL7heIR.png"
                 alt="Camiseta Evangelion"
