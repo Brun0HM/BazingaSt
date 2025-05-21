@@ -1,8 +1,7 @@
 body {
-  background-image: url("https://media.discordapp.net/attachments/1211376380747448380/1374382049049448498/Categorias.png?ex=682dd887&is=682c8707&hm=7c49c61ca148d84e46db9b478bf033d3a7ea32be9dcbdb5429ecc24e714146a0&=&format=webp&quality=lossless&width=1376&height=906") !important;
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: rgb(255, 255, 255) !important;
+  background-color: rgb(242, 242, 242) !important;
 }
 /* Cardegoria */
 /* ========================================================================================= */
@@ -110,3 +109,42 @@ body {
   font-size: 50px;
   color: #d84040;
 }
+/* ========================================================================================= */
+
+/* Config */
+/* ========================================================================================= */
+.Config input {
+  background-color: #f2f2f2;
+  height: 60px;
+}
+.TrocarTema {
+  background-color: #d9d9d9 !important;
+  width: 100px !important;
+}
+input::placeholder {
+  color: #888;
+  opacity: 1;
+}
+.bi-envelope {
+  margin-left: 2px;
+}
+.bi-lock {
+  margin-left: 2px;
+}
+.Tema {
+  background-color: #d9d9d9 !important;
+  width: 40px;
+  height: 40px;
+}
+.form-check-input.form-switch-lg {
+  width: 4rem !important;
+  height: 40px !important;
+  font-size: 1.5rem;
+}
+.Hist {
+  background-color: #d9d9d9 !important;
+}
+.Segur button {
+  height: 50px !important;
+}
+/* ========================================================================================= */
