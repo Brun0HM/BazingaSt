@@ -42,6 +42,7 @@ body {
 }
 /* ========================================================== */
 
+
 /* ========================================================================================= */
 
 /* Checkout
@@ -103,16 +104,14 @@ body {
 }
 /* ========================================================================================= */
 
-/* Home
+/* Config */
 /* ========================================================================================= */
 .TitleC {
   font-size: 50px;
   color: #d84040;
 }
-/* ========================================================================================= */
 
-/* Config */
-/* ========================================================================================= */
+
 .Config input {
   background-color: #f2f2f2;
   height: 60px;
@@ -155,3 +154,43 @@ input::placeholder {
 
 
 /* ========================================================================================= */
+
+/* ==========================Home========================== */
+
+/* Home.css */
+/* Fundo separado */
+.home-background {
+  position: relative;
+  overflow: hidden;
+  background-color: #47c3ff;
+  min-height: 100vh;
+}
+
+/* Ajustes apenas para desktop */
+@media (min-width: 768px) {
+  .home-background .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem; /* Aproxima as colunas */
+  }
+
+  .home-background .col-md-5 {
+    flex: 0 0 auto;
+    width: 45%;
+  }
+
+  .superman-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .home-background .container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* ========================================================== */
+
