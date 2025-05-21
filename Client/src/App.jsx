@@ -6,13 +6,14 @@ import ItemCarrinho from "./components/ItemCarrinho";
 import Categorias from "./pages/Categorias";
 import DestaquePage from "./pages/DestaquePage";
 import LoginPage from "./pages/LoginPage";
+import Logar from "./pages/Logar";
 
 
 
 const App = () => {
   return (
     <div>
-      <LoginPage />
+      <Logar />
     </div>
   );
 };
