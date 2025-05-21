@@ -12,6 +12,8 @@ import Header from "./components/header/Header.jsx";
 import Home from "./pages/Home.jsx";
 import SuperMan from "./assets/SUPERMAN.png";
 import DestaquePage from "./pages/DestaquePage";
+import LoginPage from "./pages/LoginPage";
+import Logar from "./pages/Logar";
 
 
 
