@@ -52,6 +52,7 @@ body::-webkit-scrollbar {
 .link-hover:hover {
   color: #d84040; /* Cor azul padrão do Bootstrap */
 }
+
 /* ========================================================== */
 
 /*============================Login========================== */
@@ -197,7 +198,7 @@ input::placeholder {
   }
 
   .superman-img {
-    max-width: 100%;
+    max-width: 80%!important;
     height: auto;
     object-fit: contain;
   }
@@ -210,6 +211,13 @@ input::placeholder {
 .nav-active,
 .nav-active i {
   color: #a01818 !important;
+}
+.Circulo {
+  border-radius:100% !important;
+  width: 1500px;
+  height: 1500px;
+  bottom: 350px;
+  left: 700px;
 }
 /* ========================================================== */
 
@@ -245,3 +253,10 @@ input::placeholder {
   color: #7c7c7c;
 }
 /* ========================================================== */
+.Aumento {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.Aumento:hover {
+  transform: scale(1.05, 1.05);
+}
