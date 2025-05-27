@@ -1,11 +1,12 @@
 import React from "react";
 import Header from "../components/header/Header.jsx";
+import Footer from "../components/footer/Footer.jsx";
 
 const Home = ({ superMan }) => (
   <div className="home-background">
     <Header />
 
-    <div className="container-fluid position-relative pt-5">
+    <div className="container-fluid position-relative pt-5 ">
       <div className="row justify-content-center align-items-center">
         {/* Coluna de texto */}
         <div className="col-12 col-md-4 d-flex text-center text-md-start mb-4 mb-md-0">
@@ -40,6 +41,7 @@ const Home = ({ superMan }) => (
         </div>
       </div>
     </div>
+    <Footer />
   </div>
 );
 
