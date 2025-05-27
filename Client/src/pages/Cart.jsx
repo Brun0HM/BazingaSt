@@ -14,7 +14,7 @@ const Cart = () => {
             <ItemCarrinho />
           </div>
         </div>
-        <div>
+        <div className="col-12 col-md-4">
           <Checkout />
         </div>
       </div>
