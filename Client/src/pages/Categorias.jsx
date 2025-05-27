@@ -1,5 +1,5 @@
 import React from 'react'
-import CardCateg from '../components/CardCategs/CardCateg'
+import CardCateg from '../components/CardCateg'
 
 const Categorias = () => {
   return (

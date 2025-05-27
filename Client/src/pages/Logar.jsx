@@ -1,5 +1,5 @@
 import React from 'react'
-import LogarConta from '../components/LogarConta/logarConta'
+import LogarConta from '../components/LogarConta'
 
 const Logar = () => {
   return (

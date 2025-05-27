@@ -10,17 +10,13 @@ import Config from "./pages/Config.jsx";
 import Home from "./pages/Home.jsx";
 import SuperMan from "./assets/SUPERMAN.png";
 import DestaquePage from "./pages/DestaquePage";
-import Footer from "./components/footer/Footer.jsx";
+import Footer from "./components/Footer.jsx";
 import LoginPage from "./pages/LoginPage";
 import Logar from "./pages/Logar";
-import Login from "./components/Login/Login.jsx";
+import Login from "./components/Login.jsx";
 
 const App = () => {
-  return (
-    <div>
-      <Login />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;

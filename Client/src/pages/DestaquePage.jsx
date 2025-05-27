@@ -1,5 +1,5 @@
 import React from 'react'
-import Destaque from '../components/Destaques/Destaque'
+import Destaque from '../components/Destaque'
 
 const DestaquePage = () => {
   return (
