@@ -3,7 +3,7 @@ import React from "react";
 const Config = () => {
   return (
     <div className="container">
-      <div>
+      <div className="justify-content-center d-flex flex-column">
         <h1 className="fw-bold pt-5 mt-5 TitleC">Configurações de Usuário</h1>
         <div className="row justify-content-center">
           <div className="d-flex flex-column col-12 col-md-5">
@@ -50,7 +50,7 @@ const Config = () => {
                 <div className="d-flex gap-5 align-items-center">
                   <div>
                     <div className="rounded-5 px-3 Tema d-flex align-items-center justify-content-center">
-                      <i class="bi bi-moon-fill text-light fs-5"></i>
+                      <i className="bi bi-moon-fill text-light fs-5"></i>
                     </div>
                   </div>
                   <div className="form-check form-switch h-100 mb-1">
@@ -88,15 +88,20 @@ const Config = () => {
             <div className="border rounded-5 bg-white col-12 col-md-12 mt-5 p-4 mb-5">
               <h1 className="fw-bold mb-4">Segurança e Privacidade</h1>
               <div className="d-flex flex-column gap-2 Segur">
-                <button className="btn btn-danger rounded-4">
+                <button className="btn btn-danger rounded-4 fs-5">
                   Excluir Conta
                 </button>
-                <button className="btn btn-outline-danger rounded-4">
+                <button className="btn btn-outline-danger rounded-4  fs-5">
                   Sair da Conta
                 </button>
               </div>
             </div>
           </div>
+        </div>
+        <div className="col-12 d-flex justify-content-center mb-5">
+          <button className="btn btnCor col-8 col-md-4 text-light fw-bold fs-5 px-4 py-3 rounded-4">
+            Salvar Alterações
+          </button>
         </div>
       </div>
     </div>
