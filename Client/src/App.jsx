@@ -8,7 +8,7 @@ import Checkout from "./components/Checkout/Checkout";
 import Cart from "./pages/Cart";
 import Config from "./pages/Config.jsx";
 import Home from "./pages/Home.jsx";
-import SuperMan from "./assets/SUPERMAN.png";
+import SuperMan from "./assets/supermannn.png";
 import DestaquePage from "./pages/DestaquePage";
 import RegisterCard from "./components/RegisterCard/RegisterCard.jsx";
 import RegisteredCards from "./components/RegisteredCards/RegisteredCards.jsx";
@@ -21,7 +21,7 @@ import Login from "./components/Login/Login.jsx";
 const App = () => {
   return (
     <div>
-    <Home superMan={SuperMan}/>
+    <Home superMan={SuperMan} />
     </div>
   );
 };

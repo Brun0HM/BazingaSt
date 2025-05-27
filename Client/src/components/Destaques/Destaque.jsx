@@ -8,7 +8,7 @@ const Destaque = () => {
           {/* BLOCO UNIFICADO: NOVA COLEÇÃO + INVERNO */}
           <div className="col-12 col-md-8">
             <a href="#posteresroupas" className="text-decoration-none">
-              <div className="p-3 bg-white rounded-4 shadow mb-3 d-flex flex-column flex-lg-row justify-content-between align-items-center">
+              <div className="p-3 bg-white rounded-4 shadow mb-3 d-flex flex-column flex-lg-row justify-content-between align-items-center Aumento">
 
                 <div className="text-center text-lg-start">
                   <h1
@@ -32,7 +32,7 @@ const Destaque = () => {
                 />
               </div>
 
-              <div className="p-3 bg-white rounded-4 shadow d-flex flex-column flex-lg-row justify-content-between align-items-center">
+              <div className="p-3 bg-white rounded-4 shadow d-flex flex-column flex-lg-row justify-content-between align-items-center Aumento">
 
                 <div className="text-center text-lg-start ms-lg-4">
                   <h3
@@ -61,7 +61,7 @@ const Destaque = () => {
           {/* CANECAS */}
           <div className="col-12 col-md-4">
             <a href="#canecas" className="text-decoration-none">
-              <div className="p-3 bg-white rounded-4 shadow text-center h-100 d-flex flex-column justify-content-between">
+              <div className="p-3 bg-white rounded-4 shadow text-center h-100 d-flex flex-column justify-content-between Aumento">
 
                 <h1
                   className="text-warning fw-bolder pt-4"

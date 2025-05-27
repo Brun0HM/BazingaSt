@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
-import Logo from "./../../assets/Logo2.png"
+import Logo from "./../../assets/Logo2.png";
 
 const Header = (props) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary z-3">
         <div className="container-fluid">
           {/* Offcanvas toggle button for mobile, only visible on small screens */}
           <button

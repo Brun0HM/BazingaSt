@@ -7,9 +7,7 @@ import Header from "../components/header/Header";
 const DestaquePage = () => {
   return (
     <div>
-      <Header/>
       <Destaque />
-      <Footer />
     </div>
   );
 };
