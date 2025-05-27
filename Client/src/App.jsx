@@ -13,12 +13,15 @@ import DestaquePage from "./pages/DestaquePage";
 import RegisterCard from "./components/RegisterCard/RegisterCard.jsx";
 import RegisteredCards from "./components/RegisteredCards/RegisteredCards.jsx";
 import Payment from "./pages/Payment.jsx";
+import Footer from "./components/footer/Footer.jsx";
+import LoginPage from "./pages/LoginPage";
+import Logar from "./pages/Logar";
+import Login from "./components/Login/Login.jsx";
 
 const App = () => {
   return (
-    <>
-  <Cart/>
-    </>
+    <div>
+    </div>
   );
 };
 
