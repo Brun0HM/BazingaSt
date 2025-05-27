@@ -3,17 +3,20 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Montserrat", sans-serif !important;
+  overflow-y: scroll; /* ou: auto */
+  scrollbar-width: none;
 }
 
-
-
-
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
 /* Cardegoria */
 /* ========================================================================================= */
 
 .card2 {
-  width: 265px;
-  height: 330px;
+  width: 285px;
+  height: 350px;
   border-radius: 15px;
   background-color: #ffffff;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -46,11 +49,12 @@ body {
   width: 50vw !important;
   max-width: 100vw !important;
 }
+.link-hover:hover {
+  color: #d84040; /* Cor azul padrão do Bootstrap */
+}
 /* ========================================================== */
 
-
 /*============================Login========================== */
-
 
 input::placeholder {
   color: #000000;
@@ -109,6 +113,9 @@ input::placeholder {
   .quantidade {
     max-width: 90px;
   }
+  .CategoriaName {
+    font-size: 35px;
+  }
 }
 /* ========================================================================================= */
 
@@ -117,6 +124,9 @@ input::placeholder {
 .TitleC {
   font-size: 50px;
   color: #d84040;
+}
+.ConfigBack {
+  background-color: #e3e3e3 !important;
 }
 
 .Config input {
@@ -197,10 +207,11 @@ input::placeholder {
     padding-right: 1rem;
   }
 }
-
+.nav-active,
+.nav-active i {
+  color: #a01818 !important;
+}
 /* ========================================================== */
-
-
 
 /* RegisterCard */
 /* ========================================================== */
@@ -234,4 +245,3 @@ input::placeholder {
   color: #7c7c7c;
 }
 /* ========================================================== */
-

@@ -1,7 +1,10 @@
 import React from 'react'
-
+import { useNavigate } from "react-router";
 const Login = () => {
-    
+  const navigate = useNavigate();
+    const EntrarRedirect =() => {
+        navigate("/registrar");
+    }
   return (
     <div className="container-fluid"  style={{ padding: 0, margin: 0 }}>
       <div className="row g-0 min-vh-100">
@@ -64,7 +67,7 @@ const Login = () => {
 
               <div className="text-center">
                 <span className="fw-bold">Já tem uma conta?</span>
-                <button type="button" className="btn text-danger rounded-4 fw-bold ms-1 p-0"
+                <button type="button" onClick={() => EntrarRedirect()} className="btn text-danger rounded-4 fw-bold ms-1 p-0"
                 >
                   Clique aqui
                 </button>

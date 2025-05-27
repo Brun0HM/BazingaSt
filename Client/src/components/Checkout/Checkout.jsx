@@ -1,6 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
-const Checkout = () => {
+const Checkout = (props) => {
+  const navigate = useNavigate();
+
+  const handleFinalizarCompra = () => {
+    navigate(props.caminho);
+  };
+  const handleContinuarComprando = () => {
+    navigate("/");
+  };
   return (
     <>
       <div className="">
@@ -23,10 +32,16 @@ const Checkout = () => {
               </div>
             </div>
             <div className="d-flex flex-column align-items-center gap-3 rounded-5 mt-4">
-              <button className="btn btnCor text-white btn-danger text-black fs-5 px-4 py-3 rounded-4 w-100 w-md-auto">
+              <button
+                className="btn btnCor text-white btn-danger text-black fs-5 px-4 py-3 rounded-4 w-100 w-md-auto"
+                onClick={handleContinuarComprando}
+              >
                 Continuar comprando
               </button>
-              <button className="btn Finalizar text-black fs-5 px-4 py-3 rounded-4 w-100 w-md-auto">
+              <button
+                className="btn Finalizar text-black fs-5 px-4 py-3 rounded-4 w-100 w-md-auto"
+                onClick={handleFinalizarCompra}
+              >
                 Finalizar Compra
               </button>
             </div>
