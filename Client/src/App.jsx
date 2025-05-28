@@ -16,7 +16,11 @@ import Logar from "./pages/Logar";
 import Login from "./components/Login.jsx";
 
 const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <Home />
+    </div>
+  );
 };
 
 export default App;
