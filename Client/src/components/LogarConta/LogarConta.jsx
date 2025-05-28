@@ -6,7 +6,7 @@ const LogarConta = () => {
     <div className="container-fluid"  style={{ padding: 0, margin: 0 }}>
       <div className="row g-0 min-vh-100">
         {/* Left showcase - hidden on mobile */}
-        <div className="col-md-6 d-none d-md-flex bg-warning text-center justify-content-center align-items-center flex-column"  style={{ backgroundColor: '#F6CC14' }}>
+        <div className="col-md-6 d-none d-md-flex bg-warning text-center justify-content-center align-items-center flex-column" style={{ backgroundColor: '#F6CC14' }}>
           <h1 className="text-light fw-bold display-4 mb-4" style={{ textShadow: '2px 2px 5px rgba(0,0,0,0.5)' }}>
             Bem-Vindo<br />
             de volta!
