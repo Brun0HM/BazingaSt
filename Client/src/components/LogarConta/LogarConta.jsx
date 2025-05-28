@@ -3,7 +3,7 @@ import React from 'react'
 const LogarConta = () => {
   return (
     <>
-    <div className="container-fluid"  style={{ padding: 0, margin: 0 }}>
+    <div className="container-fluid">
       <div className="row g-0 min-vh-100">
         {/* Left showcase - hidden on mobile */}
         <div className="col-md-6 d-none d-md-flex bg-warning text-center justify-content-center align-items-center flex-column" style={{ backgroundColor: '#F6CC14' }}>
