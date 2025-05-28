@@ -78,36 +78,37 @@ const CreateAccountForms = ({ onRedirect }) => {
         </div>
 
         <div className="d-flex flex-column flex-md-row justify-content-between mb-4 gap-2">
-          <div className="w-100">
-            <input
-              type="password"
-              className="form-control rounded-4 border-0 px-4 py-2"
-              style={{
+         <div className="w-100">
+           <input
+            type="password"
+            className="form-control rounded-4 border-0 px-4 py-2"
+            style={{
                 boxShadow: '4px 4px 0px rgba(0,0,0,1)',
                 backgroundColor: '#EBEBEB',
-              }}
+            }}
               placeholder="Senha"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
             />
-            {errors.senha && (
-              <div className="text-danger mt-1 fw-semibold ms-3 h6">
-                {errors.senha}
-              </div>
-            )}
-          </div>
+    {errors.senha && (
+      <div className="text-danger mt-1 fw-semibold ms-3 h6">
+        {errors.senha}
+      </div>
+    )}
+  </div>
 
-          <button
+           <button
             type="submit"
             className="btn text-light rounded-4 px-4 py-2 fw-bold"
             style={{
-              boxShadow: '4px 4px 0px rgba(0,0,0,1)',
-              backgroundColor: '#FD0A0A',
-            }}
-          >
-            Criar
-          </button>
-        </div>
+          boxShadow: '4px 4px 0px rgba(0,0,0,1)',
+          backgroundColor: '#FD0A0A',
+          alignSelf: 'flex-start', 
+         }}
+            >
+          Criar
+        </button>
+      </div>
 
         <div className="text-center">
           <span className="fw-bold">Já tem uma conta?</span>
