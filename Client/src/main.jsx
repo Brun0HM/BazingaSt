@@ -9,7 +9,7 @@ import ListaItens from "./pages/ListaItens.jsx";
 import Cart from "./pages/Cart.jsx";
 import Config from "./pages/Config.jsx";
 import Logar from "./pages/Logar.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
+import CreateAccount from "./pages/CreateAccount.jsx";
 import Payment from "./pages/Payment.jsx";
 
 createRoot(document.getElementById("root")).render(
@@ -24,7 +24,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/poster" element={<ListaItens />} />
         <Route path="/config" element={<Config />} />
         <Route path="/login" element={<Logar />} />
-        <Route path="/registrar" element={<LoginPage />} />
+        <Route path="/registrar" element={<CreateAccount />} />
         <Route path="/pagar" element={<Payment />} />
       </Routes>
     </BrowserRouter>
