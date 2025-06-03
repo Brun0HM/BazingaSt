@@ -17,40 +17,33 @@ const Cardegorias = ({ id, nome, preco, imagem }) => {
   const navigate = useNavigate();
   const handleClick = () => navigate("/info");
   return (
-    <div className="card2 border-3 text-decoration-none ">
-      <div>
+    <div className=" border-3 text-decoration-none p-4 col-3">
+      <div className="bg-white d-flex flex-column col-12 p-4 pt-3 rounded-4 card2">
         <img
           onClick={handleClick}
-          className="rounded-top-4"
-          src="https://placehold.co/285x250"
+          className="mb-4 rounded-3"
+          src="https://placehold.co/300x200"
           alt=""
         />
-      </div>
-      <div className="m-2">
-        <div className="m-1 mt-2"></div>
-        <div className="d-flex justify-content-between align-items-center">
-          <div
-            onClick={handleClick}
-            className="d-flex justify-content-between align-items-center m-1"
+        <div className="col-12">
+          <span className="fs-6">T I P O</span>
+          <h3 className="fw-bold mt-2 mb-2">NomeProduto</h3>
+          <div className="d-flex gap-1 mb-2 fs-6 ">
+            <i className="bi bi-star-fill"></i>{" "}
+            <i className="bi bi-star-fill"></i>{" "}
+            <i className="bi bi-star-fill"></i>{" "}
+            <i className="bi bi-star-fill"></i>{" "}
+            <i className="bi bi-star-fill"></i>
+            <p className="m-0">(5.0)</p>
+          </div>
+          <h5 className="fw-bold mb-3">R$ 00,00</h5>
+          <button
+            className="btn btn-dark w-100 botao"
+            onClick={adicionarAoCarrinho}
           >
-            <div>
-              <div className="d-flex gap-1">
-                <i className="bi bi-star-fill "></i>
-                <i className="bi bi-star-fill"></i>
-                <i className="bi bi-star-fill"></i>
-                <i className="bi bi-star-fill"></i>
-                <i className="bi bi-star-fill"></i>
-              </div>
-              <h4 className="fw-bold m-0 fs-5">Nome</h4>
-              <p className="m-0">R$00.00</p>
-            </div>
-            <a className="text-decoration-none " href=""></a>
-          </div>
-          <div className="me-1">
-            <button className="btn" onClick={adicionarAoCarrinho}>
-              <i className="bi bi-cart-plus-fill fs-3"></i>
-            </button>
-          </div>
+            {" "}
+            <i className="bi bi-cart-plus-fill"></i> Adicionar ao carrinho
+          </button>
         </div>
       </div>
     </div>

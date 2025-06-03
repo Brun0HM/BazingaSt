@@ -14,17 +14,11 @@ body::-webkit-scrollbar {
 /* Cardegoria */
 /* ========================================================================================= */
 
-.card2 {
-  width: 285px;
-  height: 350px;
-  border-radius: 15px;
-  background-color: #ffffff;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  text-decoration: none;
-}
 
-.card2:hover {
-  transform: scale(1.05, 1.05);
+
+
+.botao{
+  height: 50px;
 }
 
 .card2 a {

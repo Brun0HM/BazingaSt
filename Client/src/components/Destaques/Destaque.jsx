@@ -3,34 +3,39 @@ import React from "react";
 const Destaque = () => {
   return (
     <div>
-      <div className="container my-5">
+      <div className=" my-5">
         <div className="row g-4">
           {/* BLOCO UNIFICADO: NOVA COLEÇÃO + INVERNO */}
-          <div className="col-12 col-md-8">
-            <a href="/produtos" className="text-decoration-none">
-              <div className="p-3 bg-white rounded-4 shadow mb-3 d-flex flex-column flex-lg-row justify-content-between align-items-center Aumento">
-                <div className="text-center text-lg-start">
-                  <h1
-                    className="text-dark fw-bold mb-0"
-                    style={{ fontSize: "clamp(4rem, 10vw, 9rem)" }}
-                  >
-                    NOVA
-                  </h1>
-                  <h2
-                    className="text-primary fw-bold mb-0"
-                    style={{ fontSize: "clamp(2rem, 6vw, 4rem)" }}
-                  >
-                    COLEÇÃO!
-                  </h2>
+          <div className="col-md-1"></div>
+          <div className="col-md-7">
+            <div className="col-12 col-md-12">
+              <a href="/produtos" className="text-decoration-none">
+                <div className="p-3 bg-white rounded-4 shadow mb-3 d-flex flex-column flex-lg-row justify-content-between align-items-center Aumento">
+                  <div className="text-center text-lg-start">
+                    <h1
+                      className="text-dark fw-bold mb-0"
+                      style={{ fontSize: "clamp(4rem, 10vw, 9rem)" }}
+                    >
+                      NOVA
+                    </h1>
+                    <h2
+                      className="text-primary fw-bold mb-0"
+                      style={{ fontSize: "clamp(2rem, 6vw, 4rem)" }}
+                    >
+                      COLEÇÃO!
+                    </h2>
+                  </div>
+
+                  <img
+                    src="https://i.imgur.com/D6fcTh7.png"
+                    alt="Pôster Batman"
+                    className="img-fluid mt-3 mt-lg-0"
+                  />
                 </div>
+              </a>
+            </div>
 
-                <img
-                  src="https://i.imgur.com/D6fcTh7.png"
-                  alt="Pôster Batman"
-                  className="img-fluid mt-3 mt-lg-0"
-                />
-              </div>
-
+            <div className="col-12 col-md-12">
               <div className="p-3 bg-white rounded-4 shadow d-flex flex-column flex-lg-row justify-content-between align-items-center Aumento">
                 <div className="text-center text-lg-start ms-lg-4">
                   <h3
@@ -53,11 +58,10 @@ const Destaque = () => {
                   className="img-fluid mt-3 mt-lg-0"
                 />
               </div>
-            </a>
+            </div>
           </div>
-
           {/* CANECAS */}
-          <div className="col-12 col-md-4">
+          <div className="col-12 col-md-3">
             <a href="figures" className="text-decoration-none">
               <div className="p-3 bg-white rounded-4 shadow text-center h-100 d-flex flex-column justify-content-between Aumento">
                 <h1

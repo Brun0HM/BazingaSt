@@ -6,15 +6,14 @@ const ListaItens = () => {
   return (
     <>
       <Header />
-      <div className="ListaI">
-        <div className=" ListaI d-flex align-items-center justify-content-center flex-column">
-          <div>
-            <h1 className=" ms-0 ms-md-5 mb-5 pt-3 fw-bold text-light CategoriaName">
+      <div className="ListaI col-12">
+        <div className=" ">
+          <div className="d-flex justify-content-center align-items-center">
+            <h1 className=" pt-3 fw-bold text-light CategoriaName">
               CategoriaName
             </h1>
           </div>
-          <div className="d-flex flex-wrap ps-5 ms-3 gap-3 pb-5 ">
-            <Cardegorias />
+          <div className="d-flex flex-wrap ">
             <Cardegorias />
             <Cardegorias />
             <Cardegorias />
