@@ -13,12 +13,12 @@ const Home = ({ superMan }) => (
       <div className="container-fluid position-relative pt-5 ">
         <div className="row justify-content-center align-items-center">
           {/* Coluna de texto */}
-          <div className="col-12 col-md-4 d-flex text-center text-md-start mb-4 mb-md-0">
+          <div className="col-12 col-md-4 d-flex text-center text-md-start mb-4 mb-md-0 me-0 me-md-5"  >
             <div className="d-none d-md-flex col-4"></div>
             <div className="d-flex flex-column justify-content-center align-items-center align-items-md-start text-white">
               <h1 className="fw-bold display-2 text-white Nova">
                 NOVA <br />
-                <span className="">COLEÇÃO!</span>
+                <span className="text-white Colecao">COLEÇÃO!</span>
               </h1>
               <div className="d-flex gap-2 justify-content-center justify-content-md-end mt-4">
                 <img
@@ -34,10 +34,12 @@ const Home = ({ superMan }) => (
               </div>
             </div>
           </div>
-
+          
           {/* Coluna da imagem */}
           <div className="col-12 col-md-6 d-flex justify-content-start flex-column">
-            <div className="bg-white position-absolute Circulo z-1 d-none d-md-block">sdaaaa</div>
+            <div className="bg-white position-absolute Circulo z-1 d-none d-md-block">
+              sdaaaa
+            </div>
             <img
               src={superMan}
               alt="Superman LEGO"

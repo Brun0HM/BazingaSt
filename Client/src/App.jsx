@@ -21,7 +21,7 @@ import CreateAccount from "./pages/CreateAccount";
 const App = () => {
   return (
     <div>
-    <Home superMan={SuperMan} />
+      <Home superMan={SuperMan} />
     </div>
   );
 };

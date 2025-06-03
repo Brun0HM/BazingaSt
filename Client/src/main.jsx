@@ -11,6 +11,7 @@ import Config from "./pages/Config.jsx";
 import Logar from "./pages/Logar.jsx";
 import CreateAccount from "./pages/CreateAccount.jsx";
 import Payment from "./pages/Payment.jsx";
+import InfoProducts from "./pages/InfoProducts.jsx";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/login" element={<Logar />} />
         <Route path="/registrar" element={<CreateAccount />} />
         <Route path="/pagar" element={<Payment />} />
+        <Route path="Info" element={<InfoProducts />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
