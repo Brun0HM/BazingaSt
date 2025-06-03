@@ -93,6 +93,9 @@ input::placeholder {
   width: 70px !important;
   border: 1px solid #949494 !important;
 }
+.Quantidade {
+  min-width: 20px !important;
+}
 .img-container img {
   width: 100%;
   max-width: 150px;
@@ -117,6 +120,9 @@ input::placeholder {
   .CategoriaName {
     font-size: 35px;
   }
+}
+.Cart {
+  height: 79vh !important;
 }
 /* ========================================================================================= */
 
@@ -198,7 +204,7 @@ input::placeholder {
   }
 
   .superman-img {
-    max-width: 80%!important;
+    max-width: 80% !important;
     height: auto;
     object-fit: contain;
   }
@@ -213,12 +219,13 @@ input::placeholder {
   color: #a01818 !important;
 }
 .Circulo {
-  border-radius:100% !important;
+  border-radius: 100% !important;
   width: 1500px;
   height: 1500px;
-  bottom: 350px;
+  bottom: 200px;
   left: 700px;
 }
+
 /* ========================================================== */
 
 /* RegisterCard */
@@ -260,3 +267,16 @@ input::placeholder {
 .Aumento:hover {
   transform: scale(1.05, 1.05);
 }
+
+/* ========================InfoProduto========================= */
+.Adicionar {
+  background-color: #d84040 !important;
+  height: 70px !important;
+  border-right: 3px solid #000000 !important;
+  border-bottom: 4px solid #000000 !important;
+}
+.Adicionar:hover {
+  background-color: #f74a4a !important;
+}
+
+/* ========================================================== */
