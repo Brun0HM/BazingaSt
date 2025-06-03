@@ -19,7 +19,7 @@ const ItemCarrinho = ({ item, onRemover, onAlterarQuantidade }) => {
         </div>
         <div className="col-md-9">
           <h1 className="fw-bold mb-0 fs-4">Nome</h1>
-          <p className="fs-5 mb-2">{item.preco}</p>
+          <p className="fs-5 mb-2">R$00.00</p>
           <div
             className="quantidade d-flex border rounded-5 w-100 w-md-25 justify-content-center align-items-center mb-2"
             style={{ maxWidth: "80px" }}
