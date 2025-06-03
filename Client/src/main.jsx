@@ -11,6 +11,9 @@ import Config from "./pages/Config.jsx";
 import Logar from "./pages/Logar.jsx";
 import CreateAccount from "./pages/CreateAccount.jsx";
 import Payment from "./pages/Payment.jsx";
+import MainDashBoard from "./pages/MainDashBoard.jsx";
+import DBProdutos from "./pages/DBProdutos.jsx";
+import DBPedidos from "./pages/DBPedidos.jsx";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -26,6 +29,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/login" element={<Logar />} />
         <Route path="/registrar" element={<CreateAccount />} />
         <Route path="/pagar" element={<Payment />} />
+        <Route path="dashboard/dashboard" element={<MainDashBoard />} />
+        <Route path="dashboard/produtos" element={<DBProdutos />} />
+        <Route path="dashboard/pedidos" element={<DBPedidos />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

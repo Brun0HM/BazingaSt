@@ -16,12 +16,14 @@ import Payment from "./pages/Payment.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import Logar from "./pages/Logar";
 import CreateAccount from "./pages/CreateAccount";
+import MainDashBoard from "./pages/MainDashBoard.jsx";
+import DBProdutos from "./pages/DBProdutos.jsx";
 
 
 const App = () => {
   return (
     <div>
-    <Home superMan={SuperMan} />
+    <DBProdutos />
     </div>
   );
 };
