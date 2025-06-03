@@ -120,9 +120,9 @@ input::placeholder {
   .CategoriaName {
     font-size: 35px;
   }
-  .fundo {
-    min-height: 1000px !important;
-  }
+}
+.Cart{
+  height: 82vh !important;
 }
 /* ========================================================================================= */
 

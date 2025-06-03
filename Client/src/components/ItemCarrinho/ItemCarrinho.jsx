@@ -1,5 +1,6 @@
 import React from "react";
-import "./ItemCarrinho.css";
+import "./../../App.css";
+
 
 const ItemCarrinho = ({ item, onRemover, onAlterarQuantidade }) => {
   const incrementar = () => onAlterarQuantidade(item.id, item.quantidade + 1);
@@ -35,7 +36,7 @@ const ItemCarrinho = ({ item, onRemover, onAlterarQuantidade }) => {
             </button>
           </div>
           <button
-            className="btn text-danger"
+            className="btn text-danger p-0"
             onClick={() => onRemover(item.id)}
           >
             <i className="bi bi-trash fs-5"></i>

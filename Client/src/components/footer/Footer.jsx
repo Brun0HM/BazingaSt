@@ -1,11 +1,12 @@
 import React from "react";
+import Logo from "./../../assets/Logo2.png";
 
 const Footer = (props) => {
   return (
     <div className="">
       <div className="d-flex justify-content-between align-items-center bg-white p-3">
         <div className="d-none d-md-grid"></div>
-        <img className="" src={props.Logo} alt="logo bazinga store" />
+        <img className="" width={150} src={Logo} alt="logo bazinga store" />
         <div className="d-flex flex-column justify-content-end align-items-end">
           <div className="d-flex justify-content-end align-items-center gap-1">
             <i className="bi bi-github"></i>
