@@ -21,7 +21,7 @@ import Login from "./components/Login/Login.jsx";
 const App = () => {
   return (
     <div>
-    <Home superMan={SuperMan} />
+      <Home superMan={SuperMan} />
     </div>
   );
 };
