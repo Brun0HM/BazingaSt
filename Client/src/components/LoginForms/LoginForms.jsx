@@ -1,100 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const LoginForms = ({ onRedirect }) => {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [errors, setErrors] = useState({});
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [mensagem, setMensagem] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const newErrors = {};
-
-    if (!email) {
-      newErrors.email = 'Email é obrigatório';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email inválido';
-    }
-
-    if (!senha) {
-      newErrors.senha = 'Senha é obrigatória';
-    } else if (senha.length < 6) {
-      newErrors.senha = 'Senha deve ter no mínimo 6 caracteres';
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      alert('Login realizado');
+    setMensagem("");
+    try {
+      const response = await fetch("https://bazinga.somee.com/login", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setMensagem("Login realizado com sucesso!");
+        console.log(email, password);
+        // Aqui você pode salvar token, redirecionar, etc.
+      } else {
+        setMensagem(data.message || "Erro ao fazer login.");
+      }
+    } catch (error) {
+      console.error("Erro ao conectar na API:", error);
+      setMensagem("Erro de conexão com a API.");
     }
   };
 
   return (
-    <div className="w-100 px-4 px-md-5 py-5" style={{ maxWidth: '600px' }}>
-      <h1 className="fw-bold mb-4 display-5 text-center">Logar</h1>
+    <div className="w-100 px-4 px-md-5 py-5" style={{ maxWidth: "600px" }}>
+      <h1 className="fw-bold mb-4 display-5 text-center">Entrar</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
+          <label className="form-label">Email:</label>
           <input
-            type=""
-            className="form-control rounded-4 border-0 px-4 py-2"
-            style={{
-              boxShadow: '4px 4px 0px rgba(0,0,0,1)',
-              backgroundColor: '#EBEBEB',
-            }}
-            placeholder="Email"
+            type="email"
+            className="form-control"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && (
-            <div className="text-danger mt-1 fw-semibold ms-3 h6">{errors.email}</div>
-          )}
         </div>
-
-        <div className="d-flex flex-column flex-md-row justify-content-between mb-4 gap-2">
-         <div className="w-100">
-           <input
+        <div className="mb-3">
+          <label className="form-label">Senha:</label>
+          <input
             type="password"
-            className="form-control rounded-4 border-0 px-4 py-2"
-            style={{
-                boxShadow: '4px 4px 0px rgba(0,0,0,1)',
-                backgroundColor: '#EBEBEB',
-            }}
-              placeholder="Senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-            />
-    {errors.senha && (
-      <div className="text-danger mt-1 fw-semibold ms-3 h6">
-        {errors.senha}
-      </div>
-    )}
-  </div>
-
-           <button
-            type="submit"
-            className="btn text-light rounded-4 px-4 py-2 fw-bold"
-            style={{
-          boxShadow: '4px 4px 0px rgba(0,0,0,1)',
-          backgroundColor: '#FD0A0A',
-          alignSelf: 'flex-start', 
-         }}
-            >
-          Logar
+            className="form-control"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary w-100">
+          Entrar
+        </button>
+      </form>
+      <div className="text-center mt-3">
+        <span>Não tem conta? </span>
+        <button type="button" className="btn btn-link p-0" onClick={onRedirect}>
+          Cadastre-se
         </button>
       </div>
-
-
-        <div className="text-center">
-          <span className="fw-bold">Não tem uma conta?</span>
-          <button
-            type="button"
-            onClick={onRedirect}
-            className="btn text-danger rounded-4 fw-bold ms-1 p-0"
-          >
-            Clique aqui
-          </button>
-        </div>
-      </form>
+      {mensagem && (
+        <div className="alert alert-info mt-3 text-center">{mensagem}</div>
+      )}
     </div>
   );
 };
