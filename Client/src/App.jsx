@@ -24,6 +24,7 @@ const App = () => {
   return (
     <div>
     <DBProdutos />
+      <Home superMan={SuperMan} />
     </div>
   );
 };
