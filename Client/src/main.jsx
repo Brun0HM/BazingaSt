@@ -9,9 +9,14 @@ import ListaItens from "./pages/ListaItens.jsx";
 import Cart from "./pages/Cart.jsx";
 import Config from "./pages/Config.jsx";
 import Logar from "./pages/Logar.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
+import CreateAccount from "./pages/CreateAccount.jsx";
 import Payment from "./pages/Payment.jsx";
+import MainDashBoard from "./pages/MainDashBoard.jsx";
+import DBProdutos from "./pages/DBProdutos.jsx";
+import DBPedidos from "./pages/DBPedidos.jsx";
+import DBClientes from "./pages/DBClientes.jsx";
 import InfoProducts from "./pages/InfoProducts.jsx";
+
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -25,9 +30,13 @@ createRoot(document.getElementById("root")).render(
         <Route path="/poster" element={<ListaItens />} />
         <Route path="/config" element={<Config />} />
         <Route path="/login" element={<Logar />} />
-        <Route path="/registrar" element={<LoginPage />} />
+        <Route path="/registrar" element={<CreateAccount />} />
         <Route path="/pagar" element={<Payment />} />
-        <Route path="Info" element={<InfoProducts />}></Route>
+        <Route path="/dashboard" element={<MainDashBoard />} />
+        <Route path="/dbprodutos" element={<DBProdutos />} />
+        <Route path="/dbpedidos" element={<DBPedidos />} />
+        <Route path="Info" element={<InfoProducts />}>
+          </Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
