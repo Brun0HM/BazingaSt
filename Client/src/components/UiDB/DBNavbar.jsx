@@ -22,9 +22,9 @@ const DBNavbar = () => {
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav ms-auto">
               <a className="nav-link text-muted fw-semibold" href="dashboard">Dashboard</a>
-              <a className="nav-link text-muted fw-semibold" href="produtos">Produtos</a>
-              <a className="nav-link text-muted fw-semibold" href="pedidos">Pedidos</a>
-              <a className="nav-link text-muted fw-semibold" href="#">Clientes</a>
+              <a className="nav-link text-muted fw-semibold" href="dbprodutos">Produtos</a>
+              <a className="nav-link text-muted fw-semibold" href="dbpedidos">Pedidos</a>
+              <a className="nav-link text-muted fw-semibold" href="dbclientes">Clientes</a>
               <div className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle d-flex align-items-center"

@@ -9,6 +9,7 @@ export default function DBProdutos() {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedProducts, setSelectedProducts] = useState([])
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [viewProduct, setViewProduct] = useState(null)
   const [editingProduct, setEditingProduct] = useState(null)
 
   const [products, setProducts] = useState([
@@ -124,8 +125,15 @@ export default function DBProdutos() {
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.sku.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
-    return matchesSearch && matchesCategory
+
+    const isStatusFilter = ['active', 'inactive', 'out_of_stock'].includes(selectedCategory)
+
+    const matchesCategoryOrStatus =
+      selectedCategory === 'all' ||
+      (isStatusFilter && product.status === selectedCategory) ||
+      (!isStatusFilter && product.category === selectedCategory)
+
+    return matchesSearch && matchesCategoryOrStatus
   })
 
   const handleSelectProduct = (productId) => {
@@ -155,6 +163,99 @@ export default function DBProdutos() {
     }
   }
 
+  const handleDeleteProduct = (id) => {
+    setProducts((prev) => prev.filter((p) => p.id !== id))
+    setSelectedProducts((prev) => prev.filter((pid) => pid !== id))
+    setViewProduct(null)
+    setEditingProduct(null)
+  }
+
+  const handleToggleStatus = (id) => {
+    setProducts((prev) =>
+      prev.map((p) =>
+        p.id === id
+          ? { ...p, status: p.status === 'active' ? 'inactive' : 'active' }
+          : p
+      )
+    )
+  }
+
+  const handleBatchAction = (action) => {
+    if (action === 'delete') {
+      setProducts((prev) => prev.filter((p) => !selectedProducts.includes(p.id)))
+    }
+    if (action === 'activate') {
+      setProducts((prev) =>
+        prev.map((p) =>
+          selectedProducts.includes(p.id) ? { ...p, status: 'active' } : p
+        )
+      )
+    }
+    if (action === 'deactivate') {
+      setProducts((prev) =>
+        prev.map((p) =>
+          selectedProducts.includes(p.id) ? { ...p, status: 'inactive' } : p
+        )
+      )
+    }
+    setSelectedProducts([])
+  }
+
+  // View Details Modal
+  const ProductDetailsModal = ({ product }) => (
+    <div
+      className="modal show fade"
+      style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+      tabIndex="-1"
+    >
+      <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">
+              <i className="bi bi-box-seam me-2"></i> Produto: {product.name}
+            </h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => setViewProduct(null)}
+            ></button>
+          </div>
+          <div className="modal-body">
+            <div className="d-flex gap-3 mb-4">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="rounded"
+                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+              />
+              <div>
+                <p><strong>Categoria:</strong> {product.category}</p>
+                <p><strong>Preço:</strong> R$ {product.price.toFixed(2)}</p>
+                <p><strong>Estoque:</strong> {product.stock}</p>
+                <p><strong>SKU:</strong> {product.sku}</p>
+                <p><strong>Vendas:</strong> {product.sales}</p>
+                <p><strong>Status:</strong> {getStatusBadge(product.status)}</p>
+              </div>
+            </div>
+            <div>
+              <p><strong>Descrição:</strong></p>
+              <p className="text-muted">{product.description}</p>
+            </div>
+          </div>
+          <div className="modal-footer">
+            <button
+              className="btn btn-secondary"
+              onClick={() => setViewProduct(null)}
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  // Add/Edit Form
   const ProductForm = ({ product, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
       name: product?.name || '',
@@ -163,11 +264,22 @@ export default function DBProdutos() {
       stock: product?.stock || 0,
       description: product?.description || '',
       sku: product?.sku || '',
+      status: product?.status || 'active',
     })
 
     const handleSubmit = (e) => {
       e.preventDefault()
-      onSave(formData)
+      if (product) {
+        onSave({ ...product, ...formData })
+      } else {
+        const newProduct = {
+          id: Date.now().toString(),
+          ...formData,
+          image: '/placeholder.svg?height=80&width=80',
+          sales: 0,
+        }
+        onSave(newProduct)
+      }
     }
 
     return (
@@ -234,21 +346,38 @@ export default function DBProdutos() {
             />
           </div>
         </div>
-        <div className="mb-3 mt-3">
-          <label htmlFor="stock" className="form-label">
-            Quantidade em Estoque
-          </label>
-          <input
-            id="stock"
-            type="number"
-            className="form-control"
-            value={formData.stock}
-            onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) })}
-            placeholder="0"
-            required
-          />
+        <div className="row g-3 mt-3">
+          <div className="col-md-6">
+            <label htmlFor="stock" className="form-label">
+              Quantidade em Estoque
+            </label>
+            <input
+              id="stock"
+              type="number"
+              className="form-control"
+              value={formData.stock}
+              onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) })}
+              placeholder="0"
+              required
+            />
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="status" className="form-label">
+              Status
+            </label>
+            <select
+              id="status"
+              className="form-select"
+              value={formData.status}
+              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+            >
+              <option value="active">Ativo</option>
+              <option value="inactive">Inativo</option>
+              <option value="out_of_stock">Sem Estoque</option>
+            </select>
+          </div>
         </div>
-        <div className="mb-3">
+        <div className="mb-3 mt-3">
           <label htmlFor="description" className="form-label">
             Descrição
           </label>
@@ -280,313 +409,346 @@ export default function DBProdutos() {
   }
 
   return (
-
     <>
-    <DBNavbar />
+      <DBNavbar />
 
-<div className='ms-3 me-3'>
-    <div className="container-fluid p-4">
-      {/* Header */}
-      <div className="d-flex justify-content-between align-items-center mb-4 mt-3">
-        <div>
-          <h2 className="fw-bold">Produtos</h2>
-          <small className="text-muted">Gerencie o catálogo da sua loja geek</small>
-        </div>
-        <button className="btn btn-danger" onClick={() => setIsAddModalOpen(true)}>
-          <i className="bi bi-plus-lg me-1"></i> Adicionar Produto
-        </button>
-      </div>
-
-      {/* Tabs (Todos / Ativos / Inativos / Sem Estoque) */}
-      <ul className="nav nav-tabs mb-3">
-        <li className="nav-item">
-          <button
-            className="nav-link active"
-            onClick={() => setSelectedCategory('all')}
-            >
-            Todos ({products.length})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className="nav-link"
-            onClick={() => setSelectedCategory('active')}
-            >
-            Ativos ({products.filter((p) => p.status === 'active').length})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className="nav-link"
-            onClick={() => setSelectedCategory('inactive')}
-            >
-            Inativos ({products.filter((p) => p.status === 'inactive').length})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className="nav-link"
-            onClick={() => setSelectedCategory('out_of_stock')}
-            >
-            Sem Estoque ({products.filter((p) => p.status === 'out_of_stock').length})
-          </button>
-        </li>
-      </ul>
-
-      {/* Search + Category Filter + Batch Actions */}
-      <div className="row g-3 mb-4">
-        <div className="col-md-5">
-          <div className="input-group">
-            <span className="input-group-text bg-white">
-              <i className="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar produtos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              />
+      <div className="ms-3 me-3">
+        <div className="container-fluid p-4">
+          {/* Header */}
+          <div className="d-flex justify-content-between align-items-center mb-4 mt-3">
+            <div>
+              <h2 className="fw-bold">Produtos</h2>
+              <small className="text-muted">Gerencie o catálogo da sua loja geek</small>
+            </div>
+            <button className="btn btn-danger" onClick={() => setIsAddModalOpen(true)}>
+              <i className="bi bi-plus-lg me-1"></i> Adicionar Produto
+            </button>
           </div>
-        </div>
-        <div className="col-md-3">
-          <select
-            className="form-select"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-            <option value="all">Todas as categorias</option>
-            {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-md-4 text-end">
-          {selectedProducts.length > 0 && (
-              <div className="dropdown d-inline">
+
+          {/* Tabs (Todos / Ativos / Inativos / Sem Estoque) */}
+          <ul className="nav nav-tabs mb-3">
+            <li className="nav-item">
               <button
-                className="btn btn-outline-secondary dropdown-toggle"
-                type="button"
-                id="batchActions"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >
-                Ações em lote ({selectedProducts.length})
+                className={`nav-link ${selectedCategory === 'all' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('all')}
+              >
+                Todos ({products.length})
               </button>
-              <ul className="dropdown-menu" aria-labelledby="batchActions">
-                <li>
-                  <button className="dropdown-item">Ativar produtos</button>
-                </li>
-                <li>
-                  <button className="dropdown-item">Desativar produtos</button>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <button className="dropdown-item text-danger">Excluir produtos</button>
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-      </div>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedCategory === 'active' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('active')}
+              >
+                Ativos ({products.filter((p) => p.status === 'active').length})
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedCategory === 'inactive' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('inactive')}
+              >
+                Inativos ({products.filter((p) => p.status === 'inactive').length})
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedCategory === 'out_of_stock' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('out_of_stock')}
+              >
+                Sem Estoque ({products.filter((p) => p.status === 'out_of_stock').length})
+              </button>
+            </li>
+          </ul>
 
-      {/* Products Table */}
-      <div className="card">
-        <div className="card-header bg-white">
-          <h5 className="mb-0">Lista de Produtos</h5>
-          <small className="text-muted">{filteredProducts.length} produto(s) encontrado(s)</small>
-        </div>
-        <div className="card-body p-0">
-          <div className="table-responsive">
-            <table className="table table-hover mb-0">
-              <thead className="table-white">
-                <tr>
-                  <th scope="col" style={{ width: '2rem' }}>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      checked={
-                          selectedProducts.length === filteredProducts.length &&
-                          filteredProducts.length > 0
-                        }
-                        onChange={handleSelectAll}
-                        />
-                  </th>
-                  <th scope="col">Produto</th>
-                  <th scope="col">Categoria</th>
-                  <th scope="col">SKU</th>
-                  <th scope="col">Preço</th>
-                  <th scope="col">Estoque</th>
-                  <th scope="col">Vendas</th>
-                  <th scope="col">Status</th>
-                  <th scope="col" style={{ width: '3rem' }}></th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredProducts.map((product) => (
-                    <tr key={product.id}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={selectedProducts.includes(product.id)}
-                        onChange={() => handleSelectProduct(product.id)}
-                        />
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="rounded me-3"
-                          style={{ width: '40px', height: '40px', objectFit: 'cover' }}
-                          />
-                        <div>
-                          <div className="fw-medium">{product.name}</div>
-                          <div className="text-muted small text-truncate" style={{ maxWidth: '200px' }}>
-                            {product.description}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>{product.category}</td>
-                    <td className="font-monospace small">{product.sku}</td>
-                    <td>R$ {product.price.toFixed(2)}</td>
-                    <td>
-                      {product.stock === 0 ? (
-                          <span className="text-danger fw-semibold">{product.stock}</span>
-                        ) : (
-                            product.stock
-                        )}
-                    </td>
-                    <td>{product.sales}</td>
-                    <td>{getStatusBadge(product.status)}</td>
-                    <td>
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-sm btn-light"
-                          type="button"
-                          id={`actions-${product.id}`}
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                          >
-                          <i className="bi bi-three-dots-vertical"></i>
-                        </button>
-                        <ul
-                          className="dropdown-menu dropdown-menu-end"
-                          aria-labelledby={`actions-${product.id}`}
-                          >
-                          <li>
-                            <button className="dropdown-item">
-                              <i className="bi bi-eye me-2"></i> Visualizar
-                            </button>
-                          </li>
-                          <li>
-                            <button
-                              className="dropdown-item"
-                              onClick={() => setEditingProduct(product)}
-                              >
-                              <i className="bi bi-pencil me-2"></i> Editar
-                            </button>
-                          </li>
-                          <li>
-                            <hr className="dropdown-divider" />
-                          </li>
-                          <li>
-                            <button className="dropdown-item text-danger">
-                              <i className="bi bi-trash me-2"></i> Excluir
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      {/* Add Product Modal */}
-      {isAddModalOpen && (
-          <div
-          className="modal show fade"
-          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
-          tabIndex="-1"
-          >
-          <div className="modal-dialog modal-lg modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Adicionar Novo Produto</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setIsAddModalOpen(false)}
-                  ></button>
-              </div>
-              <div className="modal-body">
-                <ProductForm
-                  onSave={(productData) => {
-                      const newProduct = {
-                          id: Date.now().toString(),
-                          ...productData,
-                          status: 'active',
-                          image: '/placeholder.svg?height=80&width=80',
-                          sales: 0,
-                        }
-                        setProducts([...products, newProduct])
-                        setIsAddModalOpen(false)
-                    }}
-                    onCancel={() => setIsAddModalOpen(false)}
-                    />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Edit Product Modal */}
-      {editingProduct && (
-          <div
-          className="modal show fade"
-          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
-          tabIndex="-1"
-          >
-          <div className="modal-dialog modal-lg modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Editar Produto</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setEditingProduct(null)}
-                  ></button>
-              </div>
-              <div className="modal-body">
-                <ProductForm
-                  product={editingProduct}
-                  onSave={(productData) => {
-                      setProducts(
-                          products.map((p) =>
-                            p.id === editingProduct.id ? { ...p, ...productData } : p
-                        )
-                    )
-                    setEditingProduct(null)
-                }}
-                onCancel={() => setEditingProduct(null)}
+          {/* Search + Category Filter + Batch Actions */}
+          <div className="row g-3 mb-4 align-items-center">
+            <div className="col-md-5">
+              <div className="input-group">
+                <span className="input-group-text bg-white">
+                  <i className="bi bi-search"></i>
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Buscar produtos..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
             </div>
+            <div className="col-md-3">
+              <select
+                className="form-select"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="all">Todas as categorias</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+                <option disabled>──────────</option>
+                <option value="active">Ativos</option>
+                <option value="inactive">Inativos</option>
+                <option value="out_of_stock">Sem Estoque</option>
+              </select>
+            </div>
+            <div className="col-md-4 text-end">
+              {selectedProducts.length > 0 && (
+                <div className="dropdown d-inline me-2">
+                  <button
+                    className="btn btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    id="batchActions"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Ações em lote ({selectedProducts.length})
+                  </button>
+                  <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="batchActions">
+                    <li>
+                      <button
+                        className="dropdown-item d-flex align-items-center"
+                        onClick={() => handleBatchAction('activate')}
+                      >
+                        <i className="bi bi-check-circle me-2"></i> Ativar selecionados
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item d-flex align-items-center"
+                        onClick={() => handleBatchAction('deactivate')}
+                      >
+                        <i className="bi bi-slash-circle me-2"></i> Desativar selecionados
+                      </button>
+                    </li>
+                    <li><hr className="dropdown-divider" /></li>
+                    <li>
+                      <button
+                        className="dropdown-item text-danger d-flex align-items-center"
+                        onClick={() => handleBatchAction('delete')}
+                      >
+                        <i className="bi bi-trash me-2"></i> Excluir selecionados
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Products Table */}
+          <div className="card">
+            <div className="card-header bg-white d-flex justify-content-between align-items-center">
+              <h5 className="mb-0">Lista de Produtos</h5>
+              <small className="text-muted">{filteredProducts.length} produto(s) encontrado(s)</small>
+            </div>
+            <div className="card-body p-0">
+              <div className="table-responsive">
+                <table className="table table-hover mb-0">
+                  <thead className="table-white">
+                    <tr>
+                      <th scope="col" style={{ width: '2rem' }}>
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          checked={
+                            selectedProducts.length === filteredProducts.length &&
+                            filteredProducts.length > 0
+                          }
+                          onChange={handleSelectAll}
+                        />
+                      </th>
+                      <th scope="col">Produto</th>
+                      <th scope="col">Categoria</th>
+                      <th scope="col">SKU</th>
+                      <th scope="col">Preço</th>
+                      <th scope="col">Estoque</th>
+                      <th scope="col">Vendas</th>
+                      <th scope="col">Status</th>
+                      <th scope="col" style={{ width: '6rem' }}>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredProducts.map((product) => (
+                      <tr key={product.id}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            checked={selectedProducts.includes(product.id)}
+                            onChange={() => handleSelectProduct(product.id)}
+                          />
+                        </td>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="rounded me-3"
+                              style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                            />
+                            <div>
+                              <div className="fw-medium">{product.name}</div>
+                              <div
+                                className="text-muted small text-truncate"
+                                style={{ maxWidth: '200px' }}
+                              >
+                                {product.description}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>{product.category}</td>
+                        <td className="font-monospace small">{product.sku}</td>
+                        <td>R$ {product.price.toFixed(2)}</td>
+                        <td>
+                          {product.stock === 0 ? (
+                            <span className="text-danger fw-semibold">{product.stock}</span>
+                          ) : (
+                            product.stock
+                          )}
+                        </td>
+                        <td>{product.sales}</td>
+                        <td>{getStatusBadge(product.status)}</td>
+                        <td>
+                          {/* Dropdown de ações */}
+                          <div className="dropdown">
+                            <button
+                              className="btn btn-sm btn-light dropdown-toggle"
+                              type="button"
+                              id={`actions-${product.id}`}
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <i className="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul
+                              className="dropdown-menu dropdown-menu-end"
+                              aria-labelledby={`actions-${product.id}`}
+                            >
+                              <li>
+                                <button
+                                  className="dropdown-item d-flex align-items-center"
+                                  onClick={() => setViewProduct(product)}
+                                >
+                                  <i className="bi bi-eye me-2"></i> Visualizar
+                                </button>
+                              </li>
+                              <li>
+                                <button
+                                  className="dropdown-item d-flex align-items-center"
+                                  onClick={() => setEditingProduct(product)}
+                                >
+                                  <i className="bi bi-pencil-fill me-2"></i> Editar
+                                </button>
+                              </li>
+                              <li>
+                                <button
+                                  className="dropdown-item d-flex align-items-center"
+                                  onClick={() => handleToggleStatus(product.id)}
+                                >
+                                  {product.status === 'active' ? (
+                                    <i className="bi bi-slash-circle me-2"></i>
+                                  ) : (
+                                    <i className="bi bi-check-circle me-2"></i>
+                                  )}
+                                  {product.status === 'active' ? 'Desativar' : 'Ativar'}
+                                </button>
+                              </li>
+                              <li><hr className="dropdown-divider" /></li>
+                              <li>
+                                <button
+                                  className="dropdown-item text-danger d-flex align-items-center"
+                                  onClick={() => handleDeleteProduct(product.id)}
+                                >
+                                  <i className="bi bi-trash me-2"></i> Excluir
+                                </button>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* Add Product Modal */}
+          {isAddModalOpen && (
+            <div
+              className="modal show fade"
+              style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+              tabIndex="-1"
+            >
+              <div className="modal-dialog modal-lg modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Adicionar Novo Produto</h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      onClick={() => setIsAddModalOpen(false)}
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <ProductForm
+                      onSave={(newProduct) => {
+                        setProducts([...products, newProduct])
+                        setIsAddModalOpen(false)
+                      }}
+                      onCancel={() => setIsAddModalOpen(false)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Edit Product Modal */}
+          {editingProduct && (
+            <div
+              className="modal show fade"
+              style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+              tabIndex="-1"
+            >
+              <div className="modal-dialog modal-lg modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Editar Produto</h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      onClick={() => setEditingProduct(null)}
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <ProductForm
+                      product={editingProduct}
+                      onSave={(updatedProduct) => {
+                        setProducts((prev) =>
+                          prev.map((p) =>
+                            p.id === updatedProduct.id ? updatedProduct : p
+                          )
+                        )
+                        setEditingProduct(null)
+                      }}
+                      onCancel={() => setEditingProduct(null)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* View Product Modal */}
+          {viewProduct && <ProductDetailsModal product={viewProduct} />}
         </div>
-      )}
-    </div>
       </div>
-      </>
+    </>
   )
 }

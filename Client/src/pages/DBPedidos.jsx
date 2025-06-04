@@ -10,7 +10,7 @@ export default function DBPedidos() {
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [dateFilter, setDateFilter] = useState('all')
 
-  const [orders] = useState([
+  const [orders, setOrders] = useState([
     {
       id: 'ORD-4832',
       customer: {
@@ -203,18 +203,24 @@ export default function DBPedidos() {
     },
   ])
 
-  const getOrderStats = () => {
-    return {
-      total: orders.length,
-      pending: orders.filter((o) => o.status === 'pending').length,
-      processing: orders.filter((o) => o.status === 'processing').length,
-      shipped: orders.filter((o) => o.status === 'shipped').length,
-      delivered: orders.filter((o) => o.status === 'delivered').length,
-      cancelled: orders.filter((o) => o.status === 'cancelled').length,
-    }
-  }
+  const getOrderStats = () => ({
+    total: orders.length,
+    pending: orders.filter((o) => o.status === 'pending').length,
+    processing: orders.filter((o) => o.status === 'processing').length,
+    shipped: orders.filter((o) => o.status === 'shipped').length,
+    delivered: orders.filter((o) => o.status === 'delivered').length,
+    cancelled: orders.filter((o) => o.status === 'cancelled').length,
+  })
 
   const stats = getOrderStats()
+
+  // Atualiza status no state 'orders' e, se estiver aberto, no 'selectedOrder'
+  const updateOrderStatus = (orderId, newStatus) => {
+    setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o)))
+    if (selectedOrder && selectedOrder.id === orderId) {
+      setSelectedOrder({ ...selectedOrder, status: newStatus })
+    }
+  }
 
   const getStatusBadge = (status) => {
     const config = {
@@ -233,6 +239,36 @@ export default function DBPedidos() {
     )
   }
 
+  // Verifica se a data do pedido cai no filtro selecionado
+  const matchDateFilter = (orderDateStr) => {
+    if (dateFilter === 'all') return true
+
+    const orderDate = new Date(orderDateStr + 'T00:00')
+    const now = new Date()
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const startOfWeek = new Date(startOfToday)
+    startOfWeek.setDate(startOfToday.getDate() - startOfToday.getDay())
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+    const currentQuarter = Math.floor(now.getMonth() / 3)
+    const startOfQuarter = new Date(now.getFullYear(), currentQuarter * 3, 1)
+
+    switch (dateFilter) {
+      case 'today':
+        return (
+          orderDate >= startOfToday &&
+          orderDate < new Date(startOfToday.getFullYear(), startOfToday.getMonth(), startOfToday.getDate() + 1)
+        )
+      case 'week':
+        return orderDate >= startOfWeek && orderDate < new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + 7)
+      case 'month':
+        return orderDate >= startOfMonth && orderDate < new Date(startOfMonth.getFullYear(), startOfMonth.getMonth() + 1, 1)
+      case 'quarter':
+        return orderDate >= startOfQuarter && orderDate < new Date(startOfQuarter.getFullYear(), startOfQuarter.getMonth() + 3, 1)
+      default:
+        return true
+    }
+  }
+
   const filteredOrders = orders.filter((order) => {
     const matchesSearch =
       order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -240,449 +276,478 @@ export default function DBPedidos() {
       order.customer.email.toLowerCase().includes(searchTerm.toLowerCase())
 
     const matchesStatus = selectedTab === 'all' || order.status === selectedTab
-    // Note: dateFilter not applied
-    return matchesSearch && matchesStatus
+    const matchesDate = matchDateFilter(order.date)
+
+    return matchesSearch && matchesStatus && matchesDate
   })
 
   const closeModal = () => setSelectedOrder(null)
 
   return (
     <>
-        <DBNavbar />
+      <DBNavbar />
       <div className="container-fluid">
-      {/* Header */}
+        <div className="p-4 mt-3">
+          {/* Header */}
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h2 className="fw-bold">Pedidos</h2>
+              <small className="text-muted">Gerencie todos os pedidos da sua loja</small>
+            </div>
+          </div>
 
-      <div className='ms-4 me-4 mt-5'>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <h2 className="fw-bold">Pedidos</h2>
-          <small className="text-muted">Gerencie todos os pedidos da sua loja</small>
-        </div>
-        <div>
-          <button className="btn btn-outline-secondary me-2">
-            <i className="bi bi-download me-1"></i> Exportar
-          </button>
-          <button className="btn btn-outline-secondary">
-            <i className="bi bi-funnel me-1"></i> Filtrar
-          </button>
-        </div>
-      </div>
+          {/* Stats Cards */}
+          <div className="row g-3 mb-4">
+            <div className="col-6 col-md-4 col-lg-2">
+              <div className="card border-start border-2 border-secondary">
+                <div className="card-body">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h6 className="card-title mb-0">Total</h6>
+                    <i className="bi bi-cart3 text-muted" style={{ fontSize: '1.25rem' }} />
+                  </div>
+                  <h3 className="fw-bold">{stats.total}</h3>
+                </div>
+              </div>
+            </div>
+            <div className="col-6 col-md-4 col-lg-2">
+              <div className="card border-start border-2 border-warning">
+                <div className="card-body">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h6 className="card-title mb-0">Pendentes</h6>
+                    <i className="bi bi-clock text-muted" style={{ fontSize: '1.25rem' }} />
+                  </div>
+                  <h3 className="fw-bold">{stats.pending}</h3>
+                </div>
+              </div>
+            </div>
+            <div className="col-6 col-md-4 col-lg-2">
+              <div className="card border-start border-2 border-info">
+                <div className="card-body">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h6 className="card-title mb-0">Processando</h6>
+                    <i className="bi bi-box-seam text-muted" style={{ fontSize: '1.25rem' }} />
+                  </div>
+                  <h3 className="fw-bold">{stats.processing}</h3>
+                </div>
+              </div>
+            </div>
+            <div className="col-6 col-md-4 col-lg-2">
+              <div className="card border-start border-2 border-primary">
+                <div className="card-body">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h6 className="card-title mb-0">Enviados</h6>
+                    <i className="bi bi-truck text-muted" style={{ fontSize: '1.25rem' }} />
+                  </div>
+                  <h3 className="fw-bold">{stats.shipped}</h3>
+                </div>
+              </div>
+            </div>
+            <div className="col-6 col-md-4 col-lg-2">
+              <div className="card border-start border-2 border-success">
+                <div className="card-body">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h6 className="card-title mb-0">Entregues</h6>
+                    <i className="bi bi-check2-circle text-muted" style={{ fontSize: '1.25rem' }} />
+                  </div>
+                  <h3 className="fw-bold">{stats.delivered}</h3>
+                </div>
+              </div>
+            </div>
+            <div className="col-6 col-md-4 col-lg-2">
+              <div className="card border-start border-2 border-danger">
+                <div className="card-body">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h6 className="card-title mb-0">Cancelados</h6>
+                    <i className="bi bi-x-circle text-muted" style={{ fontSize: '1.25rem' }} />
+                  </div>
+                  <h3 className="fw-bold">{stats.cancelled}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      {/* Stats Cards */}
-      <div className="row g-3 mb-4">
-        <div className="col-6 col-md-4 col-lg-2">
-          <div className="card border-start border-2 border-secondary">
-            <div className="card-body">
-              <h6 className="card-title">Total</h6>
-              <h3 className="fw-bold">{stats.total}</h3>
-            </div>
-          </div>
-        </div>
-        <div className="col-6 col-md-4 col-lg-2">
-          <div className="card border-start border-2 border-warning">
-            <div className="card-body">
-              <h6 className="card-title">Pendentes</h6>
-              <h3 className="fw-bold">{stats.pending}</h3>
-            </div>
-          </div>
-        </div>
-        <div className="col-6 col-md-4 col-lg-2">
-          <div className="card border-start border-2 border-info">
-            <div className="card-body">
-              <h6 className="card-title">Processando</h6>
-              <h3 className="fw-bold">{stats.processing}</h3>
-            </div>
-          </div>
-        </div>
-        <div className="col-6 col-md-4 col-lg-2">
-          <div className="card border-start border-2 border-primary">
-            <div className="card-body">
-              <h6 className="card-title">Enviados</h6>
-              <h3 className="fw-bold">{stats.shipped}</h3>
-            </div>
-          </div>
-        </div>
-        <div className="col-6 col-md-4 col-lg-2">
-          <div className="card border-start border-2 border-success">
-            <div className="card-body">
-              <h6 className="card-title">Entregues</h6>
-              <h3 className="fw-bold">{stats.delivered}</h3>
-            </div>
-          </div>
-        </div>
-        <div className="col-6 col-md-4 col-lg-2">
-          <div className="card border-start border-2 border-danger">
-            <div className="card-body">
-              <h6 className="card-title">Cancelados</h6>
-              <h3 className="fw-bold">{stats.cancelled}</h3>
-            </div>
-          </div>
-        </div>
-      </div>
+          {/* Tabs */}
+          <ul className="nav nav-tabs mb-3">
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedTab === 'all' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('all')}
+              >
+                Todos ({stats.total})
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedTab === 'pending' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('pending')}
+              >
+                Pendentes ({stats.pending})
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedTab === 'processing' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('processing')}
+              >
+                Processando ({stats.processing})
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedTab === 'shipped' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('shipped')}
+              >
+                Enviados ({stats.shipped})
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedTab === 'delivered' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('delivered')}
+              >
+                Entregues ({stats.delivered})
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedTab === 'cancelled' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('cancelled')}
+              >
+                Cancelados ({stats.cancelled})
+              </button>
+            </li>
+          </ul>
 
-      {/* Tabs */}
-      <ul className="nav nav-tabs mb-3">
-        <li className="nav-item">
-          <button
-            className={`nav-link ${selectedTab === 'all' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('all')}
-            >
-            Todos ({stats.total})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className={`nav-link ${selectedTab === 'pending' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('pending')}
-            >
-            Pendentes ({stats.pending})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className={`nav-link ${selectedTab === 'processing' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('processing')}
-            >
-            Processando ({stats.processing})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className={`nav-link ${selectedTab === 'shipped' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('shipped')}
-            >
-            Enviados ({stats.shipped})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className={`nav-link ${selectedTab === 'delivered' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('delivered')}
-            >
-            Entregues ({stats.delivered})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className={`nav-link ${selectedTab === 'cancelled' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('cancelled')}
-            >
-            Cancelados ({stats.cancelled})
-          </button>
-        </li>
-      </ul>
-
-      {/* Filters: Search + Status + Date */}
-      <div className="row g-3 mb-4">
-        <div className="col-md-5">
-          <div className="input-group">
-            <span className="input-group-text bg-white">
-              <i className="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar pedidos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              />
+          {/* Filters: Search + Status + Date */}
+          <div className="row g-3 mb-4">
+            <div className="col-md-5">
+              <div className="input-group">
+                <span className="input-group-text bg-white">
+                  <i className="bi bi-search"></i>
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Buscar pedidos..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="col-md-3">
+              <select
+                className="form-select"
+                value={selectedTab}
+                onChange={(e) => setSelectedTab(e.target.value)}
+              >
+                <option value="all">Todos os status</option>
+                <option value="pending">Pendente</option>
+                <option value="processing">Processando</option>
+                <option value="shipped">Enviado</option>
+                <option value="delivered">Entregue</option>
+                <option value="cancelled">Cancelado</option>
+              </select>
+            </div>
+            <div className="col-md-4">
+              <select
+                className="form-select"
+                value={dateFilter}
+                onChange={(e) => setDateFilter(e.target.value)}
+              >
+                <option value="all">Todos os períodos</option>
+                <option value="today">Hoje</option>
+                <option value="week">Esta semana</option>
+                <option value="month">Este mês</option>
+                <option value="quarter">Este trimestre</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div className="col-md-3">
-          <select
-            className="form-select"
-            value={selectedTab}
-            onChange={(e) => setSelectedTab(e.target.value)}
-            >
-            <option value="all">Todos os status</option>
-            <option value="pending">Pendente</option>
-            <option value="processing">Processando</option>
-            <option value="shipped">Enviado</option>
-            <option value="delivered">Entregue</option>
-            <option value="cancelled">Cancelado</option>
-          </select>
-        </div>
-        <div className="col-md-4">
-          <select
-            className="form-select"
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-            >
-            <option value="all">Todos os períodos</option>
-            <option value="today">Hoje</option>
-            <option value="week">Esta semana</option>
-            <option value="month">Este mês</option>
-            <option value="quarter">Este trimestre</option>
-          </select>
-        </div>
-      </div>
 
-      {/* Orders Table */}
-      <div className="card">
-        <div className="card-header bg-white d-flex justify-content-between align-items-center">
-          <div>
-            <h5 className="mb-0">Lista de Pedidos</h5>
-            <small className="text-muted">{filteredOrders.length} pedido(s) encontrado(s)</small>
-          </div>
-        </div>
-        <div className="card-body p-0">
-          <div className="table-responsive">
-            <table className="table table-hover mb-0">
-              <thead className="table-white">
-                <tr>
-                  <th>Pedido</th>
-                  <th>Cliente</th>
-                  <th>Data</th>
-                  <th>Status</th>
-                  <th>Itens</th>
-                  <th>Total</th>
-                  <th>Pagamento</th>
-                  <th className="text-end">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredOrders.map((order) => (
-                    <tr key={order.id}>
-                    <td>
-                      <div className="fw-medium">{order.id}</div>
-                      {order.trackingCode && (
-                          <div className="text-muted small font-monospace">{order.trackingCode}</div>
-                        )}
-                    </td>
-                    <td>
-                      <div>
-                        <div className="fw-medium">{order.customer.name}</div>
-                        <div className="text-muted small">{order.customer.email}</div>
-                      </div>
-                    </td>
-                    <td>
-                      <div>{new Date(order.date).toLocaleDateString('pt-BR')}</div>
-                      {order.estimatedDelivery && (
+          {/* Orders Table */}
+          <div className="card">
+            <div className="card-header bg-white d-flex justify-content-between align-items-center">
+              <div>
+                <h5 className="mb-0">Lista de Pedidos</h5>
+                <small className="text-muted">{filteredOrders.length} pedido(s) encontrado(s)</small>
+              </div>
+            </div>
+            <div className="card-body p-0">
+              <div className="table-responsive">
+                <table className="table table-hover mb-0">
+                  <thead className="table-white">
+                    <tr>
+                      <th>Pedido</th>
+                      <th>Cliente</th>
+                      <th>Data</th>
+                      <th>Status</th>
+                      <th>Itens</th>
+                      <th>Total</th>
+                      <th>Pagamento</th>
+                      <th className="text-end">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredOrders.map((order) => (
+                      <tr key={order.id}>
+                        <td>
+                          <div className="fw-medium">{order.id}</div>
+                          {order.trackingCode && (
+                            <div className="text-muted small font-monospace">{order.trackingCode}</div>
+                          )}
+                        </td>
+                        <td>
+                          <div>
+                            <div className="fw-medium">{order.customer.name}</div>
+                            <div className="text-muted small">{order.customer.email}</div>
+                          </div>
+                        </td>
+                        <td>
+                          <div>{new Date(order.date).toLocaleDateString('pt-BR')}</div>
+                          {order.estimatedDelivery && (
+                            <div className="text-muted small">
+                              Entrega: {new Date(order.estimatedDelivery).toLocaleDateString('pt-BR')}
+                            </div>
+                          )}
+                        </td>
+                        <td>{getStatusBadge(order.status)}</td>
+                        <td>
+                          <div className="small">
+                            {order.items.length} item{order.items.length > 1 ? 's' : ''}
+                          </div>
                           <div className="text-muted small">
-                          Entrega: {new Date(order.estimatedDelivery).toLocaleDateString('pt-BR')}
-                        </div>
-                      )}
-                    </td>
-                    <td>{getStatusBadge(order.status)}</td>
-                    <td>
-                      <div className="small">
-                        {order.items.length} item{order.items.length > 1 ? 's' : ''}
-                      </div>
-                      <div className="text-muted small">
-                        {order.items.reduce((acc, i) => acc + i.quantity, 0)} unidade
-                        {order.items.reduce((acc, i) => acc + i.quantity, 0) > 1 ? 's' : ''}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="fw-medium">R$ {order.total.toFixed(2)}</div>
-                    </td>
-                    <td>
-                      <div className="small">{order.paymentMethod}</div>
-                    </td>
-                    <td className="text-end">
-                      <button
-                        className="btn btn-sm btn-light"
-                        onClick={() => setSelectedOrder(order)}
-                        >
-                        <i className="bi bi-three-dots-vertical"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      {/* Order Details Modal */}
-      {selectedOrder && (
-          <div
-          className="modal show fade"
-          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
-          tabIndex="-1"
-          >
-          <div className="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title d-flex align-items-center">
-                  <i className="bi bi-cart-fill me-2"></i> Detalhes do Pedido {selectedOrder.id}
-                </h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={closeModal}
-                  ></button>
-              </div>
-              <div className="modal-body">
-                {/* Status & Actions */}
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <div className="d-flex align-items-center gap-3">
-                    {getStatusBadge(selectedOrder.status)}
-                    {selectedOrder.trackingCode && (
-                        <div className="text-muted small">
-                        Rastreamento: <span className="font-monospace">{selectedOrder.trackingCode}</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="d-flex gap-2">
-                    <button className="btn btn-outline-secondary btn-sm">
-                      <i className="bi bi-printer me-1"></i> Imprimir
-                    </button>
-                    <div className="dropdown">
-                      <button
-                        className="btn btn-outline-secondary btn-sm dropdown-toggle"
-                        type="button"
-                        id="statusDropdown"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        >
-                        Alterar Status
-                      </button>
-                      <ul className="dropdown-menu" aria-labelledby="statusDropdown">
-                        <li>
-                          <button className="dropdown-item">Pendente</button>
-                        </li>
-                        <li>
-                          <button className="dropdown-item">Processando</button>
-                        </li>
-                        <li>
-                          <button className="dropdown-item">Enviado</button>
-                        </li>
-                        <li>
-                          <button className="dropdown-item">Entregue</button>
-                        </li>
-                        <li>
-                          <hr className="dropdown-divider" />
-                        </li>
-                        <li>
-                          <button className="dropdown-item text-danger">Cancelar</button>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row g-4 mb-4">
-                  {/* Customer Info */}
-                  <div className="col-md-6">
-                    <div className="card">
-                      <div className="card-header bg-white">
-                        <h6 className="mb-0">Informações do Cliente</h6>
-                      </div>
-                      <div className="card-body">
-                        <p className="mb-1">
-                          <strong>Nome:</strong> {selectedOrder.customer.name}
-                        </p>
-                        <p className="mb-1">
-                          <strong>Email:</strong> {selectedOrder.customer.email}
-                        </p>
-                        <p className="mb-1">
-                          <strong>Telefone:</strong> {selectedOrder.customer.phone}
-                        </p>
-                        <p className="mb-0">
-                          <strong>Endereço:</strong> {selectedOrder.customer.address}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Order Info */}
-                  <div className="col-md-6">
-                    <div className="card">
-                      <div className="card-header bg-white">
-                        <h6 className="mb-0">Informações do Pedido</h6>
-                      </div>
-                      <div className="card-body">
-                        <p className="mb-1">
-                          <strong>Método de Pagamento:</strong> {selectedOrder.paymentMethod}
-                        </p>
-                        <p className="mb-1">
-                          <strong>Data do Pedido:</strong>{' '}
-                          {new Date(selectedOrder.date).toLocaleDateString('pt-BR')}
-                        </p>
-                        {selectedOrder.estimatedDelivery && (
-                            <p className="mb-1">
-                            <strong>Previsão de Entrega:</strong>{' '}
-                            {new Date(selectedOrder.estimatedDelivery).toLocaleDateString('pt-BR')}
-                          </p>
-                        )}
-                        {selectedOrder.notes && (
-                            <p className="mb-0">
-                            <strong>Observações:</strong> {selectedOrder.notes}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Order Items */}
-                <div className="card mb-4">
-                  <div className="card-header bg-white">
-                    <h6 className="mb-0">Itens do Pedido</h6>
-                  </div>
-                  <div className="card-body">
-                    {selectedOrder.items.map((item) => (
-                        <div
-                        key={item.id}
-                        className="d-flex align-items-center gap-3 p-3 border rounded mb-3"
-                        >
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="rounded"
-                          style={{ width: '60px', height: '60px', objectFit: 'cover' }}
-                          />
-                        <div className="flex-grow-1">
-                          <h6 className="mb-1">{item.name}</h6>
-                          <small className="text-muted">SKU: {item.sku}</small>
-                          <p className="mb-0">Quantidade: {item.quantity}</p>
-                        </div>
-                        <div className="text-end">
-                          <p className="fw-medium mb-1">
-                            R$ {(item.price * item.quantity).toFixed(2)}
-                          </p>
-                          <small className="text-muted">R$ {item.price.toFixed(2)} cada</small>
-                        </div>
-                      </div>
+                            {order.items.reduce((acc, i) => acc + i.quantity, 0)} unidade
+                            {order.items.reduce((acc, i) => acc + i.quantity, 0) > 1 ? 's' : ''}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="fw-medium">R$ {order.total.toFixed(2)}</div>
+                        </td>
+                        <td>
+                          <div className="small">{order.paymentMethod}</div>
+                        </td>
+                        <td className="text-end">
+                          <button
+                            className="btn btn-sm btn-light"
+                            onClick={() => setSelectedOrder(order)}
+                          >
+                            <i className="bi bi-three-dots-vertical"></i>
+                          </button>
+                        </td>
+                      </tr>
                     ))}
-
-                    <hr />
-
-                    <div className="d-flex justify-content-between mb-1">
-                      <span>Subtotal:</span>
-                      <span>R$ {selectedOrder.subtotal.toFixed(2)}</span>
-                    </div>
-                    <div className="d-flex justify-content-between mb-1">
-                      <span>Frete:</span>
-                      <span>R$ {selectedOrder.shipping.toFixed(2)}</span>
-                    </div>
-                    {selectedOrder.tax > 0 && (
-                        <div className="d-flex justify-content-between mb-1">
-                        <span>Impostos:</span>
-                        <span>R$ {selectedOrder.tax.toFixed(2)}</span>
-                      </div>
-                    )}
-                    <hr />
-                    <div className="d-flex justify-content-between fw-bold fs-5">
-                      <span>Total:</span>
-                      <span>R$ {selectedOrder.total.toFixed(2)}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={closeModal}>
-                  Fechar
-                </button>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
+
+          {/* Order Details Modal */}
+          {selectedOrder && (
+            <div
+              className="modal show fade"
+              style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+              tabIndex="-1"
+            >
+              <div className="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title d-flex align-items-center">
+                      <i className="bi bi-cart-fill me-2"></i> Detalhes do Pedido {selectedOrder.id}
+                    </h5>
+                    <button type="button" className="btn-close" onClick={closeModal}></button>
+                  </div>
+                  <div className="modal-body">
+                    {/* Status & Actions */}
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                      <div className="d-flex align-items-center gap-3">
+                        {getStatusBadge(selectedOrder.status)}
+                        {selectedOrder.trackingCode && (
+                          <div className="text-muted small">
+                            Rastreamento:{' '}
+                            <span className="font-monospace">{selectedOrder.trackingCode}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="d-flex">
+                        <div className="dropdown">
+                          <button
+                            className="btn btn-outline-secondary btn-sm dropdown-toggle"
+                            type="button"
+                            id="statusDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            Alterar Status
+                          </button>
+                          <ul className="dropdown-menu" aria-labelledby="statusDropdown">
+                            <li>
+                              <button
+                                className="dropdown-item"
+                                onClick={() => updateOrderStatus(selectedOrder.id, 'pending')}
+                              >
+                                Pendente
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                className="dropdown-item"
+                                onClick={() => updateOrderStatus(selectedOrder.id, 'processing')}
+                              >
+                                Processando
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                className="dropdown-item"
+                                onClick={() => updateOrderStatus(selectedOrder.id, 'shipped')}
+                              >
+                                Enviado
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                className="dropdown-item"
+                                onClick={() => updateOrderStatus(selectedOrder.id, 'delivered')}
+                              >
+                                Entregue
+                              </button>
+                            </li>
+                            <li>
+                              <hr className="dropdown-divider" />
+                            </li>
+                            <li>
+                              <button
+                                className="dropdown-item text-danger"
+                                onClick={() => updateOrderStatus(selectedOrder.id, 'cancelled')}
+                              >
+                                Cancelar
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row g-4 mb-4">
+                      {/* Customer Info */}
+                      <div className="col-md-6">
+                        <div className="card">
+                          <div className="card-header bg-white">
+                            <h6 className="mb-0">Informações do Cliente</h6>
+                          </div>
+                          <div className="card-body">
+                            <p className="mb-1">
+                              <strong>Nome:</strong> {selectedOrder.customer.name}
+                            </p>
+                            <p className="mb-1">
+                              <strong>Email:</strong> {selectedOrder.customer.email}
+                            </p>
+                            <p className="mb-1">
+                              <strong>Telefone:</strong> {selectedOrder.customer.phone}
+                            </p>
+                            <p className="mb-0">
+                              <strong>Endereço:</strong> {selectedOrder.customer.address}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Order Info */}
+                      <div className="col-md-6">
+                        <div className="card">
+                          <div className="card-header bg-white">
+                            <h6 className="mb-0">Informações do Pedido</h6>
+                          </div>
+                          <div className="card-body">
+                            <p className="mb-1">
+                              <strong>Método de Pagamento:</strong> {selectedOrder.paymentMethod}
+                            </p>
+                            <p className="mb-1">
+                              <strong>Data do Pedido:</strong>{' '}
+                              {new Date(selectedOrder.date).toLocaleDateString('pt-BR')}
+                            </p>
+                            {selectedOrder.estimatedDelivery && (
+                              <p className="mb-1">
+                                <strong>Previsão de Entrega:</strong>{' '}
+                                {new Date(selectedOrder.estimatedDelivery).toLocaleDateString('pt-BR')}
+                              </p>
+                            )}
+                            {selectedOrder.notes && (
+                              <p className="mb-0">
+                                <strong>Observações:</strong> {selectedOrder.notes}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Order Items */}
+                    <div className="card mb-4">
+                      <div className="card-header bg-white">
+                        <h6 className="mb-0">Itens do Pedido</h6>
+                      </div>
+                      <div className="card-body">
+                        {selectedOrder.items.map((item) => (
+                          <div
+                            key={item.id}
+                            className="d-flex align-items-center gap-3 p-3 border rounded mb-3"
+                          >
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="rounded"
+                              style={{ width: '60px', height: '60px', objectFit: 'cover' }}
+                            />
+                            <div className="flex-grow-1">
+                              <h6 className="mb-1">{item.name}</h6>
+                              <small className="text-muted">SKU: {item.sku}</small>
+                              <p className="mb-0">Quantidade: {item.quantity}</p>
+                            </div>
+                            <div className="text-end">
+                              <p className="fw-medium mb-1">
+                                R$ {(item.price * item.quantity).toFixed(2)}
+                              </p>
+                              <small className="text-muted">R$ {item.price.toFixed(2)} cada</small>
+                            </div>
+                          </div>
+                        ))}
+
+                        <hr />
+
+                        <div className="d-flex justify-content-between mb-1">
+                          <span>Subtotal:</span>
+                          <span>R$ {selectedOrder.subtotal.toFixed(2)}</span>
+                        </div>
+                        <div className="d-flex justify-content-between mb-1">
+                          <span>Frete:</span>
+                          <span>R$ {selectedOrder.shipping.toFixed(2)}</span>
+                        </div>
+                        {selectedOrder.tax > 0 && (
+                          <div className="d-flex justify-content-between mb-1">
+                            <span>Impostos:</span>
+                            <span>R$ {selectedOrder.tax.toFixed(2)}</span>
+                          </div>
+                        )}
+                        <hr />
+                        <div className="d-flex justify-content-between fw-bold fs-5">
+                          <span>Total:</span>
+                          <span>R$ {selectedOrder.total.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button className="btn btn-secondary" onClick={closeModal}>
+                      Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
-    </div>
       </div>
-      </>
+    </>
   )
 }
