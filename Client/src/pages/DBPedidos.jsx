@@ -1,4 +1,3 @@
-// DBPedidos.jsx
 import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -20,22 +19,8 @@ export default function DBPedidos() {
         address: 'Rua das Flores, 123 - São Paulo, SP - 01234-567',
       },
       items: [
-        {
-          id: '1',
-          name: 'Camiseta Star Wars - Darth Vader',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 2,
-          price: 89.9,
-          sku: 'SW-DV-001',
-        },
-        {
-          id: '2',
-          name: 'Caneca Marvel - Homem de Ferro',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 1,
-          price: 49.9,
-          sku: 'MG-IF-001',
-        },
+        { id: '1', name: 'Camiseta Star Wars - Darth Vader', image: '/placeholder.svg?height=60&width=60', quantity: 2, price: 89.9, sku: 'SW-DV-001' },
+        { id: '2', name: 'Caneca Marvel - Homem de Ferro', image: '/placeholder.svg?height=60&width=60', quantity: 1, price: 49.9, sku: 'MG-IF-001' },
       ],
       status: 'delivered',
       subtotal: 229.7,
@@ -57,22 +42,8 @@ export default function DBPedidos() {
         address: 'Av. Paulista, 456 - São Paulo, SP - 01310-100',
       },
       items: [
-        {
-          id: '3',
-          name: 'Action Figure Homem-Aranha',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 1,
-          price: 199.9,
-          sku: 'AF-SM-001',
-        },
-        {
-          id: '4',
-          name: 'Quadro Decorativo Batman',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 2,
-          price: 79.9,
-          sku: 'QD-BT-001',
-        },
+        { id: '3', name: 'Action Figure Homem-Aranha', image: '/placeholder.svg?height=60&width=60', quantity: 1, price: 199.9, sku: 'AF-SM-001' },
+        { id: '4', name: 'Quadro Decorativo Batman', image: '/placeholder.svg?height=60&width=60', quantity: 2, price: 79.9, sku: 'QD-BT-001' },
       ],
       status: 'shipped',
       subtotal: 359.7,
@@ -92,16 +63,7 @@ export default function DBPedidos() {
         phone: '(11) 77777-7777',
         address: 'Rua Augusta, 789 - São Paulo, SP - 01305-000',
       },
-      items: [
-        {
-          id: '5',
-          name: 'Jogo Dungeons & Dragons Starter Set',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 1,
-          price: 299.9,
-          sku: 'JG-DD-001',
-        },
-      ],
+      items: [{ id: '5', name: 'Jogo Dungeons & Dragons Starter Set', image: '/placeholder.svg?height=60&width=60', quantity: 1, price: 299.9, sku: 'JG-DD-001' }],
       status: 'processing',
       subtotal: 299.9,
       shipping: 25.0,
@@ -120,22 +82,8 @@ export default function DBPedidos() {
         address: 'Rua Oscar Freire, 321 - São Paulo, SP - 01426-001',
       },
       items: [
-        {
-          id: '6',
-          name: 'Funko Pop Stranger Things - Eleven',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 1,
-          price: 149.9,
-          sku: 'FP-ST-011',
-        },
-        {
-          id: '7',
-          name: 'Chaveiro Groot Guardians',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 3,
-          price: 29.9,
-          sku: 'CH-GR-001',
-        },
+        { id: '6', name: 'Funko Pop Stranger Things - Eleven', image: '/placeholder.svg?height=60&width=60', quantity: 1, price: 149.9, sku: 'FP-ST-011' },
+        { id: '7', name: 'Chaveiro Groot Guardians', image: '/placeholder.svg?height=60&width=60', quantity: 3, price: 29.9, sku: 'CH-GR-001' },
       ],
       status: 'delivered',
       subtotal: 239.6,
@@ -155,16 +103,7 @@ export default function DBPedidos() {
         phone: '(11) 55555-5555',
         address: 'Rua da Consolação, 654 - São Paulo, SP - 01302-000',
       },
-      items: [
-        {
-          id: '8',
-          name: 'Caneca Rick and Morty',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 2,
-          price: 49.9,
-          sku: 'MG-RM-001',
-        },
-      ],
+      items: [{ id: '8', name: 'Caneca Rick and Morty', image: '/placeholder.svg?height=60&width=60', quantity: 2, price: 49.9, sku: 'MG-RM-001' }],
       status: 'cancelled',
       subtotal: 99.8,
       shipping: 10.0,
@@ -182,16 +121,7 @@ export default function DBPedidos() {
         phone: '(11) 44444-4444',
         address: 'Av. Faria Lima, 987 - São Paulo, SP - 04538-132',
       },
-      items: [
-        {
-          id: '9',
-          name: 'Camiseta The Office - Dunder Mifflin',
-          image: '/placeholder.svg?height=60&width=60',
-          quantity: 1,
-          price: 79.9,
-          sku: 'SW-TO-001',
-        },
-      ],
+      items: [{ id: '9', name: 'Camiseta The Office - Dunder Mifflin', image: '/placeholder.svg?height=60&width=60', quantity: 1, price: 79.9, sku: 'SW-TO-001' }],
       status: 'pending',
       subtotal: 79.9,
       shipping: 15.0,
@@ -214,12 +144,9 @@ export default function DBPedidos() {
 
   const stats = getOrderStats()
 
-  // Atualiza status no state 'orders' e, se estiver aberto, no 'selectedOrder'
   const updateOrderStatus = (orderId, newStatus) => {
     setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o)))
-    if (selectedOrder && selectedOrder.id === orderId) {
-      setSelectedOrder({ ...selectedOrder, status: newStatus })
-    }
+    if (selectedOrder?.id === orderId) setSelectedOrder({ ...selectedOrder, status: newStatus })
   }
 
   const getStatusBadge = (status) => {
@@ -230,7 +157,6 @@ export default function DBPedidos() {
       delivered: { label: 'Entregue', className: 'bg-success text-white', icon: 'bi-check-circle' },
       cancelled: { label: 'Cancelado', className: 'bg-danger text-white', icon: 'bi-x-circle' },
     }[status]
-
     return (
       <span className={`badge ${config.className} d-inline-flex align-items-center`}>
         <i className={`bi ${config.icon} me-1`}></i>
@@ -239,10 +165,8 @@ export default function DBPedidos() {
     )
   }
 
-  // Verifica se a data do pedido cai no filtro selecionado
   const matchDateFilter = (orderDateStr) => {
     if (dateFilter === 'all') return true
-
     const orderDate = new Date(orderDateStr + 'T00:00')
     const now = new Date()
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -252,21 +176,20 @@ export default function DBPedidos() {
     const currentQuarter = Math.floor(now.getMonth() / 3)
     const startOfQuarter = new Date(now.getFullYear(), currentQuarter * 3, 1)
 
-    switch (dateFilter) {
-      case 'today':
-        return (
-          orderDate >= startOfToday &&
-          orderDate < new Date(startOfToday.getFullYear(), startOfToday.getMonth(), startOfToday.getDate() + 1)
-        )
-      case 'week':
-        return orderDate >= startOfWeek && orderDate < new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + 7)
-      case 'month':
-        return orderDate >= startOfMonth && orderDate < new Date(startOfMonth.getFullYear(), startOfMonth.getMonth() + 1, 1)
-      case 'quarter':
-        return orderDate >= startOfQuarter && orderDate < new Date(startOfQuarter.getFullYear(), startOfQuarter.getMonth() + 3, 1)
-      default:
-        return true
-    }
+    return (
+      (dateFilter === 'today' &&
+        orderDate >= startOfToday &&
+        orderDate < new Date(startOfToday.getFullYear(), startOfToday.getMonth(), startOfToday.getDate() + 1)) ||
+      (dateFilter === 'week' &&
+        orderDate >= startOfWeek &&
+        orderDate < new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + 7)) ||
+      (dateFilter === 'month' &&
+        orderDate >= startOfMonth &&
+        orderDate < new Date(startOfMonth.getFullYear(), startOfMonth.getMonth() + 1, 1)) ||
+      (dateFilter === 'quarter' &&
+        orderDate >= startOfQuarter &&
+        orderDate < new Date(startOfQuarter.getFullYear(), startOfQuarter.getMonth() + 3, 1))
+    )
   }
 
   const filteredOrders = orders.filter((order) => {
@@ -274,10 +197,8 @@ export default function DBPedidos() {
       order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.customer.email.toLowerCase().includes(searchTerm.toLowerCase())
-
     const matchesStatus = selectedTab === 'all' || order.status === selectedTab
     const matchesDate = matchDateFilter(order.date)
-
     return matchesSearch && matchesStatus && matchesDate
   })
 
@@ -288,7 +209,6 @@ export default function DBPedidos() {
       <DBNavbar />
       <div className="container-fluid">
         <div className="p-4 mt-3">
-          {/* Header */}
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div>
               <h2 className="fw-bold">Pedidos</h2>
@@ -296,7 +216,6 @@ export default function DBPedidos() {
             </div>
           </div>
 
-          {/* Stats Cards */}
           <div className="row g-3 mb-4">
             <div className="col-6 col-md-4 col-lg-2">
               <div className="card border-start border-2 border-secondary">
@@ -366,65 +285,25 @@ export default function DBPedidos() {
             </div>
           </div>
 
-          {/* Tabs */}
           <ul className="nav nav-tabs mb-3">
-            <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'all' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('all')}
-              >
-                Todos ({stats.total})
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'pending' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('pending')}
-              >
-                Pendentes ({stats.pending})
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'processing' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('processing')}
-              >
-                Processando ({stats.processing})
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'shipped' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('shipped')}
-              >
-                Enviados ({stats.shipped})
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'delivered' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('delivered')}
-              >
-                Entregues ({stats.delivered})
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'cancelled' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('cancelled')}
-              >
-                Cancelados ({stats.cancelled})
-              </button>
-            </li>
+            {['all', 'pending', 'processing', 'shipped', 'delivered', 'cancelled'].map((status) => (
+              <li className="nav-item" key={status}>
+                <button
+                  className={`nav-link ${selectedTab === status ? 'active' : ''}`}
+                  onClick={() => setSelectedTab(status)}
+                >
+                  {status === 'all'
+                    ? `Todos (${stats.total})`
+                    : `${status.charAt(0).toUpperCase() + status.slice(1)} (${stats[status]})`}
+                </button>
+              </li>
+            ))}
           </ul>
 
-          {/* Filters: Search + Status + Date */}
           <div className="row g-3 mb-4">
             <div className="col-md-5">
               <div className="input-group">
-                <span className="input-group-text bg-white">
-                  <i className="bi bi-search"></i>
-                </span>
+                <span className="input-group-text bg-white"><i className="bi bi-search"></i></span>
                 <input
                   type="text"
                   className="form-control"
@@ -463,7 +342,6 @@ export default function DBPedidos() {
             </div>
           </div>
 
-          {/* Orders Table */}
           <div className="card">
             <div className="card-header bg-white d-flex justify-content-between align-items-center">
               <div>
@@ -487,67 +365,59 @@ export default function DBPedidos() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredOrders.map((order) => (
-                      <tr key={order.id}>
-                        <td>
-                          <div className="fw-medium">{order.id}</div>
-                          {order.trackingCode && (
-                            <div className="text-muted small font-monospace">{order.trackingCode}</div>
-                          )}
-                        </td>
-                        <td>
-                          <div>
-                            <div className="fw-medium">{order.customer.name}</div>
-                            <div className="text-muted small">{order.customer.email}</div>
-                          </div>
-                        </td>
-                        <td>
-                          <div>{new Date(order.date).toLocaleDateString('pt-BR')}</div>
-                          {order.estimatedDelivery && (
-                            <div className="text-muted small">
-                              Entrega: {new Date(order.estimatedDelivery).toLocaleDateString('pt-BR')}
+                    {filteredOrders.map((order) => {
+                      const totalQty = order.items.reduce((acc, i) => acc + i.quantity, 0)
+                      return (
+                        <tr key={order.id}>
+                          <td>
+                            <div className="fw-medium">{order.id}</div>
+                            {order.trackingCode && (
+                              <div className="text-muted small font-monospace">{order.trackingCode}</div>
+                            )}
+                          </td>
+                          <td>
+                            <div>
+                              <div className="fw-medium">{order.customer.name}</div>
+                              <div className="text-muted small">{order.customer.email}</div>
                             </div>
-                          )}
-                        </td>
-                        <td>{getStatusBadge(order.status)}</td>
-                        <td>
-                          <div className="small">
-                            {order.items.length} item{order.items.length > 1 ? 's' : ''}
-                          </div>
-                          <div className="text-muted small">
-                            {order.items.reduce((acc, i) => acc + i.quantity, 0)} unidade
-                            {order.items.reduce((acc, i) => acc + i.quantity, 0) > 1 ? 's' : ''}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="fw-medium">R$ {order.total.toFixed(2)}</div>
-                        </td>
-                        <td>
-                          <div className="small">{order.paymentMethod}</div>
-                        </td>
-                        <td className="text-end">
-                          <button
-                            className="btn btn-sm btn-light"
-                            onClick={() => setSelectedOrder(order)}
-                          >
-                            <i className="bi bi-three-dots-vertical"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td>
+                            <div>{new Date(order.date).toLocaleDateString('pt-BR')}</div>
+                            {order.estimatedDelivery && (
+                              <div className="text-muted small">
+                                Entrega: {new Date(order.estimatedDelivery).toLocaleDateString('pt-BR')}
+                              </div>
+                            )}
+                          </td>
+                          <td>{getStatusBadge(order.status)}</td>
+                          <td>
+                            <div className="small">{order.items.length} item{order.items.length > 1 ? 's' : ''}</div>
+                            <div className="text-muted small">
+                              {totalQty} unidade{totalQty > 1 ? 's' : ''}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="fw-medium">R$ {order.total.toFixed(2)}</div>
+                          </td>
+                          <td>
+                            <div className="small">{order.paymentMethod}</div>
+                          </td>
+                          <td className="text-end">
+                            <button className="btn btn-sm btn-light" onClick={() => setSelectedOrder(order)}>
+                              <i className="bi bi-three-dots-vertical"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
 
-          {/* Order Details Modal */}
           {selectedOrder && (
-            <div
-              className="modal show fade"
-              style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
-              tabIndex="-1"
-            >
+            <div className="modal show fade" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
               <div className="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                 <div className="modal-content">
                   <div className="modal-header">
@@ -557,7 +427,6 @@ export default function DBPedidos() {
                     <button type="button" className="btn-close" onClick={closeModal}></button>
                   </div>
                   <div className="modal-body">
-                    {/* Status & Actions */}
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <div className="d-flex align-items-center gap-3">
                         {getStatusBadge(selectedOrder.status)}
@@ -580,167 +449,78 @@ export default function DBPedidos() {
                             Alterar Status
                           </button>
                           <ul className="dropdown-menu" aria-labelledby="statusDropdown">
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => updateOrderStatus(selectedOrder.id, 'pending')}
-                              >
-                                Pendente
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => updateOrderStatus(selectedOrder.id, 'processing')}
-                              >
-                                Processando
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => updateOrderStatus(selectedOrder.id, 'shipped')}
-                              >
-                                Enviado
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => updateOrderStatus(selectedOrder.id, 'delivered')}
-                              >
-                                Entregue
-                              </button>
-                            </li>
-                            <li>
-                              <hr className="dropdown-divider" />
-                            </li>
-                            <li>
-                              <button
-                                className="dropdown-item text-danger"
-                                onClick={() => updateOrderStatus(selectedOrder.id, 'cancelled')}
-                              >
-                                Cancelar
-                              </button>
-                            </li>
+                            <li><button className="dropdown-item" onClick={() => updateOrderStatus(selectedOrder.id, 'pending')}>Pendente</button></li>
+                            <li><button className="dropdown-item" onClick={() => updateOrderStatus(selectedOrder.id, 'processing')}>Processando</button></li>
+                            <li><button className="dropdown-item" onClick={() => updateOrderStatus(selectedOrder.id, 'shipped')}>Enviado</button></li>
+                            <li><button className="dropdown-item" onClick={() => updateOrderStatus(selectedOrder.id, 'delivered')}>Entregue</button></li>
+                            <li><hr className="dropdown-divider" /></li>
+                            <li><button className="dropdown-item text-danger" onClick={() => updateOrderStatus(selectedOrder.id, 'cancelled')}>Cancelar</button></li>
                           </ul>
                         </div>
                       </div>
                     </div>
 
                     <div className="row g-4 mb-4">
-                      {/* Customer Info */}
                       <div className="col-md-6">
                         <div className="card">
                           <div className="card-header bg-white">
                             <h6 className="mb-0">Informações do Cliente</h6>
                           </div>
                           <div className="card-body">
-                            <p className="mb-1">
-                              <strong>Nome:</strong> {selectedOrder.customer.name}
-                            </p>
-                            <p className="mb-1">
-                              <strong>Email:</strong> {selectedOrder.customer.email}
-                            </p>
-                            <p className="mb-1">
-                              <strong>Telefone:</strong> {selectedOrder.customer.phone}
-                            </p>
-                            <p className="mb-0">
-                              <strong>Endereço:</strong> {selectedOrder.customer.address}
-                            </p>
+                            <p className="mb-1"><strong>Nome:</strong> {selectedOrder.customer.name}</p>
+                            <p className="mb-1"><strong>Email:</strong> {selectedOrder.customer.email}</p>
+                            <p className="mb-1"><strong>Telefone:</strong> {selectedOrder.customer.phone}</p>
+                            <p className="mb-0"><strong>Endereço:</strong> {selectedOrder.customer.address}</p>
                           </div>
                         </div>
                       </div>
-
-                      {/* Order Info */}
                       <div className="col-md-6">
                         <div className="card">
                           <div className="card-header bg-white">
                             <h6 className="mb-0">Informações do Pedido</h6>
                           </div>
                           <div className="card-body">
-                            <p className="mb-1">
-                              <strong>Método de Pagamento:</strong> {selectedOrder.paymentMethod}
-                            </p>
-                            <p className="mb-1">
-                              <strong>Data do Pedido:</strong>{' '}
-                              {new Date(selectedOrder.date).toLocaleDateString('pt-BR')}
-                            </p>
+                            <p className="mb-1"><strong>Método de Pagamento:</strong> {selectedOrder.paymentMethod}</p>
+                            <p className="mb-1"><strong>Data do Pedido:</strong> {new Date(selectedOrder.date).toLocaleDateString('pt-BR')}</p>
                             {selectedOrder.estimatedDelivery && (
-                              <p className="mb-1">
-                                <strong>Previsão de Entrega:</strong>{' '}
-                                {new Date(selectedOrder.estimatedDelivery).toLocaleDateString('pt-BR')}
-                              </p>
+                              <p className="mb-1"><strong>Previsão de Entrega:</strong> {new Date(selectedOrder.estimatedDelivery).toLocaleDateString('pt-BR')}</p>
                             )}
-                            {selectedOrder.notes && (
-                              <p className="mb-0">
-                                <strong>Observações:</strong> {selectedOrder.notes}
-                              </p>
-                            )}
+                            {selectedOrder.notes && <p className="mb-0"><strong>Observações:</strong> {selectedOrder.notes}</p>}
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Order Items */}
                     <div className="card mb-4">
                       <div className="card-header bg-white">
                         <h6 className="mb-0">Itens do Pedido</h6>
                       </div>
                       <div className="card-body">
                         {selectedOrder.items.map((item) => (
-                          <div
-                            key={item.id}
-                            className="d-flex align-items-center gap-3 p-3 border rounded mb-3"
-                          >
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="rounded"
-                              style={{ width: '60px', height: '60px', objectFit: 'cover' }}
-                            />
+                          <div key={item.id} className="d-flex align-items-center gap-3 p-3 border rounded mb-3">
+                            <img src={item.image} alt={item.name} className="rounded" style={{ width: '60px', height: '60px', objectFit: 'cover' }} />
                             <div className="flex-grow-1">
                               <h6 className="mb-1">{item.name}</h6>
                               <small className="text-muted">SKU: {item.sku}</small>
                               <p className="mb-0">Quantidade: {item.quantity}</p>
                             </div>
                             <div className="text-end">
-                              <p className="fw-medium mb-1">
-                                R$ {(item.price * item.quantity).toFixed(2)}
-                              </p>
+                              <p className="fw-medium mb-1">R$ {(item.price * item.quantity).toFixed(2)}</p>
                               <small className="text-muted">R$ {item.price.toFixed(2)} cada</small>
                             </div>
                           </div>
                         ))}
-
                         <hr />
-
-                        <div className="d-flex justify-content-between mb-1">
-                          <span>Subtotal:</span>
-                          <span>R$ {selectedOrder.subtotal.toFixed(2)}</span>
-                        </div>
-                        <div className="d-flex justify-content-between mb-1">
-                          <span>Frete:</span>
-                          <span>R$ {selectedOrder.shipping.toFixed(2)}</span>
-                        </div>
-                        {selectedOrder.tax > 0 && (
-                          <div className="d-flex justify-content-between mb-1">
-                            <span>Impostos:</span>
-                            <span>R$ {selectedOrder.tax.toFixed(2)}</span>
-                          </div>
-                        )}
+                        <div className="d-flex justify-content-between mb-1"><span>Subtotal:</span><span>R$ {selectedOrder.subtotal.toFixed(2)}</span></div>
+                        <div className="d-flex justify-content-between mb-1"><span>Frete:</span><span>R$ {selectedOrder.shipping.toFixed(2)}</span></div>
+                        {selectedOrder.tax > 0 && <div className="d-flex justify-content-between mb-1"><span>Impostos:</span><span>R$ {selectedOrder.tax.toFixed(2)}</span></div>}
                         <hr />
-                        <div className="d-flex justify-content-between fw-bold fs-5">
-                          <span>Total:</span>
-                          <span>R$ {selectedOrder.total.toFixed(2)}</span>
-                        </div>
+                        <div className="d-flex justify-content-between fw-bold fs-5"><span>Total:</span><span>R$ {selectedOrder.total.toFixed(2)}</span></div>
                       </div>
                     </div>
                   </div>
                   <div className="modal-footer">
-                    <button className="btn btn-secondary" onClick={closeModal}>
-                      Fechar
-                    </button>
+                    <button className="btn btn-secondary" onClick={closeModal}>Fechar</button>
                   </div>
                 </div>
               </div>

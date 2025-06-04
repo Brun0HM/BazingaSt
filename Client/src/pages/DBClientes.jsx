@@ -1,4 +1,3 @@
-// DBClientes.jsx
 import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -13,7 +12,6 @@ export default function DBClientes() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [editingCustomer, setEditingCustomer] = useState(null)
 
-  // Agora com setter para poder adicionar/editar
   const [customers, setCustomers] = useState([
     {
       id: '1',
@@ -28,12 +26,7 @@ export default function DBClientes() {
       totalSpent: 2450.8,
       totalOrders: 12,
       averageOrderValue: 204.23,
-      address: {
-        street: 'Rua das Flores, 123',
-        city: 'São Paulo',
-        state: 'SP',
-        zipCode: '01234-567',
-      },
+      address: { street: 'Rua das Flores, 123', city: 'São Paulo', state: 'SP', zipCode: '01234-567' },
       preferences: ['Star Wars', 'Marvel', 'Camisetas'],
       orders: [
         { id: 'ORD-4832', date: '2024-05-12', total: 244.7, status: 'delivered', items: 2 },
@@ -55,12 +48,7 @@ export default function DBClientes() {
       totalSpent: 1280.5,
       totalOrders: 8,
       averageOrderValue: 160.06,
-      address: {
-        street: 'Av. Paulista, 456',
-        city: 'São Paulo',
-        state: 'SP',
-        zipCode: '01310-100',
-      },
+      address: { street: 'Av. Paulista, 456', city: 'São Paulo', state: 'SP', zipCode: '01310-100' },
       preferences: ['DC Comics', 'Action Figures', 'Decoração'],
       orders: [
         { id: 'ORD-4831', date: '2024-05-11', total: 379.7, status: 'shipped', items: 2 },
@@ -81,12 +69,7 @@ export default function DBClientes() {
       totalSpent: 890.4,
       totalOrders: 5,
       averageOrderValue: 178.08,
-      address: {
-        street: 'Rua Augusta, 789',
-        city: 'São Paulo',
-        state: 'SP',
-        zipCode: '01305-000',
-      },
+      address: { street: 'Rua Augusta, 789', city: 'São Paulo', state: 'SP', zipCode: '01305-000' },
       preferences: ['RPG', 'Jogos', 'Livros'],
       orders: [{ id: 'ORD-4830', date: '2024-05-11', total: 324.9, status: 'processing', items: 1 }],
       notes: '',
@@ -104,12 +87,7 @@ export default function DBClientes() {
       totalSpent: 3200.9,
       totalOrders: 18,
       averageOrderValue: 177.83,
-      address: {
-        street: 'Rua Oscar Freire, 321',
-        city: 'São Paulo',
-        state: 'SP',
-        zipCode: '01426-001',
-      },
+      address: { street: 'Rua Oscar Freire, 321', city: 'São Paulo', state: 'SP', zipCode: '01426-001' },
       preferences: ['Stranger Things', 'Funko Pop', 'Séries'],
       orders: [{ id: 'ORD-4829', date: '2024-05-10', total: 251.6, status: 'delivered', items: 2 }],
       notes: 'Cliente fiel, sempre deixa avaliações positivas',
@@ -127,12 +105,7 @@ export default function DBClientes() {
       totalSpent: 320.7,
       totalOrders: 3,
       averageOrderValue: 106.9,
-      address: {
-        street: 'Rua da Consolação, 654',
-        city: 'São Paulo',
-        state: 'SP',
-        zipCode: '01302-000',
-      },
+      address: { street: 'Rua da Consolação, 654', city: 'São Paulo', state: 'SP', zipCode: '01302-000' },
       preferences: ['Rick and Morty', 'Canecas'],
       orders: [{ id: 'ORD-4828', date: '2024-05-09', total: 109.8, status: 'cancelled', items: 2 }],
       notes: 'Cancelou último pedido, verificar motivo',
@@ -150,12 +123,7 @@ export default function DBClientes() {
       totalSpent: 94.9,
       totalOrders: 1,
       averageOrderValue: 94.9,
-      address: {
-        street: 'Av. Faria Lima, 987',
-        city: 'São Paulo',
-        state: 'SP',
-        zipCode: '04538-132',
-      },
+      address: { street: 'Av. Faria Lima, 987', city: 'São Paulo', state: 'SP', zipCode: '04538-132' },
       preferences: ['The Office', 'Séries'],
       orders: [{ id: 'ORD-4827', date: '2024-05-13', total: 94.9, status: 'pending', items: 1 }],
       notes: 'Cliente novo, primeira compra',
@@ -173,12 +141,7 @@ export default function DBClientes() {
       totalSpent: 450.3,
       totalOrders: 4,
       averageOrderValue: 112.58,
-      address: {
-        street: 'Rua Vergueiro, 432',
-        city: 'São Paulo',
-        state: 'SP',
-        zipCode: '01504-000',
-      },
+      address: { street: 'Rua Vergueiro, 432', city: 'São Paulo', state: 'SP', zipCode: '01504-000' },
       preferences: ['Marvel', 'Quadrinhos'],
       orders: [],
       notes: 'Cliente bloqueado por problemas de pagamento',
@@ -216,7 +179,6 @@ export default function DBClientes() {
       inactive: { label: 'Inativo', className: 'bg-secondary text-white' },
       blocked: { label: 'Bloqueado', className: 'bg-danger text-white' },
     }[status] || { label: 'Desconhecido', className: 'bg-light text-dark' }
-
     return <span className={`badge ${config.className}`}>{config.label}</span>
   }
 
@@ -225,14 +187,10 @@ export default function DBClientes() {
       cust.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       cust.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       cust.phone.includes(searchTerm)
-
     const matchesSegment = selectedSegment === 'all' || cust.segment === selectedSegment
     const matchesStatus = selectedStatus === 'all' || cust.status === selectedStatus
     const matchesTab =
-      selectedTab === 'all' ||
-      cust.status === selectedTab ||
-      cust.segment === selectedTab
-
+      selectedTab === 'all' || cust.status === selectedTab || cust.segment === selectedTab
     return matchesSearch && matchesSegment && matchesStatus && matchesTab
   })
 
@@ -242,7 +200,6 @@ export default function DBClientes() {
     setIsAddModalOpen(false)
   }
 
-  // Formulário para adicionar/editar
   const CustomerForm = ({ customer, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
       name: customer?.name || '',
@@ -257,7 +214,6 @@ export default function DBClientes() {
 
     const handleSubmit = (e) => {
       e.preventDefault()
-      // Se for edição, mantém id e demais campos não alterados (status, segment, registrationDate, etc)
       if (customer) {
         const updated = {
           ...customer,
@@ -274,7 +230,6 @@ export default function DBClientes() {
         }
         onSave(updated)
       } else {
-        // Novo cliente
         const newCustomer = {
           id: Date.now().toString(),
           name: formData.name,
@@ -306,9 +261,7 @@ export default function DBClientes() {
       <form onSubmit={handleSubmit}>
         <div className="row g-3 mb-3">
           <div className="col-md-6">
-            <label htmlFor="name" className="form-label">
-              Nome Completo
-            </label>
+            <label htmlFor="name" className="form-label">Nome Completo</label>
             <input
               id="name"
               type="text"
@@ -319,9 +272,7 @@ export default function DBClientes() {
             />
           </div>
           <div className="col-md-6">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
+            <label htmlFor="email" className="form-label">Email</label>
             <input
               id="email"
               type="email"
@@ -333,9 +284,7 @@ export default function DBClientes() {
           </div>
         </div>
         <div className="mb-3">
-          <label htmlFor="phone" className="form-label">
-            Telefone
-          </label>
+          <label htmlFor="phone" className="form-label">Telefone</label>
           <input
             id="phone"
             type="text"
@@ -385,9 +334,7 @@ export default function DBClientes() {
           </div>
         </div>
         <div className="mb-3">
-          <label htmlFor="notes" className="form-label">
-            Observações
-          </label>
+          <label htmlFor="notes" className="form-label">Observações</label>
           <input
             id="notes"
             type="text"
@@ -419,7 +366,6 @@ export default function DBClientes() {
             <button type="button" className="btn-close" onClick={closeModal}></button>
           </div>
           <div className="modal-body">
-            {/* Header do Cliente */}
             <div className="d-flex align-items-center gap-3 mb-4">
               <img
                 src={customer.avatar}
@@ -433,20 +379,16 @@ export default function DBClientes() {
                   {getSegmentBadge(customer.segment)} {getStatusBadge(customer.status)}
                 </div>
                 <div className="text-muted small">
-                  <i className="bi bi-calendar me-1"></i> Cliente desde{' '}
-                  {new Date(customer.registrationDate).toLocaleDateString('pt-BR')}
+                  <i className="bi bi-calendar me-1"></i> Cliente desde {new Date(customer.registrationDate).toLocaleDateString('pt-BR')}
                   {customer.lastPurchase && (
                     <>
                       <br />
-                      <i className="bi bi-bag-check me-1"></i> Última compra:{' '}
-                      {new Date(customer.lastPurchase).toLocaleDateString('pt-BR')}
+                      <i className="bi bi-bag-check me-1"></i> Última compra: {new Date(customer.lastPurchase).toLocaleDateString('pt-BR')}
                     </>
                   )}
                 </div>
               </div>
             </div>
-
-            {/* Estatísticas */}
             <div className="row g-3 mb-4">
               <div className="col-md-4">
                 <div className="card text-center">
@@ -473,9 +415,7 @@ export default function DBClientes() {
                 </div>
               </div>
             </div>
-
             <div className="row g-4">
-              {/* Informações Pessoais */}
               <div className="col-md-6">
                 <div className="card">
                   <div className="card-header bg-white">
@@ -509,8 +449,6 @@ export default function DBClientes() {
                   </div>
                 </div>
               </div>
-
-              {/* Histórico de Pedidos */}
               <div className="col-md-6">
                 <div className="card">
                   <div className="card-header bg-white">
@@ -521,15 +459,11 @@ export default function DBClientes() {
                   <div className="card-body">
                     {customer.orders.length > 0 ? (
                       customer.orders.map((order) => (
-                        <div
-                          key={order.id}
-                          className="d-flex justify-content-between align-items-center p-3 border rounded mb-3"
-                        >
+                        <div key={order.id} className="d-flex justify-content-between align-items-center p-3 border rounded mb-3">
                           <div>
                             <div className="fw-medium">{order.id}</div>
                             <small className="text-muted">
-                              {new Date(order.date).toLocaleDateString('pt-BR')} • {order.items}{' '}
-                              item{order.items > 1 ? 's' : ''}
+                              {new Date(order.date).toLocaleDateString('pt-BR')} • {order.items} item{order.items > 1 ? 's' : ''}
                             </small>
                           </div>
                           <div className="text-end">
@@ -559,9 +493,7 @@ export default function DBClientes() {
             </div>
           </div>
           <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={closeModal}>
-              Fechar
-            </button>
+            <button className="btn btn-secondary" onClick={closeModal}>Fechar</button>
           </div>
         </div>
       </div>
@@ -571,10 +503,8 @@ export default function DBClientes() {
   return (
     <>
       <DBNavbar />
-
       <div className="container-fluid">
         <div className="p-4 mt-3">
-          {/* Header */}
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div>
               <h2 className="fw-bold">Clientes</h2>
@@ -584,8 +514,6 @@ export default function DBClientes() {
               <i className="bi bi-plus-lg me-1"></i> Adicionar Cliente
             </button>
           </div>
-
-          {/* Stats Cards */}
           <div className="row g-3 mb-4">
             <div className="col-6 col-md-4 col-lg-2">
               <div className="card border-start border-2 border-secondary">
@@ -654,66 +582,42 @@ export default function DBClientes() {
               </div>
             </div>
           </div>
-
-          {/* Tabs */}
           <ul className="nav nav-tabs mb-3">
             <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'all' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('all')}
-              >
+              <button className={`nav-link ${selectedTab === 'all' ? 'active' : ''}`} onClick={() => setSelectedTab('all')}>
                 Todos ({stats.total})
               </button>
             </li>
             <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'active' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('active')}
-              >
+              <button className={`nav-link ${selectedTab === 'active' ? 'active' : ''}`} onClick={() => setSelectedTab('active')}>
                 Ativos ({stats.active})
               </button>
             </li>
             <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'vip' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('vip')}
-              >
+              <button className={`nav-link ${selectedTab === 'vip' ? 'active' : ''}`} onClick={() => setSelectedTab('vip')}>
                 VIP ({stats.vip})
               </button>
             </li>
             <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'new' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('new')}
-              >
+              <button className={`nav-link ${selectedTab === 'new' ? 'active' : ''}`} onClick={() => setSelectedTab('new')}>
                 Novos ({stats.new})
               </button>
             </li>
             <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'inactive' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('inactive')}
-              >
+              <button className={`nav-link ${selectedTab === 'inactive' ? 'active' : ''}`} onClick={() => setSelectedTab('inactive')}>
                 Inativos ({stats.inactive})
               </button>
             </li>
             <li className="nav-item">
-              <button
-                className={`nav-link ${selectedTab === 'blocked' ? 'active' : ''}`}
-                onClick={() => setSelectedTab('blocked')}
-              >
+              <button className={`nav-link ${selectedTab === 'blocked' ? 'active' : ''}`} onClick={() => setSelectedTab('blocked')}>
                 Bloqueados ({stats.blocked})
               </button>
             </li>
           </ul>
-
-          {/* Filters: Search + Segment + Status */}
           <div className="row g-3 mb-4">
             <div className="col-md-5">
               <div className="input-group">
-                <span className="input-group-text bg-white">
-                  <i className="bi bi-search"></i>
-                </span>
+                <span className="input-group-text bg-white"><i className="bi bi-search"></i></span>
                 <input
                   type="text"
                   className="form-control"
@@ -724,11 +628,7 @@ export default function DBClientes() {
               </div>
             </div>
             <div className="col-md-3">
-              <select
-                className="form-select"
-                value={selectedSegment}
-                onChange={(e) => setSelectedSegment(e.target.value)}
-              >
+              <select className="form-select" value={selectedSegment} onChange={(e) => setSelectedSegment(e.target.value)}>
                 <option value="all">Todos os segmentos</option>
                 <option value="vip">VIP</option>
                 <option value="regular">Regular</option>
@@ -736,11 +636,7 @@ export default function DBClientes() {
               </select>
             </div>
             <div className="col-md-4">
-              <select
-                className="form-select"
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-              >
+              <select className="form-select" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
                 <option value="all">Todos os status</option>
                 <option value="active">Ativo</option>
                 <option value="inactive">Inativo</option>
@@ -748,8 +644,6 @@ export default function DBClientes() {
               </select>
             </div>
           </div>
-
-          {/* Customers Table */}
           <div className="card">
             <div className="card-header d-flex justify-content-between align-items-center bg-white">
               <div>
@@ -803,9 +697,7 @@ export default function DBClientes() {
                         </td>
                         <td>
                           <div className="fw-medium">R$ {cust.totalSpent.toFixed(2)}</div>
-                          <div className="text-muted small">
-                            Média: R$ {cust.averageOrderValue.toFixed(2)}
-                          </div>
+                          <div className="text-muted small">Média: R$ {cust.averageOrderValue.toFixed(2)}</div>
                         </td>
                         <td>
                           {cust.lastPurchase ? (
@@ -816,16 +708,10 @@ export default function DBClientes() {
                         </td>
                         <td className="text-end">
                           <div className="btn-group">
-                            <button
-                              className="btn btn-sm btn-light"
-                              onClick={() => setSelectedCustomer(cust)}
-                            >
+                            <button className="btn btn-sm btn-light" onClick={() => setSelectedCustomer(cust)}>
                               <i className="bi bi-eye"></i>
                             </button>
-                            <button
-                              className="btn btn-sm btn-light"
-                              onClick={() => setEditingCustomer(cust)}
-                            >
+                            <button className="btn btn-sm btn-light" onClick={() => setEditingCustomer(cust)}>
                               <i className="bi bi-pencil-fill"></i>
                             </button>
                           </div>
@@ -837,14 +723,8 @@ export default function DBClientes() {
               </div>
             </div>
           </div>
-
-          {/* Add Customer Modal */}
           {isAddModalOpen && (
-            <div
-              className="modal show fade"
-              style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
-              tabIndex="-1"
-            >
+            <div className="modal show fade" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
               <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
                   <div className="modal-header bg-white">
@@ -864,14 +744,8 @@ export default function DBClientes() {
               </div>
             </div>
           )}
-
-          {/* Edit Customer Modal */}
           {editingCustomer && (
-            <div
-              className="modal show fade"
-              style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
-              tabIndex="-1"
-            >
+            <div className="modal show fade" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
               <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
                   <div className="modal-header bg-white">
@@ -882,9 +756,7 @@ export default function DBClientes() {
                     <CustomerForm
                       customer={editingCustomer}
                       onSave={(data) => {
-                        setCustomers((prev) =>
-                          prev.map((c) => (c.id === data.id ? data : c))
-                        )
+                        setCustomers((prev) => prev.map((c) => (c.id === data.id ? data : c)))
                         closeModal()
                       }}
                       onCancel={closeModal}
@@ -894,8 +766,6 @@ export default function DBClientes() {
               </div>
             </div>
           )}
-
-          {/* Customer Details Modal */}
           {selectedCustomer && <CustomerDetailsModal customer={selectedCustomer} />}
         </div>
       </div>
