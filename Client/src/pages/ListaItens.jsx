@@ -7,11 +7,12 @@ const ListaItens = () => {
     <>
       <Header />
       <div className="ListaI col-12">
-        <div className=" ">
-          <div className="d-flex justify-content-center align-items-center">
-            <h1 className=" pt-3 fw-bold text-light CategoriaName">
-              CategoriaName
-            </h1>
+        <div className=" container ">
+          <div className="d-flex align-items-center pt-5 pb-5">
+            <div className="d-flex flex-column ps-3">
+              <h2 className=" fw-bold">CategoriaName</h2>
+              <p>MiniDescrição</p>
+            </div>
           </div>
           <div className="d-flex flex-wrap ">
             <Cardegorias />

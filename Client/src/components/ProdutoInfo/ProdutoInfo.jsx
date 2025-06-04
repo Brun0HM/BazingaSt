@@ -24,41 +24,50 @@ const ProdutoInfo = () => {
   };
 
   return (
-    <div className="container py-4">
-      <div className="row align-items-center">
-        <div className="col-12 col-md-4 text-center mb-4 mb-md-0">
+    <>
+      <div className="">
+        <div className="d-flex flex-column flex-md-row justify-content-center">
           <img
-            src={produto.imagem}
+            className="rounded-2"
+            src="https://placehold.co/400x400"
             alt=""
-            className="img-fluid rounded"
-            style={{ maxWidth: "400px", width: "100%" }}
           />
-        </div>
-        <div className="col-12 col-md-1"></div>
-        <div className="col-12 col-md-6">
-          <h1 className="fw-bold m-0 p-0">{produto.nome}</h1>
-          <div className="d-flex align-items-center gap-2 flex-wrap">
-            <span className="fs-3">{produto.preco}</span>
-            <p className="m-0">InforAdicionais</p>
-          </div>
-          <p className="fs-5 w-100 pt-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-            minus quia sunt ipsa nemo quisquam sed laudantium voluptates nisi
-            quas earum aperiam, id beatae recusandae rem obcaecati cupiditate
-            autem exercitationem?
-          </p>
-          <div className="w-100 pt-4">
+          <div className="d-flex flex-column ms-0 ms-md-5 px-2 px-md-0  p justify-content-between col-12 col-md-5">
+            <div className="d-flex">
+              <p className=" border border-danger rounded-5 text-danger p-1 fw-bold border-2 px-2 Categor">
+                Categoria
+              </p>
+            </div>
+            <h1 className="fw-bold">NomeaProduto</h1>
+            <div className="d-flex gap-1">
+              <i className="bi bi-star-fill text-se"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-half"></i>
+              <i className="bi bi-star"></i>
+              <p className="fw-bold pe-3">3.5</p>
+              <p>(10 avaliações)</p>
+            </div>
+            <h1 className="fw-bold text-danger">R$00.00</h1>
+            <div className="d-flex w-100">
+              <p>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti, enim debitis nemo quos expedita placeat illo ducimus
+                nam mollitia reprehenderit sunt! Deserunt deleniti laborum
+                cumque quia autem, praesentium quasi placeat.
+              </p>
+            </div>
             <button
-              className="btn btn-danger text-center Adicionar w-100 d-flex justify-content-center align-items-center fs-5 fw-bold rounded-4"
+              className="btn btn-danger botao"
               onClick={adicionarAoCarrinho}
             >
-              <i className="bi bi-cart-plus-fill me-2 m-0"></i>
-              <span className="m-0">Adicionar ao carrinho</span>
+              <i className="bi bi-cart-plus-fill me-2"></i>
+              Adicionar ao carrinho
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

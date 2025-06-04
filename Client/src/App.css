@@ -25,13 +25,7 @@ body::-webkit-scrollbar {
   margin-right: 10px;
 }
 .ListaI {
-  background-color: #d84040;
-}
-.CategoriaName {
-  font-size: 60px;
-}
-.CategoriaName {
-  font-size: 60px;
+  background-color: #ffffff;
 }
 
 /* ==========================Header========================== */
@@ -51,7 +45,7 @@ body::-webkit-scrollbar {
 
 /*============================Login========================== */
 
-input::placeholder {
+.Config input::placeholder {
   color: #000000;
   font-weight: 800;
 }
@@ -115,9 +109,12 @@ input::placeholder {
     font-size: 35px;
   }
 }
-.Cart {
-  height: 79vh !important;
+@media (min-width: 1800px) {
+  .Cart{
+    height: 100vh !important;
+  }
 }
+
 /* ========================================================================================= */
 
 /* Config */
@@ -138,7 +135,7 @@ input::placeholder {
   background-color: #d9d9d9 !important;
   width: 100px !important;
 }
-input::placeholder {
+.Config input::placeholder {
   color: #888;
   opacity: 1;
 }
@@ -274,3 +271,6 @@ input::placeholder {
 }
 
 /* ========================================================== */
+.Categor{
+  font-size: 13px;
+}
