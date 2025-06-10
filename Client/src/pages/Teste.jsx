@@ -1,227 +1,101 @@
 import React, { useEffect, useState } from "react";
 
-const DashboardProdutos = () => {
-  const [produtos, setProdutos] = useState([]);
+const Carrinho = () => {
+  const [itens, setItens] = useState([]);
   const [erro, setErro] = useState("");
-  const [form, setForm] = useState({
-    nome: "",
-    descricao: "",
-    preco: "",
-    imagem: "",
-    estoque: "",
-    categoriaId: "",
-  });
-  const [mensagem, setMensagem] = useState("");
-
-  // GET produtos
-  const fetchProdutos = async () => {
-    setErro("");
-    try {
-      const response = await fetch("https://bazinga.somee.com/api/Produtos", {
-        method: "GET",
-        headers: { accept: "text/plain" },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setProdutos(data);
-      } else {
-        setErro("Erro ao buscar produtos.");
-      }
-    } catch (error) {
-      setErro("Erro de conexão com a API.");
-    }
-  };
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProdutos();
+    const fetchCarrinho = async () => {
+      try {
+        const response = await fetch(
+          "https://www.bazingastore.somee.com/api/CarrinhoItems",
+          {
+            method: "GET",
+            headers: { accept: "text/plain" },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setItens(data);
+        } else {
+          setErro("Erro ao buscar itens do carrinho.");
+        }
+      } catch (error) {
+        setErro("Erro de conexão com a API.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCarrinho();
   }, []);
 
-  // POST produto
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMensagem("");
-    try {
-      const response = await fetch("https://bazinga.somee.com/api/Produtos", {
-        method: "POST",
-        headers: {
-          accept: "text/plain",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nome: form.nome,
-          descricao: form.descricao,
-          preco: parseFloat(form.preco),
-          imagem: form.imagem,
-          estoque: parseInt(form.estoque),
-          categoriaId: form.categoriaId,
-        }),
-      });
-      if (response.ok) {
-        setMensagem("Produto cadastrado com sucesso!");
-        setForm({
-          nome: "",
-          descricao: "",
-          preco: "",
-          imagem: "",
-          estoque: "",
-          categoriaId: "",
-        });
-        fetchProdutos();
-      } else {
-        setMensagem("Erro ao cadastrar produto.");
-      }
-    } catch (error) {
-      setMensagem("Erro de conexão com a API.");
-    }
-  };
+  const total = itens.reduce(
+    (acc, item) => acc + item.preco * (item.quantidade || 1),
+    0
+  );
 
   return (
     <div className="container py-5">
-      <div className="row justify-content-center mb-5">
-        <div className="col-12 col-lg-8">
-          <div className="card shadow-sm border-0">
-            <div className="card-body">
-              <h2 className="mb-4 text-center fw-bold text-primary">
-                Dashboard de Produtos
-              </h2>
-              <h4 className="mb-3">Cadastrar novo produto</h4>
-              <form onSubmit={handleSubmit} className="row g-3">
-                <div className="col-md-6">
-                  <label className="form-label">Nome</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={form.nome}
-                    required
-                    onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label">Categoria ID</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={form.categoriaId}
-                    required
-                    onChange={(e) =>
-                      setForm({ ...form, categoriaId: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label">Preço</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    className="form-control"
-                    value={form.preco}
-                    required
-                    onChange={(e) =>
-                      setForm({ ...form, preco: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label">Estoque</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    value={form.estoque}
-                    required
-                    onChange={(e) =>
-                      setForm({ ...form, estoque: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="col-12">
-                  <label className="form-label">Descrição</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={form.descricao}
-                    required
-                    onChange={(e) =>
-                      setForm({ ...form, descricao: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="col-12">
-                  <label className="form-label">Imagem (URL)</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={form.imagem}
-                    required
-                    onChange={(e) =>
-                      setForm({ ...form, imagem: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="col-12 d-grid">
-                  <button type="submit" className="btn btn-success btn-lg">
-                    <i className="bi bi-plus-circle me-2"></i>
-                    Cadastrar Produto
-                  </button>
-                </div>
-              </form>
-              {mensagem && (
-                <div className="alert alert-info mt-3 text-center">
-                  {mensagem}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Lista de produtos */}
-      <div className="card shadow-sm border-0">
-        <div className="card-body">
-          <h4 className="mb-4 fw-bold text-primary">Produtos cadastrados</h4>
-          {erro && <div className="alert alert-danger text-center">{erro}</div>}
+      <h2 className="mb-4 text-center">Carrinho de Compras</h2>
+      {erro && <div className="alert alert-danger text-center">{erro}</div>}
+      {loading ? (
+        <div className="text-center">Carregando...</div>
+      ) : (
+        <>
           <div className="row g-4">
-            {produtos.map((produto) => (
-              <div
-                className="col-12 col-sm-6 col-md-4 col-lg-3"
-                key={produto.id}
-              >
-                <div className="card h-100 border-0 shadow-sm">
+            {itens.map((item) => (
+              <div className="col-12 col-md-6 col-lg-4" key={item.id}>
+                <div className="card h-100">
                   <img
-                    src={produto.imagem || "https://placehold.co/300x200"}
+                    src={item.imagem || "https://placehold.co/300x200"}
                     className="card-img-top"
-                    alt={produto.nome}
-                    style={{ objectFit: "cover", height: "180px" }}
+                    alt={item.nome}
+                    style={{ objectFit: "cover", height: "200px" }}
                   />
-                  <div className="card-body d-flex flex-column">
-                    <h5 className="card-title fw-bold">{produto.nome}</h5>
-                    <p
-                      className="card-text mb-1 text-muted"
-                      style={{ fontSize: "0.95em" }}
-                    >
-                      {produto.descricao || "Sem descrição"}
+                  <div className="card-body">
+                    <h5 className="card-title">{item.nome}</h5>
+                    <p className="card-text mb-1">
+                      Quantidade: <strong>{item.quantidade || 1}</strong>
                     </p>
-                    <span className="fw-bold mb-2 text-success">
-                      {produto.preco
-                        ? `R$ ${produto.preco}`
-                        : "Preço indisponível"}
-                    </span>
-                    <span className="mb-2">Estoque: {produto.estoque}</span>
-                    <span className="mb-2">
-                      Categoria: {produto.categoriaId}
-                    </span>
+                    <p className="card-text mb-1">
+                      Preço unitário: <strong>R$ {item.preco}</strong>
+                    </p>
+                    <p className="card-text">
+                      Subtotal:{" "}
+                      <strong>
+                        R$ {(item.preco * (item.quantidade || 1)).toFixed(2)}
+                      </strong>
+                    </p>
                   </div>
                 </div>
               </div>
             ))}
-            {produtos.length === 0 && !erro && (
+            {itens.length === 0 && !erro && (
               <div className="col-12 text-center text-muted">
-                Nenhum produto encontrado.
+                Carrinho vazio.
               </div>
             )}
           </div>
-        </div>
-      </div>
+          {/* Checkout */}
+          {itens.length > 0 && (
+            <div className="mt-5">
+              <div className="card p-4">
+                <h4 className="fw-bold mb-3">Checkout</h4>
+                <div className="d-flex justify-content-between">
+                  <span>Total:</span>
+                  <span className="fw-bold">R$ {total.toFixed(2)}</span>
+                </div>
+                <button className="btn btn-success mt-3 w-100">
+                  Finalizar Compra
+                </button>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
 
-export default DashboardProdutos;
+export default Carrinho;

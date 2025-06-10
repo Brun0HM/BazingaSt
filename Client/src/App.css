@@ -1,5 +1,5 @@
 body {
-background-color: #47c3ff !important;
+  background-color: #47c3ff !important;
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Montserrat", sans-serif !important;
@@ -14,10 +14,18 @@ body::-webkit-scrollbar {
 /* Cardegoria */
 /* ========================================================================================= */
 
+.imagess {
+  width: 400px;
+  height: 280px;
+  object-fit: cover;
+}
+.imgsss {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+}
 
-
-
-.botao{
+.botao {
   height: 50px;
 }
 
@@ -110,7 +118,7 @@ body::-webkit-scrollbar {
   }
 }
 @media (min-width: 1800px) {
-  .Cart{
+  .Cart {
     height: 100vh !important;
   }
 }
@@ -271,6 +279,6 @@ body::-webkit-scrollbar {
 }
 
 /* ========================================================== */
-.Categor{
+.Categor {
   font-size: 13px;
 }

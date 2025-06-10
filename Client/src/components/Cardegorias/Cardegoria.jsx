@@ -21,11 +21,11 @@ const Cardegoria = ({ produto }) => {
   const handleClick = () => navigate("/info/" + produto.id);
 
   return (
-    <div className="border-3 text-decoration-none col-12 col-md-12">
+    <div className="border-3 text-decoration-none col-12 col-md-4">
       <div className="bg-white d-flex flex-column col-12 p-3 pt-3 rounded-4 card2">
         <img
           onClick={handleClick}
-          className="mb-4 rounded-2"
+          className="mb-4 rounded-2 imagess"
           src={produto.imagem || "https://placehold.co/300x200"}
           alt={produto.nome}
         />

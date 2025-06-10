@@ -1,44 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 const ProdutoInfo = () => {
-  // Dados do produto (ajuste conforme necessário)
-  const produto = {
-    id: 1,
-    nome: "NomeProduto",
-    preco: "R$00.00",
-    imagem: "https://placehold.co/400x400",
-  };
+  const { id } = useParams();
+  const [produto, setProduto] = useState(null);
+  const [erro, setErro] = useState("");
 
-  const adicionarAoCarrinho = () => {
-    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-    const index = carrinho.findIndex((item) => item.id === produto.id);
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      try {
+        const response = await fetch(
+          "https://www.bazingastore.somee.com/api/Produtos",
+          {
+            method: "GET",
+            headers: { accept: "text/plain" },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          const prod = data.find((p) => p.id === id);
+          setProduto(prod);
+        } else {
+          setErro("Erro ao buscar produtos.");
+        }
+      } catch (error) {
+        setErro("Erro de conexão com a API.");
+      }
+    };
+    fetchProdutos();
+  }, [id]);
 
-    if (index >= 0) {
-      carrinho[index].quantidade += 1;
-    } else {
-      carrinho.push({ ...produto, quantidade: 1 });
-    }
+  if (erro) {
+    return <div className="alert alert-danger text-center">{erro}</div>;
+  }
 
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-    alert("Produto adicionado ao carrinho!");
-  };
+  if (!produto) {
+    return <div className="text-center py-5">Carregando...</div>;
+  }
 
   return (
     <>
       <div className="">
         <div className="d-flex flex-column flex-md-row justify-content-center">
           <img
-            className="rounded-2"
-            src="https://placehold.co/400x400"
-            alt=""
+            className="rounded-2 imgsss"
+            src={produto.imagem || "https://placehold.co/400x400"}
+            alt={produto.nome}
           />
-          <div className="d-flex flex-column ms-0 ms-md-5 px-2 px-md-0  p justify-content-between col-12 col-md-5">
+          <div className="d-flex flex-column ms-0 ms-md-5 px-2 px-md-0 p justify-content-between col-12 col-md-5">
             <div className="d-flex">
-              <p className=" border border-danger rounded-5 text-danger p-1 fw-bold border-2 px-2 Categor">
-                Categoria
+              <p className="border border-danger rounded-5 text-danger p-1 fw-bold border-2 px-2 Categor">
+                {produto.categoriaId || "Categoria"}
               </p>
             </div>
-            <h1 className="fw-bold">NomeaProduto</h1>
+            <h1 className="fw-bold">{produto.nome}</h1>
             <div className="d-flex gap-1">
               <i className="bi bi-star-fill text-se"></i>
               <i className="bi bi-star-fill"></i>
@@ -48,19 +63,13 @@ const ProdutoInfo = () => {
               <p className="fw-bold pe-3">3.5</p>
               <p>(10 avaliações)</p>
             </div>
-            <h1 className="fw-bold text-danger">R$00.00</h1>
+            <h1 className="fw-bold text-danger">
+              {produto.preco ? `R$ ${produto.preco}` : "R$00.00"}
+            </h1>
             <div className="d-flex w-100">
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti, enim debitis nemo quos expedita placeat illo ducimus
-                nam mollitia reprehenderit sunt! Deserunt deleniti laborum
-                cumque quia autem, praesentium quasi placeat.
-              </p>
+              <p>{produto.descricao || "Sem descrição"}</p>
             </div>
-            <button
-              className="btn btn-danger botao"
-              onClick={adicionarAoCarrinho}
-            >
+            <button className="btn btn-danger botao">
               <i className="bi bi-cart-plus-fill me-2"></i>
               Adicionar ao carrinho
             </button>

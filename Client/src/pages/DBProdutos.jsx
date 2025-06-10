@@ -17,10 +17,13 @@ const DashboardProdutos = () => {
   const fetchProdutos = async () => {
     setErro("");
     try {
-      const response = await fetch("https://bazinga.somee.com/api/Produtos", {
-        method: "GET",
-        headers: { accept: "text/plain" },
-      });
+      const response = await fetch(
+        "https://www.bazingastore.somee.com/api/Produtos",
+        {
+          method: "GET",
+          headers: { accept: "text/plain" },
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         setProdutos(data);
@@ -36,26 +39,53 @@ const DashboardProdutos = () => {
     fetchProdutos();
   }, []);
 
+  const handleDelete = async (id) => {
+    console.log("Tentando excluir produto com id:", id);
+    if (!window.confirm("Tem certeza que deseja excluir este produto?")) return;
+    try {
+      const response = await fetch(
+        `https://www.bazingastore.somee.com/api/Produtos/${id}`,
+        {
+          method: "DELETE",
+          headers: { accept: "*/*" },
+        }
+      );
+      if (response.ok) {
+        setProdutos(produtos.filter((produto) => produto.id !== id));
+      } else {
+        alert(
+          "Erro ao excluir produto." +
+            setProdutos(produtos.filter((produto) => produto.id))
+        );
+      }
+    } catch (error) {
+      alert("Erro de conexão com a API.");
+    }
+  };
+
   // POST produto
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensagem("");
     try {
-      const response = await fetch("https://bazinga.somee.com/api/Produtos", {
-        method: "POST",
-        headers: {
-          accept: "text/plain",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nome: form.nome,
-          descricao: form.descricao,
-          preco: parseFloat(form.preco),
-          imagem: form.imagem,
-          estoque: parseInt(form.estoque),
-          categoriaId: form.categoriaId,
-        }),
-      });
+      const response = await fetch(
+        "https://www.bazingastore.somee.com/api/Produtos",
+        {
+          method: "POST",
+          headers: {
+            accept: "text/plain",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nome: form.nome,
+            descricao: form.descricao,
+            preco: parseFloat(form.preco),
+            imagem: form.imagem,
+            estoque: parseInt(form.estoque),
+            categoriaId: form.categoriaId,
+          }),
+        }
+      );
       if (response.ok) {
         setMensagem("Produto cadastrado com sucesso!");
         setForm({
@@ -209,6 +239,12 @@ const DashboardProdutos = () => {
                       Categoria: {produto.categoriaId}
                     </span>
                   </div>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDelete(produto.id)}
+                  >
+                    Excluir
+                  </button>
                 </div>
               </div>
             ))}
