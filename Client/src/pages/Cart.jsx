@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ItemCarrinho from "../components/ItemCarrinho/ItemCarrinho";
 import Checkout from "../components/Checkout/Checkout";
 import Header from "../components/header/Header";
-import Footer from "../components/footer/Footer";
+import Footer from "../components/Footer.jsx";
 
 // Função utilitária para buscar do localStorage
 const getCarrinhoStorage = () => {
@@ -63,7 +63,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-        <Footer />
+      <Footer />
     </>
   );
 };

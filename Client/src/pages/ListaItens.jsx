@@ -1,5 +1,5 @@
 import Cardegorias from "../components/Cardegorias/Cardegoria";
-import Footer from "../components/footer/Footer";
+import Footer from "../components/Footer.jsx";
 import Header from "../components/header/Header";
 
 const ListaItens = () => {
