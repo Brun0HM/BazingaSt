@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cardegoria from "../components/Cardegorias/Cardegoria";
-import Footer from "../components/footer/Footer";
+import Footer from "../components/Footer";
 import Header from "../components/header/Header";
 
 const ListaItens = () => {
