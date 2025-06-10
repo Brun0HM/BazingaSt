@@ -2,7 +2,9 @@ import React from "react";
 import { Link, NavLink } from "react-router";
 import Logo from "./../../assets/Logo2.png";
 
-const Header = (props) => {
+const Header = () => {
+  const usuarioEmail = localStorage.getItem("usuarioEmail");
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary z-3">
@@ -179,12 +181,15 @@ const Header = (props) => {
                   <i className="bi bi-gear-fill"></i>
                 </NavLink>
               </li>
-
-              <Link to="/login" className="text-decoration-none text-black">
-                <span className="btn rounded-5 btnCor pt-2 pb-2 pe-3 ps-3">
-                  Entrar
-                </span>
-              </Link>
+              <div>
+                {usuarioEmail ? (
+                  <span className="fw-bold text-primary">{usuarioEmail}</span>
+                ) : (
+                  <a href="/login" className="btn btn-primary">
+                    Entrar
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>

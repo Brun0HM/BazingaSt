@@ -1,36 +1,40 @@
-import React, { useState, useEffect } from "react";
-import ItemCarrinho from "../components/ItemCarrinho/ItemCarrinho";
+import React, { useEffect, useState } from "react";
+import Footer from "../components/Footer";
 import Checkout from "../components/Checkout/Checkout";
+import ItemCarrinho from "../components/ItemCarrinho/ItemCarrinho";
 import Header from "../components/header/Header";
-import Footer from "../components/footer/Footer";
-
-// Função utilitária para buscar do localStorage
-const getCarrinhoStorage = () => {
-  const data = localStorage.getItem("carrinho");
-  return data ? JSON.parse(data) : [];
-};
 
 const Cart = () => {
-  const [itensCarrinho, setItensCarrinho] = useState(getCarrinhoStorage());
+  const [itensCarrinho, setItensCarrinho] = useState([]);
+  const [erro, setErro] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  // Atualiza o localStorage sempre que itensCarrinho mudar
   useEffect(() => {
-    localStorage.setItem("carrinho", JSON.stringify(itensCarrinho));
-  }, [itensCarrinho]);
+    const fetchCarrinho = async () => {
+      try {
+        const response = await fetch(
+          "https://www.bazingastore.somee.com/api/CarrinhoItems",
+          {
+            method: "GET",
+            headers: { accept: "text/plain" },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setItensCarrinho(data);
+        } else {
+          setErro("Erro ao buscar itens do carrinho.");
+        }
+      } catch (error) {
+        setErro("Erro de conexão com a API.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCarrinho();
+  }, []);
 
-  // Exemplo de função para remover item
-  const removerItem = (id) => {
-    setItensCarrinho(itensCarrinho.filter((item) => item.id !== id));
-  };
-
-  // Exemplo de função para alterar quantidade
-  const alterarQuantidade = (id, quantidade) => {
-    setItensCarrinho(
-      itensCarrinho.map((item) =>
-        item.id === id ? { ...item, quantidade } : item
-      )
-    );
-  };
+  // Funções de remover/alterar quantidade podem ser adaptadas conforme sua API
 
   return (
     <>
@@ -41,7 +45,14 @@ const Cart = () => {
             <div className="col-12 col-md-8 mb-4">
               <h1 className="TitleC fw-bold">Carrinho</h1>
               <div className="d-flex flex-column mb-5">
-                {itensCarrinho.length === 0 ? (
+                {erro && (
+                  <div className="alert alert-danger text-center">{erro}</div>
+                )}
+                {loading ? (
+                  <div className="text-center py-5 fs-3 text-muted">
+                    Carregando...
+                  </div>
+                ) : itensCarrinho.length === 0 ? (
                   <div className="text-center py-5 fs-3 text-muted">
                     Carrinho vazio
                   </div>
@@ -50,8 +61,8 @@ const Cart = () => {
                     <ItemCarrinho
                       key={item.id}
                       item={item}
-                      onRemover={removerItem}
-                      onAlterarQuantidade={alterarQuantidade}
+                      // onRemover={removerItem}
+                      // onAlterarQuantidade={alterarQuantidade}
                     />
                   ))
                 )}
@@ -63,7 +74,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-        <Footer />
+      <Footer />
     </>
   );
 };

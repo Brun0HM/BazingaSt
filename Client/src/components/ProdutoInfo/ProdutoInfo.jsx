@@ -1,64 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 const ProdutoInfo = () => {
-  // Dados do produto (ajuste conforme necessário)
-  const produto = {
-    id: 1,
-    nome: "NomeProduto",
-    preco: "R$00.00",
-    imagem: "https://placehold.co/400x400",
-  };
+  const { id } = useParams();
+  const [produto, setProduto] = useState(null);
+  const [erro, setErro] = useState("");
 
-  const adicionarAoCarrinho = () => {
-    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-    const index = carrinho.findIndex((item) => item.id === produto.id);
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      try {
+        const response = await fetch(
+          "https://www.bazingastore.somee.com/api/Produtos",
+          {
+            method: "GET",
+            headers: { accept: "text/plain" },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          const prod = data.find((p) => p.id === id);
+          setProduto(prod);
+        } else {
+          setErro("Erro ao buscar produtos.");
+        }
+      } catch (error) {
+        setErro("Erro de conexão com a API.");
+      }
+    };
+    fetchProdutos();
+  }, [id]);
 
-    if (index >= 0) {
-      carrinho[index].quantidade += 1;
-    } else {
-      carrinho.push({ ...produto, quantidade: 1 });
-    }
+  if (erro) {
+    return <div className="alert alert-danger text-center">{erro}</div>;
+  }
 
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-    alert("Produto adicionado ao carrinho!");
-  };
+  if (!produto) {
+    return <div className="text-center py-5">Carregando...</div>;
+  }
 
   return (
-    <div className="container py-4">
-      <div className="row align-items-center">
-        <div className="col-12 col-md-4 text-center mb-4 mb-md-0">
+    <>
+      <div className="">
+        <div className="d-flex flex-column flex-md-row justify-content-center">
           <img
-            src={produto.imagem}
-            alt=""
-            className="img-fluid rounded"
-            style={{ maxWidth: "400px", width: "100%" }}
+            className="rounded-2 imgsss"
+            src={produto.imagem || "https://placehold.co/400x400"}
+            alt={produto.nome}
           />
-        </div>
-        <div className="col-12 col-md-1"></div>
-        <div className="col-12 col-md-6">
-          <h1 className="fw-bold m-0 p-0">{produto.nome}</h1>
-          <div className="d-flex align-items-center gap-2 flex-wrap">
-            <span className="fs-3">{produto.preco}</span>
-            <p className="m-0">InforAdicionais</p>
-          </div>
-          <p className="fs-5 w-100 pt-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-            minus quia sunt ipsa nemo quisquam sed laudantium voluptates nisi
-            quas earum aperiam, id beatae recusandae rem obcaecati cupiditate
-            autem exercitationem?
-          </p>
-          <div className="w-100 pt-4">
-            <button
-              className="btn btn-danger text-center Adicionar w-100 d-flex justify-content-center align-items-center fs-5 fw-bold rounded-4"
-              onClick={adicionarAoCarrinho}
-            >
-              <i className="bi bi-cart-plus-fill me-2 m-0"></i>
-              <span className="m-0">Adicionar ao carrinho</span>
+          <div className="d-flex flex-column ms-0 ms-md-5 px-2 px-md-0 p justify-content-between col-12 col-md-5">
+            <div className="d-flex">
+              <p className="border border-danger rounded-5 text-danger p-1 fw-bold border-2 px-2 Categor">
+                {produto.categoriaId || "Categoria"}
+              </p>
+            </div>
+            <h1 className="fw-bold">{produto.nome}</h1>
+            <div className="d-flex gap-1">
+              <i className="bi bi-star-fill text-se"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-half"></i>
+              <i className="bi bi-star"></i>
+              <p className="fw-bold pe-3">3.5</p>
+              <p>(10 avaliações)</p>
+            </div>
+            <h1 className="fw-bold text-danger">
+              {produto.preco ? `R$ ${produto.preco}` : "R$00.00"}
+            </h1>
+            <div className="d-flex w-100">
+              <p>{produto.descricao || "Sem descrição"}</p>
+            </div>
+            <button className="btn btn-danger botao">
+              <i className="bi bi-cart-plus-fill me-2"></i>
+              Adicionar ao carrinho
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
