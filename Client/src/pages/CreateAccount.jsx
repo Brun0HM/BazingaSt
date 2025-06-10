@@ -1,24 +1,32 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 const CreateAccount = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensagem, setMensagem] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensagem("");
     try {
-      const response = await fetch("https://bazinga.somee.com/register", {
-        method: "POST",
-        headers: {
-          accept: "*/*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://www.bazingastore.somee.com/register",
+        {
+          method: "POST",
+          headers: {
+            accept: "*/*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
       if (response.ok) {
         setMensagem("Registro realizado com sucesso!");
+        setTimeout(() => {
+          navigate("/login"); // ajuste para a rota de login do seu projeto
+        }, 1200);
         setEmail("");
         setPassword("");
       } else {

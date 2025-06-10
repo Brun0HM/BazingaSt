@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 const LoginForms = ({ onRedirect }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensagem, setMensagem] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensagem("");
     try {
-      const response = await fetch("https://bazinga.somee.com/login", {
+      const response = await fetch("https://www.bazingastore.somee.com/login", {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -20,13 +22,14 @@ const LoginForms = ({ onRedirect }) => {
       const data = await response.json();
       if (response.ok) {
         setMensagem("Login realizado com sucesso!");
-        console.log(email, password);
-        // Aqui você pode salvar token, redirecionar, etc.
+        localStorage.setItem("usuarioEmail", email); // Salva o email do usuário
+        setTimeout(() => {
+          navigate("/"); // Redireciona para Home
+        }, 1000);
       } else {
         setMensagem(data.message || "Erro ao fazer login.");
       }
     } catch (error) {
-      console.error("Erro ao conectar na API:", error);
       setMensagem("Erro de conexão com a API.");
     }
   };

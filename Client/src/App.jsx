@@ -8,7 +8,7 @@ import Teste from "./pages/Teste.jsx";
 const App = () => {
   return (
     <div>
-      <Teste  />
+      <Teste />
       {/* <Home superMan={SuperMan} /> */}
     </div>
   );
