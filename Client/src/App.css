@@ -1,19 +1,22 @@
 body {
-  background: #47c3ff !important;
+
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Montserrat", sans-serif !important;
+  overflow-y: scroll; /* ou: auto */
+  scrollbar-width: none;
 }
 
-
-
-
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
 /* Cardegoria */
 /* ========================================================================================= */
 
 .card2 {
-  width: 265px;
-  height: 330px;
+  width: 285px;
+  height: 350px;
   border-radius: 15px;
   background-color: #ffffff;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -46,10 +49,13 @@ body {
   width: 50vw !important;
   max-width: 100vw !important;
 }
+.link-hover:hover {
+  color: #d84040; /* Cor azul padrão do Bootstrap */
+}
+
 /* ========================================================== */
 
 /*============================Login========================== */
-
 
 input::placeholder {
   color: #000000;
@@ -62,7 +68,6 @@ input::placeholder {
 /* ========================================================================================= */
 .Checkout {
   background-color: #eeeeee;
-  width: 450px !important;
 }
 .Checkout hr {
   border: 2px solid #949494 !important;
@@ -74,11 +79,6 @@ input::placeholder {
   background-color: #c3c3c3 !important;
 }
 @media (max-width: 576px) {
-  .Checkout {
-    width: 90% !important;
-    padding: 1rem !important;
-    border-radius: 1rem !important;
-  }
   .btn.Continuar,
   .btn.Finalizar {
     font-size: 1rem !important;
@@ -92,6 +92,9 @@ input::placeholder {
 .quantidade {
   width: 70px !important;
   border: 1px solid #949494 !important;
+}
+.Quantidade {
+  min-width: 20px !important;
 }
 .img-container img {
   width: 100%;
@@ -114,6 +117,12 @@ input::placeholder {
   .quantidade {
     max-width: 90px;
   }
+  .CategoriaName {
+    font-size: 35px;
+  }
+}
+.Cart{
+  height: 82vh !important;
 }
 /* ========================================================================================= */
 
@@ -123,6 +132,10 @@ input::placeholder {
   font-size: 50px;
   color: #d84040;
 }
+.ConfigBack {
+  background-color: #e3e3e3 !important;
+}
+
 .Config input {
   background-color: #f2f2f2;
   height: 60px;
@@ -142,7 +155,7 @@ input::placeholder {
   margin-left: 2px;
 }
 .Tema {
-  background-color: #d9d9d9 !important;
+  background-color: #d84040 !important;
   width: 40px;
   height: 40px;
 }
@@ -157,6 +170,12 @@ input::placeholder {
 .Segur button {
   height: 50px !important;
 }
+/* Exemplo: mudar para verde */
+.form-check-input:checked {
+  background-color: #d84040 !important;
+  border-color: #d84040 !important;
+}
+
 /* ========================================================================================= */
 
 /* ==========================Home========================== */
@@ -185,7 +204,7 @@ input::placeholder {
   }
 
   .superman-img {
-    max-width: 100%;
+    max-width: 80% !important;
     height: auto;
     object-fit: contain;
   }
@@ -194,6 +213,70 @@ input::placeholder {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+}
+.nav-active,
+.nav-active i {
+  color: #a01818 !important;
+}
+.Circulo {
+  border-radius: 100% !important;
+  width: 1500px;
+  height: 1500px;
+  bottom: 200px;
+  left: 700px;
+}
+
+/* ========================================================== */
+
+/* RegisterCard */
+/* ========================================================== */
+
+.inputCredit {
+  background: #3b3b3b !important;
+  min-height: 45px;
+}
+
+.inputCredit::placeholder {
+  color: #7f7f7f !important;
+}
+.inputCredit {
+  background: #e6e6e6 !important;
+  min-height: 45px;
+}
+.conteudo {
+  background-color: #252525 !important;
+}
+
+.level {
+  background-color: #fff !important;
+  opacity: 0.3;
+}
+
+.favGamesFundo {
+  background-color: #2f2f2f !important;
+}
+
+.genero {
+  color: #7c7c7c;
+}
+/* ========================================================== */
+.Aumento {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.Aumento:hover {
+  transform: scale(1.05, 1.05);
+}
+
+/* ========================InfoProduto========================= */
+.Adicionar {
+  background-color: #d84040 !important;
+  height: 70px !important;
+  border-right: 3px solid #000000 !important;
+  border-bottom: 4px solid #000000 !important;
+}
+.Adicionar:hover {
+  background-color: #f74a4a !important;
 }
 
 /* ========================================================== */
