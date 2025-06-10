@@ -41,7 +41,7 @@ Bazinga Store é uma plataforma digital de e-commerce voltada para o público ge
 ---
 
 
-## Preview
+## 🏳️ Preview
 ![Imagem de preview](https://github.com/user-attachments/assets/6d30707f-d0c4-4ec1-8e8b-861cf5c97b17)
 
 
