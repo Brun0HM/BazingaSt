@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../components/footer/Footer";
+import Footer from "../components/Footer";
 import Checkout from "../components/Checkout/Checkout";
 import ItemCarrinho from "../components/ItemCarrinho/ItemCarrinho";
 import Header from "../components/header/Header";
