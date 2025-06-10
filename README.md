@@ -82,4 +82,10 @@ dotnet run
 - [Mazzi](https://github.com/ThiagoM22)  
 - [Ryan](https://github.com/rattin1)
 
+## 🔗 Links
+
+- [API] https://github.com/Brun0HM/BazingaStore
+- [CLIENT] https://github.com/Brun0HM/BazingaSt/tree/main/Client
+- [SITE]
+- [API PUBLICADA]
 
