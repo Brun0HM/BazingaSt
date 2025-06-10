@@ -4,18 +4,37 @@ import { useNavigate } from "react-router";
 const Cardegoria = ({ produto }) => {
   const navigate = useNavigate();
 
-  const adicionarAoCarrinho = () => {
-    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-    const index = carrinho.findIndex((item) => item.id === produto.id);
+  const adicionarAoCarrinho = async () => {
+    try {
+      // Substitua pelo carrinhoId real do usuário logado, se necessário
+      const carrinhoId = "6d701580-bd38-43a8-babd-08dda8488229";
+      const produtoId = produto.id;
+      const quantidade = 1;
 
-    if (index >= 0) {
-      carrinho[index].quantidade += 1;
-    } else {
-      carrinho.push({ ...produto, quantidade: 1 });
+      const response = await fetch(
+        "https://www.bazingastore.somee.com//api/CarrinhoItems",
+        {
+          method: "POST",
+          headers: {
+            accept: "text/plain",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            carrinhoId,
+            produtoId,
+            quantidade,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        alert("Produto adicionado ao carrinho!");
+      } else {
+        alert("Erro ao adicionar produto ao carrinho.");
+      }
+    } catch (error) {
+      alert("Erro de conexão com a API.");
     }
-
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-    alert("Produto adicionado ao carrinho!");
   };
 
   const handleClick = () => navigate("/info/" + produto.id);
