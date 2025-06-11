@@ -1,7 +1,7 @@
 import React from "react";
-import CardCateg from "../components/CardCategs/CardCateg";
+import CardCateg from "../components/CardCateg.jsx";
 import Header from "../components/header/Header";
-import Footer from "../components/footer/Footer";
+import Footer from "../components/Footer.jsx";
 
 const Categorias = () => {
   return (

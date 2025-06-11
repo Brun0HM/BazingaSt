@@ -5,6 +5,7 @@ import ProdutoInfo from "../components/ProdutoInfo/ProdutoInfo";
 import Cardegorias from "../components/Cardegorias/Cardegoria";
 import { useState, useEffect } from "react";
 
+
 const InfoProducts = () => {
   const [produtos, setProdutos] = useState([]);
   const [erro, setErro] = useState("");
