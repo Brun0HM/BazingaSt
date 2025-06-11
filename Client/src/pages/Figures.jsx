@@ -3,7 +3,7 @@ import Cardegoria from "../components/Cardegorias/Cardegoria";
 import Footer from "../components/Footer";
 import Header from "../components/header/Header";
 
-const ListaItens = () => {
+const Figures = () => {
   const [produtos, setProdutos] = useState([]);
   const [erro, setErro] = useState("");
 
@@ -68,4 +68,4 @@ const ListaItens = () => {
   );
 };
 
-export default ListaItens;
+export default Figures;
