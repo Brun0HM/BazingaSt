@@ -5,7 +5,7 @@ const DBNavbar = () => {
     <nav className="navbar navbar-expand-lg navbar-white bg-white border-bottom">
         <div className="container-fluid">
           <a className="navbar-brand d-flex align-items-center fw-bolder text-danger" href="#">
-            <i className="bi bi-archive-fill pe-2" style={{ fontSize: '1.5rem' }} />
+            <i className="bi bi-archive-fill pe-2 " style={{ fontSize: '1.5rem' }} />
             BazingaStore
           </a>
           <button
