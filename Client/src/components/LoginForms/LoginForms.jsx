@@ -25,15 +25,49 @@ const LoginForms = ({ onRedirect }) => {
         data = await response.json();
       }
 
+      //pesquisar nos cadastros pelo e-mail ou outro item e fazer a logica de capturar as informações
+
+      //condicional - se não tiver nada na role user - aplica a role, se já tiver não faz nada
+      //PUT do USerID
       if (response.ok) {
-//pesquisar nos cadastros pelo e-mail ou outro item e fazer a logica de capturar as informações
-
-
-//condicional - se não tiver nada na role user - aplica a role, se já tiver não faz nada
-//PUT do USerID 
-
         setMensagem("Login realizado com sucesso!");
-        localStorage.setItem("usuarioEmail", email); // Salva apenas o email
+        localStorage.setItem("usuarioEmail", email);
+
+        // 1. Buscar usuário pelo email
+        try {
+          const userId = data && data.id;
+          const userResponse = await fetch(
+            `https://www.bazingastore.somee.com/api/Usuarios/meu-id`,
+            {
+              method: "GET",
+              headers: { accept: "application/json" },
+            }
+          );
+          if (userResponse.ok) {
+            const usuarios = await userResponse.json();
+            const usuario = Array.isArray(usuarios) ? usuarios[0] : usuarios;
+            if (usuario) {
+              // 2. Verificar se possui role
+              if (!usuario.role || usuario.role.length === 0) {
+                // 3. Atualizar role para "user"
+                await fetch(
+                  `https://www.bazingastore.somee.com/api/Usuarios/${usuario.id}`,
+                  {
+                    method: "PUT",
+                    headers: {
+                      accept: "application/json",
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ ...usuario, role: ["user"] }),
+                  }
+                );
+              }
+            }
+          }
+        } catch (e) {
+          // Se der erro, apenas segue o fluxo normal
+        }
+
         navigate("/"); // Redireciona para Home
       } else {
         setMensagem((data && data.message) || "Erro ao fazer login.");
