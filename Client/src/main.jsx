@@ -17,6 +17,9 @@ import DBPedidos from "./pages/DBPedidos.jsx";
 import DBClientes from "./pages/DBClientes.jsx";
 import InfoProducts from "./pages/InfoProducts.jsx";
 import AdicionarCupom from "./pages/AdicionarCupom.jsx";
+import Figures from "./pages/Figures.jsx";
+import Roupas from "./pages/Roupas.jsx";
+import Poster from "./pages/Poster.jsx";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -25,9 +28,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />} />
         <Route path="/carrinho" element={<Cart />} />
         <Route path="/produtos" element={<ListaItens />} />
-        <Route path="/roupas" element={<ListaItens />} />
-        <Route path="/figures" element={<ListaItens />} />
-        <Route path="/poster" element={<ListaItens />} />
+        <Route path="/roupas" element={<Roupas />} />
+        <Route path="/figures" element={<Figures />} />
+        <Route path="/poster" element={<Poster />} />
         <Route path="/config" element={<Config />} />
         <Route path="/login" element={<Logar />} />
         <Route path="/registrar" element={<CreateAccount />} />

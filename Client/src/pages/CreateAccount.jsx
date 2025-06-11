@@ -11,17 +11,14 @@ const CreateAccount = () => {
     e.preventDefault();
     setMensagem("");
     try {
-      const response = await fetch(
-        "https://www.bazingastore.somee.com/register",
-        {
-          method: "POST",
-          headers: {
-            accept: "*/*",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch("https://bazingastore.somee.com/register", {
+        method: "POST",
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
       if (response.ok) {
         setMensagem("Registro realizado com sucesso!");
         setTimeout(() => {

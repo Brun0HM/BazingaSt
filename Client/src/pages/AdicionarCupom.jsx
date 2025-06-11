@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import HeaderDS from "../components/HeaderDS";
 
 const AdicionarCupom = () => {
   const [cupons, setCupons] = useState([]);
@@ -74,95 +75,100 @@ const AdicionarCupom = () => {
   );
 
   return (
-    <div className="container py-5">
-      <h2 className="mb-4 text-center">Dashboard de Cupons de Desconto</h2>
-      {/* Formulário de cadastro */}
-      <div className="card mb-5 p-4">
-        <h4 className="mb-3">Adicionar novo cupom</h4>
-        <form onSubmit={handleSubmit} className="row g-3">
-          <div className="col-md-4">
-            <label className="form-label">Código</label>
-            <input
-              type="text"
-              className="form-control"
-              value={form.codigo}
-              required
-              onChange={(e) => setForm({ ...form, codigo: e.target.value })}
-            />
-          </div>
-          <div className="col-md-4">
-            <label className="form-label">% Desconto</label>
-            <input
-              type="number"
-              className="form-control"
-              value={form.percentualDesconto}
-              required
-              min={1}
-              max={100}
-              onChange={(e) =>
-                setForm({ ...form, percentualDesconto: e.target.value })
-              }
-            />
-          </div>
-          <div className="col-md-4">
-            <label className="form-label">Validade</label>
-            <input
-              type="datetime-local"
-              className="form-control"
-              value={form.dataValidade}
-              required
-              onChange={(e) =>
-                setForm({ ...form, dataValidade: e.target.value })
-              }
-            />
-          </div>
-          <div className="col-12 d-grid">
-            <button type="submit" className="btn btn-success btn-lg">
-              Adicionar Cupom
-            </button>
-          </div>
-        </form>
-        {mensagem && (
-          <div className="alert alert-info mt-3 text-center">{mensagem}</div>
-        )}
-      </div>
-      {/* Lista de cupons ativos */}
-      <div className="card shadow-sm border-0">
-        <div className="card-body">
-          <h4 className="mb-4 fw-bold text-primary">Cupons Ativos</h4>
-          {erro && <div className="alert alert-danger text-center">{erro}</div>}
-          <div className="table-responsive">
-            <table className="table table-bordered table-striped align-middle">
-              <thead className="table-dark">
-                <tr>
-                  <th>Código</th>
-                  <th>% Desconto</th>
-                  <th>Validade</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cuponsAtivos.map((cupom) => (
-                  <tr key={cupom.id}>
-                    <td>{cupom.codigo}</td>
-                    <td>{cupom.percentualDesconto}%</td>
-                    <td>
-                      {new Date(cupom.dataValidade).toLocaleString("pt-BR")}
-                    </td>
-                  </tr>
-                ))}
-                {cuponsAtivos.length === 0 && (
+    <>
+    <HeaderDS />
+      <div className="container py-5">
+        <h2 className="mb-4 text-center">Dashboard de Cupons de Desconto</h2>
+        {/* Formulário de cadastro */}
+        <div className="card mb-5 p-4">
+          <h4 className="mb-3">Adicionar novo cupom</h4>
+          <form onSubmit={handleSubmit} className="row g-3">
+            <div className="col-md-4">
+              <label className="form-label">Código</label>
+              <input
+                type="text"
+                className="form-control"
+                value={form.codigo}
+                required
+                onChange={(e) => setForm({ ...form, codigo: e.target.value })}
+              />
+            </div>
+            <div className="col-md-4">
+              <label className="form-label">% Desconto</label>
+              <input
+                type="number"
+                className="form-control"
+                value={form.percentualDesconto}
+                required
+                min={1}
+                max={100}
+                onChange={(e) =>
+                  setForm({ ...form, percentualDesconto: e.target.value })
+                }
+              />
+            </div>
+            <div className="col-md-4">
+              <label className="form-label">Validade</label>
+              <input
+                type="datetime-local"
+                className="form-control"
+                value={form.dataValidade}
+                required
+                onChange={(e) =>
+                  setForm({ ...form, dataValidade: e.target.value })
+                }
+              />
+            </div>
+            <div className="col-12 d-grid">
+              <button type="submit" className="btn btn-success btn-lg">
+                Adicionar Cupom
+              </button>
+            </div>
+          </form>
+          {mensagem && (
+            <div className="alert alert-info mt-3 text-center">{mensagem}</div>
+          )}
+        </div>
+        {/* Lista de cupons ativos */}
+        <div className="card shadow-sm border-0">
+          <div className="card-body">
+            <h4 className="mb-4 fw-bold text-primary">Cupons Ativos</h4>
+            {erro && (
+              <div className="alert alert-danger text-center">{erro}</div>
+            )}
+            <div className="table-responsive">
+              <table className="table table-bordered table-striped align-middle">
+                <thead className="table-dark">
                   <tr>
-                    <td colSpan={3} className="text-center text-muted">
-                      Nenhum cupom ativo.
-                    </td>
+                    <th>Código</th>
+                    <th>% Desconto</th>
+                    <th>Validade</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {cuponsAtivos.map((cupom) => (
+                    <tr key={cupom.id}>
+                      <td>{cupom.codigo}</td>
+                      <td>{cupom.percentualDesconto}%</td>
+                      <td>
+                        {new Date(cupom.dataValidade).toLocaleString("pt-BR")}
+                      </td>
+                    </tr>
+                  ))}
+                  {cuponsAtivos.length === 0 && (
+                    <tr>
+                      <td colSpan={3} className="text-center text-muted">
+                        Nenhum cupom ativo.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

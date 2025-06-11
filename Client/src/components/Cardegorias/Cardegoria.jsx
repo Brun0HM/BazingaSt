@@ -8,7 +8,7 @@ const Cardegoria = ({ produto }) => {
     try {
       // Substitua pelo carrinhoId real do usuário logado, se necessário
       const carrinhoId = "6d701580-bd38-43a8-babd-08dda8488229";
-      const produtoId = produto.id;
+      const produtoId = produto.produtoId;
       const quantidade = 1;
 
       const response = await fetch(

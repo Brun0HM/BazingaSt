@@ -15,6 +15,13 @@ body::-webkit-scrollbar {
 /* Cardegoria */
 /* ========================================================================================= */
 
+.tamanho{
+  min-height: 100vh !important;
+}
+.Logos{
+  width: 200px;
+  height: 200px;
+}
 .imagess {
   width: 400px;
   height: 280px;
@@ -116,6 +123,11 @@ body::-webkit-scrollbar {
   }
   .CategoriaName {
     font-size: 35px;
+  }
+  .imagess {
+    width: 334px;
+    height: 180px;
+    object-fit: cover;
   }
 }
 @media (min-width: 1800px) {

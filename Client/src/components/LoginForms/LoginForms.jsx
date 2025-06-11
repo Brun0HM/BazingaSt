@@ -11,7 +11,7 @@ const LoginForms = ({ onRedirect }) => {
     e.preventDefault();
     setMensagem("");
     try {
-      const response = await fetch("https://www.bazingastore.somee.com/login", {
+      const response = await fetch("https://bazingastore.somee.com/login", {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -19,15 +19,24 @@ const LoginForms = ({ onRedirect }) => {
         },
         body: JSON.stringify({ email, password }),
       });
-      const data = await response.json();
+
+      let data = null;
+      if (response.status !== 204) {
+        data = await response.json();
+      }
+
       if (response.ok) {
+//pesquisar nos cadastros pelo e-mail ou outro item e fazer a logica de capturar as informações
+
+
+//condicional - se não tiver nada na role user - aplica a role, se já tiver não faz nada
+//PUT do USerID 
+
         setMensagem("Login realizado com sucesso!");
-        localStorage.setItem("usuarioEmail", email); // Salva o email do usuário
-        setTimeout(() => {
-          navigate("/"); // Redireciona para Home
-        }, 1000);
+        localStorage.setItem("usuarioEmail", email); // Salva apenas o email
+        navigate("/"); // Redireciona para Home
       } else {
-        setMensagem(data.message || "Erro ao fazer login.");
+        setMensagem((data && data.message) || "Erro ao fazer login.");
       }
     } catch (error) {
       setMensagem("Erro de conexão com a API.");

@@ -184,7 +184,7 @@ const Header = () => {
                 {usuarioEmail ? (
                   <span className="fw-bold text-bg-black">{usuarioEmail}</span>
                 ) : (
-                  <a href="/login" className="btn btn-primary">
+                  <a href="/login" className="btn btn-primary btnCor border-0">
                     Entrar
                   </a>
                 )}

@@ -2,9 +2,57 @@ import React from "react";
 import "./../../App.css";
 
 const ItemCarrinho = ({ item, onRemover, onAlterarQuantidade }) => {
-  const incrementar = () => onAlterarQuantidade(item.id, item.quantidade + 1);
-  const decrementar = () =>
-    onAlterarQuantidade(item.id, Math.max(0, item.quantidade - 1));
+  // Função para atualizar a quantidade via API
+  const alterarQuantidade = async (novaQuantidade) => {
+    if (novaQuantidade < 1) return;
+    try {
+      const response = await fetch(
+        `https://www.bazingastore.somee.com/api/CarrinhoItems/${item.carrinhoItemId}`,
+        {
+          method: "PUT",
+          headers: {
+            accept: "text/plain",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...item,
+            quantidade: novaQuantidade,
+          }),
+        }
+      );
+      if (response.ok) {
+        if (onAlterarQuantidade) onAlterarQuantidade();
+      } else {
+        alert("Erro ao atualizar quantidade.");
+      }
+    } catch (error) {
+      alert("Erro de conexão com a API.");
+    }
+  };
+
+  const incrementar = () => alterarQuantidade(item.quantidade + 1);
+  const decrementar = () => alterarQuantidade(item.quantidade - 1);
+
+  // Função para deletar item do carrinho via API
+  const removerItem = async () => {
+    if (!window.confirm("Deseja remover este item do carrinho?")) return;
+    try {
+      const response = await fetch(
+        `https://www.bazingastore.somee.com/api/CarrinhoItems/${item.carrinhoItemId}`,
+        {
+          method: "DELETE",
+          headers: { accept: "*/*" },
+        }
+      );
+      if (response.ok) {
+        if (onRemover) onRemover(item.id);
+      } else {
+        alert("Erro ao remover item do carrinho.");
+      }
+    } catch (error) {
+      alert("Erro de conexão com a API.");
+    }
+  };
 
   return (
     <div className="container py-3 ">
@@ -34,10 +82,7 @@ const ItemCarrinho = ({ item, onRemover, onAlterarQuantidade }) => {
               +
             </button>
           </div>
-          <button
-            className="btn text-danger p-0"
-            onClick={() => onRemover(item.id)}
-          >
+          <button className="btn text-danger p-0" onClick={removerItem}>
             <i className="bi bi-trash fs-5"></i>
           </button>
         </div>
