@@ -1,5 +1,5 @@
 body {
-
+  background-color: #47c3ff !important;
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Montserrat", sans-serif !important;
@@ -14,30 +14,26 @@ body::-webkit-scrollbar {
 /* Cardegoria */
 /* ========================================================================================= */
 
-.card2 {
-  width: 285px;
-  height: 350px;
-  border-radius: 15px;
-  background-color: #ffffff;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  text-decoration: none;
+.imagess {
+  width: 400px;
+  height: 280px;
+  object-fit: cover;
+}
+.imgsss {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
 }
 
-.card2:hover {
-  transform: scale(1.05, 1.05);
+.botao {
+  height: 50px;
 }
 
 .card2 a {
   margin-right: 10px;
 }
 .ListaI {
-  background-color: #d84040;
-}
-.CategoriaName {
-  font-size: 60px;
-}
-.CategoriaName {
-  font-size: 60px;
+  background-color: #ffffff;
 }
 
 /* ==========================Header========================== */
@@ -57,7 +53,7 @@ body::-webkit-scrollbar {
 
 /*============================Login========================== */
 
-input::placeholder {
+.Config input::placeholder {
   color: #000000;
   font-weight: 800;
 }
@@ -121,9 +117,12 @@ input::placeholder {
     font-size: 35px;
   }
 }
-.Cart{
-  height: 82vh !important;
+@media (min-width: 1800px) {
+  .Cart {
+    height: 100vh !important;
+  }
 }
+
 /* ========================================================================================= */
 
 /* Config */
@@ -144,7 +143,7 @@ input::placeholder {
   background-color: #d9d9d9 !important;
   width: 100px !important;
 }
-input::placeholder {
+.Config input::placeholder {
   color: #888;
   opacity: 1;
 }
@@ -280,3 +279,6 @@ input::placeholder {
 }
 
 /* ========================================================== */
+.Categor {
+  font-size: 13px;
+}

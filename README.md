@@ -40,6 +40,11 @@ Bazinga Store é uma plataforma digital de e-commerce voltada para o público ge
 
 ---
 
+
+## 🏳️ Preview
+![Imagem de preview](https://github.com/user-attachments/assets/6d30707f-d0c4-4ec1-8e8b-861cf5c97b17)
+
+
 ## 🔧 Clonando o repositório
 
 ```bash
@@ -82,4 +87,10 @@ dotnet run
 - [Mazzi](https://github.com/ThiagoM22)  
 - [Ryan](https://github.com/rattin1)
 
+## 🔗 Links
+
+- [API] https://github.com/Brun0HM/BazingaStore
+- [CLIENT] https://github.com/Brun0HM/BazingaSt/tree/main/Client
+- [SITE]
+- [API PUBLICADA]
 

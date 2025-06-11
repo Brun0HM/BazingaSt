@@ -1,7 +1,7 @@
 import React from "react";
 import Destaque from "../components/Destaque";
 import Home from "./Home";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer.jsx";
 import Header from "../components/header/Header";
 
 const DestaquePage = () => {

@@ -12,39 +12,57 @@ const Checkout = (props) => {
   };
   return (
     <>
-      <div className="">
-        <div className="">
-          <div className="bg-white Checkout rounded-5 p-4">
-            <h1 className="fw-bold mb-3">Checkout:</h1>
-            <hr />
-            <div className="d-flex flex-column gap-2 mb-4">
-              <div className="d-flex justify-content-between">
-                <p>Produto</p>
-                <p>R$00.00</p>
-              </div>
-              <div className="d-flex justify-content-between">
-                <p>Produto</p>
-                <p>R$00.00</p>
-              </div>
-              <div className="d-flex justify-content-between">
-                <p>Produto</p>
-                <p>R$00.00</p>
-              </div>
+      <div>
+        <div className="bg-white col-12 p-4 rounded-3 border-2 border">
+          <h2 className="fw-bold">
+            <i class="bi bi-credit-card fs-3 me-2 text-danger"></i> Checkout
+          </h2>
+          <div className="d-flex flex-column">
+            <div className="d-flex justify-content-between pt-4">
+              <p>Produto 1</p>
+              <p className="fw-bold">R$00.00</p>
             </div>
-            <div className="d-flex flex-column align-items-center gap-3 rounded-5 mt-4">
-              <button
-                className="btn btnCor text-white btn-danger text-black fs-5 px-4 py-3 rounded-4 w-100 w-md-auto"
-                onClick={handleContinuarComprando}
-              >
-                Continuar comprando
-              </button>
-              <button
-                className="btn Finalizar text-black fs-5 px-4 py-3 rounded-4 w-100 w-md-auto"
-                onClick={handleFinalizarCompra}
-              >
-                Finalizar Compra
-              </button>
+            <div className="d-flex justify-content-between">
+              <p>Produto 2</p>
+              <p className="fw-bold">R$00.00</p>
+            </div>{" "}
+            <div className="d-flex justify-content-between">
+              <p>Produto 3</p>
+              <p className="fw-bold">R$00.00</p>
             </div>
+          </div>
+          <hr />
+          <div>
+            <div className="d-flex justify-content-between">
+              <p>Subtotal</p>
+              <p className="fw-bold">R$00.00</p>
+            </div>
+            <div className="d-flex justify-content-between">
+              <p>Frete</p>
+              <p className="text-success fw-bold">Gratis</p>
+            </div>
+            <div className=" d-flex gap-2">
+              <input
+                type="text"
+                placeholder="Cupom de Desconto"
+                className="form-control"
+              />
+              <button className="btn btn-danger">Aplicar</button>
+            </div>
+          </div>
+          <hr />
+          <div className="pb-3">
+            <div className="d-flex justify-content-between pb-3">
+              <h5 className="fw-bold">Total</h5>
+              <h5 className="fw-bold text-danger">R$00.00</h5>
+            </div>
+            <button className="btn btn-danger w-100 botao" onClick={handleFinalizarCompra}>Finalizar Compra</button>
+            <button
+              className="btn btn-outline-danger w-100 mt-2 botao"
+              onClick={handleContinuarComprando}
+            >
+              Continuar Comprando
+            </button>
           </div>
         </div>
       </div>
