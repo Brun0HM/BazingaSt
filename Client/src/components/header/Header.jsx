@@ -9,7 +9,6 @@ const Header = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary z-3">
         <div className="container-fluid">
-          {/* Offcanvas toggle button for mobile, only visible on small screens */}
           <button
             className="navbar-toggler d-lg-none"
             type="button"
@@ -183,7 +182,7 @@ const Header = () => {
               </li>
               <div>
                 {usuarioEmail ? (
-                  <span className="fw-bold text-primary">{usuarioEmail}</span>
+                  <span className="fw-bold text-bg-black">{usuarioEmail}</span>
                 ) : (
                   <a href="/login" className="btn btn-primary">
                     Entrar
