@@ -3,6 +3,13 @@ import Footer from "../components/Footer";
 import Checkout from "../components/Checkout/Checkout";
 import ItemCarrinho from "../components/ItemCarrinho/ItemCarrinho";
 import Header from "../components/header/Header";
+import Footer from "../components/Footer.jsx";
+
+// Função utilitária para buscar do localStorage
+const getCarrinhoStorage = () => {
+  const data = localStorage.getItem("carrinho");
+  return data ? JSON.parse(data) : [];
+};
 
 const Cart = () => {
   const [itensCarrinho, setItensCarrinho] = useState([]);
