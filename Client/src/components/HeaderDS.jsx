@@ -9,7 +9,8 @@ const HeaderDS = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-white bg-white shadow-sm">
       <div className="container">
-        <a className="navbar-brand fw-bold" href="/">
+        <a className="navbar-brand fw-bold align-items-center text-danger" href="/">
+        <i className="bi bi-archive-fill pe-2 " style={{ fontSize: '1.5rem' }} />
           Bazinga Dashboard
         </a>
         <div className="d-flex gap-3">

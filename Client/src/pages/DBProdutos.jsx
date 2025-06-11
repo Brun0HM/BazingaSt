@@ -109,19 +109,21 @@ const DashboardProdutos = () => {
 
   return (
     <>
+     <div>
+
       <HeaderDS />
       <div className="container py-5">
         <div className="row justify-content-center mb-5">
-          <div className="col-12 col-lg-8">
+          <div className="col-12 col-lg-12">
             <div className="card shadow-sm border-0">
               <div className="card-body">
-                <h2 className="mb-4 text-center fw-bold text-primary">
-                  Dashboard de Produtos
+                <h2 className="mb-4 text-center fw-bold text-danger">
+                  Adicionar Produto
                 </h2>
-                <h4 className="mb-3">Cadastrar novo produto</h4>
+                <h4 className="mb-3 fw-bold text-center text-muted">Cadastrar novo produto</h4>
                 <form onSubmit={handleSubmit} className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">Nome</label>
+                    <label className="form-label fw-bolder">Nome</label>
                     <input
                       type="text"
                       className="form-control"
@@ -133,7 +135,7 @@ const DashboardProdutos = () => {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Categoria ID</label>
+                    <label className="form-label fw-bolder">Categoria ID</label>
                     <input
                       type="text"
                       className="form-control"
@@ -145,7 +147,7 @@ const DashboardProdutos = () => {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Preço</label>
+                    <label className="form-label fw-bolder">Preço</label>
                     <input
                       type="number"
                       step="0.01"
@@ -158,7 +160,7 @@ const DashboardProdutos = () => {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Estoque</label>
+                    <label className="form-label fw-bolder">Estoque</label>
                     <input
                       type="number"
                       className="form-control"
@@ -170,7 +172,7 @@ const DashboardProdutos = () => {
                     />
                   </div>
                   <div className="col-12">
-                    <label className="form-label">Descrição</label>
+                    <label className="form-label fw-bolder">Descrição</label>
                     <input
                       type="text"
                       className="form-control"
@@ -182,7 +184,7 @@ const DashboardProdutos = () => {
                     />
                   </div>
                   <div className="col-12">
-                    <label className="form-label">Imagem (URL)</label>
+                    <label className="form-label fw-bolder">Imagem (URL)</label>
                     <input
                       type="text"
                       className="form-control"
@@ -194,7 +196,7 @@ const DashboardProdutos = () => {
                     />
                   </div>
                   <div className="col-12 d-grid">
-                    <button type="submit" className="btn btn-success btn-lg">
+                    <button type="submit" className="btn btn-danger btn-lg">
                       <i className="bi bi-plus-circle me-2"></i>
                       Cadastrar Produto
                     </button>
@@ -212,7 +214,7 @@ const DashboardProdutos = () => {
         {/* Lista de produtos */}
         <div className="card shadow-sm border-0">
           <div className="card-body">
-            <h4 className="mb-4 fw-bold text-primary">Produtos cadastrados</h4>
+            <h4 className="mb-4 fw-bold text-dark text-center fs-3">Produtos cadastrados</h4>
             {erro && (
               <div className="alert alert-danger text-center">{erro}</div>
             )}
@@ -248,7 +250,7 @@ const DashboardProdutos = () => {
                       </span>
                     </div>
                     <button
-                      className="btn btn-sm btn-danger"
+                      className="btn btn-sm btn-dark fw-semibold fs-6"
                       onClick={() => handleDelete(produto.produtoId)}
                     >
                       Excluir
@@ -265,6 +267,7 @@ const DashboardProdutos = () => {
           </div>
         </div>
       </div>
+                      </div>
     </>
   );
 };

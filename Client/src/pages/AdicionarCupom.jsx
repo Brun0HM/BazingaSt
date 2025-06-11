@@ -78,13 +78,13 @@ const AdicionarCupom = () => {
     <>
     <HeaderDS />
       <div className="container py-5">
-        <h2 className="mb-4 text-center">Dashboard de Cupons de Desconto</h2>
         {/* Formulário de cadastro */}
         <div className="card mb-5 p-4">
-          <h4 className="mb-3">Adicionar novo cupom</h4>
+        <h2 className="mb-4 text-center fw-bold">Dashboard de Cupons de Desconto</h2>
+          <h4 className="mb-3 text-center text-muted fw-bold">Adicionar novo cupom</h4>
           <form onSubmit={handleSubmit} className="row g-3">
             <div className="col-md-4">
-              <label className="form-label">Código</label>
+              <label className="form-label fw-bolder">Código</label>
               <input
                 type="text"
                 className="form-control"
@@ -94,7 +94,7 @@ const AdicionarCupom = () => {
               />
             </div>
             <div className="col-md-4">
-              <label className="form-label">% Desconto</label>
+              <label className="form-label fw-bolder">% Desconto</label>
               <input
                 type="number"
                 className="form-control"
@@ -108,7 +108,7 @@ const AdicionarCupom = () => {
               />
             </div>
             <div className="col-md-4">
-              <label className="form-label">Validade</label>
+              <label className="form-label fw-bolder">Validade</label>
               <input
                 type="datetime-local"
                 className="form-control"
@@ -120,7 +120,7 @@ const AdicionarCupom = () => {
               />
             </div>
             <div className="col-12 d-grid">
-              <button type="submit" className="btn btn-success btn-lg">
+              <button type="submit" className="btn btn-danger btn-lg">
                 Adicionar Cupom
               </button>
             </div>
@@ -132,7 +132,7 @@ const AdicionarCupom = () => {
         {/* Lista de cupons ativos */}
         <div className="card shadow-sm border-0">
           <div className="card-body">
-            <h4 className="mb-4 fw-bold text-primary">Cupons Ativos</h4>
+            <h4 className="mb-4 fw-bolder text-dark text-center">Cupons Ativos</h4>
             {erro && (
               <div className="alert alert-danger text-center">{erro}</div>
             )}
