@@ -4,6 +4,7 @@ body {
   background-repeat: no-repeat;
   font-family: "Montserrat", sans-serif !important;
   overflow-y: scroll; /* ou: auto */
+  overflow-x: hidden; /* para esconder a barra de rolagem horizontal */
   scrollbar-width: none;
 }
 
