@@ -23,7 +23,6 @@ import DBProdutos from "./pages/DBProdutos.jsx";
 const App = () => {
   return (
     <div>
-    <DBProdutos />
       <Home superMan={SuperMan} />
     </div>
   );
