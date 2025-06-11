@@ -3,7 +3,7 @@ import Cardegoria from "../components/Cardegorias/Cardegoria";
 import Footer from "../components/Footer";
 import Header from "../components/header/Header";
 
-const Figures = () => {
+const Poster = () => {
   const [produtos, setProdutos] = useState([]);
   const [erro, setErro] = useState("");
 
@@ -37,11 +37,12 @@ const Figures = () => {
         <div className="container">
           <div className="d-flex align-items-center pt-5 pb-5">
             <div className="d-flex flex-column ps-3">
-              <h2 className="fw-bold">Figures</h2>
+              <h2 className="fw-bold">Posters</h2>
               <p className="w-75">
-                Dê vida à sua coleção com nossos figures incríveis! Dos heróis
-                lendários aos vilões icônicos, cada peça é um tributo à sua
-                paixão por games, animes, filmes e séries
+                Transforme suas paredes em portais para outros mundos! Com
+                nossos posters geek, leve para seu espaço cenas épicas,
+                personagens icônicos e artes exclusivas dos seus universos
+                favoritos.
               </p>
             </div>
           </div>
@@ -50,8 +51,8 @@ const Figures = () => {
             {produtos
               .filter(
                 (produto) =>
-                  produto.categoriaId === "01818fc5-6565-435b-abb7-b10aa23ee869"
-              ) // ou produto.categoriaId === "id_da_categoria"s
+                  produto.categoriaId === "23a61ffd-7a1e-4d8d-982b-06df4724d890"
+              )
               .map((produto) => (
                 <Cardegoria key={produto.id} produto={produto} />
               ))}
@@ -68,4 +69,4 @@ const Figures = () => {
   );
 };
 
-export default Figures;
+export default Poster;

@@ -33,7 +33,7 @@ const ListaItens = () => {
   return (
     <>
       <Header />
-      <div className="ListaI col-12">
+      <div className="ListaI col-12 tamanho">
         <div className="container">
           <div className="d-flex align-items-center pt-5 pb-5">
             <div className="d-flex flex-column ps-3">

@@ -3,7 +3,6 @@ import Footer from "../components/Footer";
 import Checkout from "../components/Checkout/Checkout";
 import ItemCarrinho from "../components/ItemCarrinho/ItemCarrinho";
 import Header from "../components/header/Header";
-import Footer from "../components/Footer.jsx";
 
 // Função utilitária para buscar do localStorage
 const getCarrinhoStorage = () => {
@@ -76,7 +75,12 @@ const Cart = () => {
               </div>
             </div>
             <div className="col-12 col-md-4">
-              <Checkout caminho="/pagar" />
+              <Checkout
+                caminho="/pagar"
+                itensCarrinho={itensCarrinho}
+                loading={loading}
+                erro={erro}
+              />
             </div>
           </div>
         </div>
