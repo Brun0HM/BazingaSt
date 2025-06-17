@@ -20,40 +20,8 @@ const CreateAccount = () => {
         body: JSON.stringify({ email, password }),
       });
       if (response.ok) {
-        let usuarioId = null;
-        try {
-          if (response.status !== 204) {
-            const data = await response.json();
-            console.log("Resposta do registro:", data);
-            usuarioId = data && (data.usuarioId || data.id || data.userId);
-          }
-        } catch {
-          usuarioId = null;
-        }
-
-        // Se conseguiu o id, cria o carrinho
-        if (usuarioId) {
-          try {
-            await fetch("https://localhost:7257/api/Carrinhos", {
-              method: "POST",
-              headers: {
-                accept: "text/plain",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ usuarioId }),
-            });
-          } catch {
-            // Se der erro ao criar o carrinho, apenas segue o fluxo
-          }
-        } else {
-          // Se não conseguiu o id, avise o usuário ou tente buscar o usuário pelo email (se houver endpoint)
-          console.warn("Não foi possível obter o ID do usuário após registro.");
-        }
-
         setMensagem("Registro realizado com sucesso!");
-        setTimeout(() => {
-          navigate("/login");
-        }, 1200);
+        navigate("/login");
         setEmail("");
         setPassword("");
       } else {
