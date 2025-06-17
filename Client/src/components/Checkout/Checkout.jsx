@@ -1,11 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Checkout = ({ caminho, itensCarrinho = [], loading, erro }) => {
   // Calcula o total dos itens
-  const total = itensCarrinho.reduce(
+  const totalInicial = itensCarrinho.reduce(
     (acc, item) => acc + item.produto.preco * (item.quantidade || 1),
     0
   );
+  useEffect(() => {
+    setTotal(totalInicial);
+  }, [itensCarrinho]);
+
+  const [cupom, setCupom] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [total, setTotal] = useState(totalInicial);
+  const [desconto, setDesconto] = useState(0);
+  const [aplicando, setAplicando] = useState(false);
+  const aplicarCupom = async (e) => {
+    e.preventDefault();
+    setMensagem("");
+    setAplicando(true);
+    try {
+      const response = await fetch(
+        "http://localhost:5286/api/CupomDescontos/verificar-e-aplicar-cupom",
+        {
+          method: "POST",
+          headers: {
+            accept: "text/plain",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            valorTotal: totalInicial,
+            codigo: cupom,
+          }),
+        }
+      );
+      if (response.ok) {
+        const novoTotal = await response.json();
+        setDesconto(totalInicial - novoTotal);
+        setTotal(novoTotal);
+        setMensagem("Cupom aplicado com sucesso!");
+        console.log(total);
+      } else {
+        setMensagem("Cupom inválido ou erro ao aplicar.");
+        setDesconto(0);
+        setTotal(totalInicial);
+      }
+    } catch {
+      setMensagem("Erro de conexão com a API.");
+      setDesconto(0);
+      setTotal(totalInicial);
+    }
+    setAplicando(false);
+  };
 
   return (
     <div className="card p-4 shadow-sm">
@@ -38,13 +84,25 @@ const Checkout = ({ caminho, itensCarrinho = [], loading, erro }) => {
           <p>Frete</p>
           <p className="text-success fw-bold">Gratis</p>
         </div>
-        <div className="d-flex gap-2">
+        <form className="d-flex gap-2 mb-2" onSubmit={aplicarCupom}>
           <input
             type="text"
             placeholder="Cupom de Desconto"
             className="form-control"
+            value={cupom}
+            onChange={(e) => setCupom(e.target.value)}
+            disabled={aplicando}
           />
-          <button className="btn btn-danger">Aplicar</button>
+          <button className="btn btn-danger" type="submit" disabled={aplicando}>
+            {aplicando ? "Aplicando..." : "Aplicar"}
+          </button>
+        </form>
+        {mensagem && (
+          <div className="alert alert-info text-center py-1">{mensagem}</div>
+        )}
+        <div className="d-flex justify-content-between mb-2">
+          <span>Desconto:</span>
+          <span className="text-success">- R$ {desconto.toFixed(2)}</span>
         </div>
         <hr />
         <div className="pb-3">
