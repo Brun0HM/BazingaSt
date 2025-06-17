@@ -1,34 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, { useState } from "react";
 
-const ProdutoInfo = () => {
-  const { id } = useParams();
-  const [produto, setProduto] = useState(null);
+const ProdutoInfo = (produto) => {
   const [erro, setErro] = useState("");
-
-  useEffect(() => {
-    const fetchProdutos = async () => {
-      try {
-        const response = await fetch(
-          "https://www.bazingastore.somee.com/api/Produtos",
-          {
-            method: "GET",
-            headers: { accept: "text/plain" },
-          }
-        );
-        if (response.ok) {
-          const data = await response.json();
-          const prod = data.find((p) => p.id === id);
-          setProduto(prod);
-        } else {
-          setErro("Erro ao buscar produtos.");
-        }
-      } catch (error) {
-        setErro("Erro de conexão com a API.");
-      }
-    };
-    fetchProdutos();
-  }, [id]);
 
   if (erro) {
     return <div className="alert alert-danger text-center">{erro}</div>;

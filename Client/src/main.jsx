@@ -40,7 +40,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/dbpedidos" element={<DBPedidos />} />
         <Route path="/dbclientes" element={<DBClientes />} />
         <Route path="/cupom" element={<AdicionarCupom />} />
-        <Route path="Info" element={<InfoProducts />}></Route>
+        <Route path="/info/:produtoId" element={<InfoProducts />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
