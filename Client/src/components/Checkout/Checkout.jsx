@@ -3,7 +3,7 @@ import React from "react";
 const Checkout = ({ caminho, itensCarrinho = [], loading, erro }) => {
   // Calcula o total dos itens
   const total = itensCarrinho.reduce(
-    (acc, item) => acc + item.preco * (item.quantidade || 1),
+    (acc, item) => acc + item.produto.preco * (item.quantidade || 1),
     0
   );
 
@@ -22,11 +22,13 @@ const Checkout = ({ caminho, itensCarrinho = [], loading, erro }) => {
                 className="d-flex justify-content-between align-items-center mb-2"
               >
                 <div>
-                  <span className="fw-bold">{item.nome}</span>
-                  <span className="text-muted ms-2">x{item.quantidade}</span>
+                  <span className="">{item.produto.nome}</span>
+                  <span className="text-muted ms-2 fw-bold">
+                    x{item.quantidade}
+                  </span>
                 </div>
                 <span>
-                  R$ {(item.preco * (item.quantidade || 1)).toFixed(2)}
+                  R$ {(item.produto.preco * (item.quantidade || 1)).toFixed(2)}
                 </span>
               </div>
             ))

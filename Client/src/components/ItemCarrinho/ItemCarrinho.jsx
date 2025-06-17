@@ -35,7 +35,6 @@ const ItemCarrinho = ({ item, onRemover, onAlterarQuantidade }) => {
 
   // Função para deletar item do carrinho via API
   const removerItem = async () => {
-    if (!window.confirm("Deseja remover este item do carrinho?")) return;
     try {
       const response = await fetch(
         `https://www.bazingastore.somee.com/api/CarrinhoItems/${item.carrinhoItemId}`,
@@ -60,14 +59,14 @@ const ItemCarrinho = ({ item, onRemover, onAlterarQuantidade }) => {
         <div className="col-md-3 text-center mb-3 mb-md-0 img-container">
           <img
             className="img-fluid rounded-4"
-            src={item.imagem || "https://placehold.co/220x220"}
+            src={item.produto.imagem || "https://placehold.co/220x220"}
             alt={item.nome}
-            style={{ maxWidth: "150px" }}
+            style={{ maxWidth: "150px", objectFit: "cover", minHeight: "150px" }}
           />
         </div>
         <div className="col-md-9">
-          <h1 className="fw-bold mb-0 fs-4">{item.nome}</h1>
-          <p className="fs-5 mb-2">R$ {item.preco}</p>
+          <h1 className="fw-bold mb-0 fs-4">{item.produto.nome}</h1>
+          <p className="fs-5 mb-2">R$ {item.produto.preco}</p>
           <div
             className="quantidade d-flex border rounded-5 w-100 w-md-25 justify-content-center align-items-center mb-2"
             style={{ maxWidth: "80px" }}
