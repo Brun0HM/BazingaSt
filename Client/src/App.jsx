@@ -7,8 +7,8 @@ import Teste from "./pages/Teste.jsx";
 const App = () => {
   return (
     <div>
-      <Teste />
-      {/* <Home superMan={SuperMan} /> */}
+      {/* <Teste /> */}
+      <Home superMan={SuperMan} />
     </div>
   );
 };
