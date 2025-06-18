@@ -15,10 +15,10 @@ body::-webkit-scrollbar {
 /* Cardegoria */
 /* ========================================================================================= */
 
-.tamanho{
+.tamanho {
   min-height: 100vh !important;
 }
-.Logos{
+.Logos {
   width: 200px;
   height: 200px;
 }
@@ -66,6 +66,9 @@ body::-webkit-scrollbar {
   font-weight: 800;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
 /* ========================================================================================= */
 
 /* Checkout

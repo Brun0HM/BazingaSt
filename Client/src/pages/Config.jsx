@@ -1,8 +1,30 @@
 import React from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router";
 
 const Config = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5286/api/Auth/logout", {
+        method: "POST",
+        headers: { accept: "*/*" },
+      });
+      if (response.ok) {
+        // Limpa dados do usuário do localStorage/sessionStorage se necessário
+        localStorage.removeItem("usuarioEmail");
+        localStorage.removeItem("usuarioId");
+        localStorage.removeItem("carrinhoId");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1200);
+      }
+    } catch (error) {
+      //
+    }
+  };
   return (
     <>
       <Header />
@@ -96,7 +118,10 @@ const Config = () => {
                     <button className="btn btn-danger rounded-4 fs-5">
                       Excluir Conta
                     </button>
-                    <button className="btn btn-outline-danger rounded-4  fs-5">
+                    <button
+                      className="btn btn-outline-danger rounded-4  fs-5"
+                      onClick={handleLogout}
+                    >
                       Sair da Conta
                     </button>
                   </div>
