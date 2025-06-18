@@ -44,7 +44,7 @@ const LoginForms = ({ onRedirect }) => {
           if (userResponse.ok) {
             const usuario = await userResponse.json();
             // 2. Verificar se possui role
-            if (!usuario.role || usuario.role.length === 0) {
+            if (!usuario.roles || usuario.roles.length === 0) {
               await fetch(`http://localhost:5286/api/Auth/role/${usuario.id}`, {
                 method: "PUT",
                 headers: {
@@ -54,6 +54,7 @@ const LoginForms = ({ onRedirect }) => {
                 body: JSON.stringify("user"),
               });
             }
+            localStorage.setItem("usuarioRole", usuario.roles);
 
             // 3. Verificar se já existe carrinho para o usuário
             const carrinhosResponse = await fetch(

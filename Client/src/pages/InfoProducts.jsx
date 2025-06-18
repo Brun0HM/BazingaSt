@@ -13,6 +13,9 @@ const InfoProducts = () => {
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
+    console.log(infoProduto);
+  }, [infoProduto]);
+  useEffect(() => {
     const fetchProdutos = async () => {
       try {
         const response = await fetch(
@@ -39,7 +42,7 @@ const InfoProducts = () => {
     const fetchProduto = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5286/api/Produtos/382bb5d4-75a0-4b4d-b466-1eb28aa84c61`,
+          `http://localhost:5286/api/Produtos/${id}`,
           {
             method: "GET",
             headers: { accept: "text/plain" },
@@ -48,7 +51,6 @@ const InfoProducts = () => {
         if (response.ok) {
           const data = await response.json();
           setInfoProduto(data);
-          console.log(infoProduto);
         } else {
           setErro("Erro ao buscar produto.");
         }
@@ -57,7 +59,7 @@ const InfoProducts = () => {
       }
     };
     fetchProduto();
-  }, []);
+  }, [id]);
 
   return (
     <>

@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import Logo from "./../../assets/Logo2.png";
 
 const Header = () => {
-  const usuarioEmail = localStorage.getItem("usuarioEmail");
+  const [usuarioEmail, setUsuarioEmail] = useState(
+    localStorage.getItem("usuarioEmail")
+  );
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    const storedRole = localStorage.getItem("usuarioRole");
+    if (storedRole) {
+      setRole(storedRole);
+    } else {
+      // Se não estiver no localStorage, tente buscar do backend se necessário
+      // Exemplo: fetch role pelo email, se sua API permitir
+    }
+  }, []);
 
   return (
     <>
@@ -167,6 +180,19 @@ const Header = () => {
                   <i className="bi bi-image-fill"></i>
                 </NavLink>
               </li>
+              {role === "Admin" && (
+                <li className="nav-link active fs-4">
+                  <NavLink
+                    to="/dbclientes"
+                    className={({ isActive }) =>
+                      "text-decoration-none text-black" +
+                      (isActive ? " nav-active" : "")
+                    }
+                  >
+                    <i className="bi bi-speedometer2"></i>
+                  </NavLink>
+                </li>
+              )}
             </ul>
             <div className="d-flex justify-content-end align-items-center gap-2">
               <li className="nav-link active fs-4">

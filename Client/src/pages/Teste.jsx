@@ -1,92 +1,55 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
-const CheckoutTeste = ({ totalInicial = 10 }) => {
-  const [cupom, setCupom] = useState("");
+const LogoutPage = () => {
   const [mensagem, setMensagem] = useState("");
-  const [total, setTotal] = useState(totalInicial);
-  const [desconto, setDesconto] = useState(0);
-  const [aplicando, setAplicando] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const aplicarCupom = async (e) => {
-    e.preventDefault();
+  const handleLogout = async () => {
+    setLoading(true);
     setMensagem("");
-    setAplicando(true);
     try {
-      const response = await fetch(
-        "http://localhost:5286/api/CupomDescontos/verificar-e-aplicar-cupom",
-        {
-          method: "POST",
-          headers: {
-            accept: "text/plain",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            valorTotal: totalInicial,
-            codigo: cupom,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:5286/api/Auth/logout", {
+        method: "POST",
+        headers: { accept: "*/*" },
+      });
       if (response.ok) {
-        const novoTotal = await response.json();
-        setDesconto(totalInicial - novoTotal);
-        setTotal(novoTotal);
-        setMensagem("Cupom aplicado com sucesso!");
+        setMensagem("Logout realizado com sucesso!");
+        // Limpa dados do usuário do localStorage/sessionStorage se necessário
+        localStorage.removeItem("usuarioEmail");
+        localStorage.removeItem("usuarioId");
+        localStorage.removeItem("carrinhoId");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1200);
       } else {
-        setMensagem("Cupom inválido ou erro ao aplicar.");
-        setDesconto(0);
-        setTotal(totalInicial);
+        setMensagem("Erro ao realizar logout.");
       }
-    } catch {
+    } catch (error) {
       setMensagem("Erro de conexão com a API.");
-      setDesconto(0);
-      setTotal(totalInicial);
+    } finally {
+      setLoading(false);
     }
-    setAplicando(false);
   };
 
   return (
     <div className="container py-5">
-      <h2 className="mb-4">Checkout</h2>
-      <form className="mb-3" onSubmit={aplicarCupom}>
-        <div className="input-group">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Cupom de desconto"
-            value={cupom}
-            onChange={(e) => setCupom(e.target.value)}
-            disabled={aplicando}
-          />
-          <button
-            className="btn btn-primary"
-            type="submit"
-            disabled={aplicando}
-          >
-            {aplicando ? "Aplicando..." : "Aplicar"}
-          </button>
-        </div>
-      </form>
+      <h2 className="mb-4 text-center">Logout</h2>
       {mensagem && (
         <div className="alert alert-info text-center">{mensagem}</div>
       )}
-      <div className="card p-4">
-        <div className="d-flex justify-content-between mb-2">
-          <span>Subtotal:</span>
-          <span>R$ {totalInicial.toFixed(2)}</span>
-        </div>
-        <div className="d-flex justify-content-between mb-2">
-          <span>Desconto:</span>
-          <span className="text-success">- R$ {desconto.toFixed(2)}</span>
-        </div>
-        <hr />
-        <div className="d-flex justify-content-between">
-          <strong>Total:</strong>
-          <strong className="text-danger">R$ {total.toFixed(2)}</strong>
-        </div>
-        <button className="btn btn-success mt-4 w-100">Finalizar Compra</button>
+      <div className="text-center">
+        <button
+          className="btn btn-danger btn-lg"
+          onClick={handleLogout}
+          disabled={loading}
+        >
+          {loading ? "Saindo..." : "Logout"}
+        </button>
       </div>
     </div>
   );
 };
 
-export default CheckoutTeste;
+export default LogoutPage;

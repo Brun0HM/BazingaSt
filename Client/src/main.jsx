@@ -20,6 +20,17 @@ import AdicionarCupom from "./pages/AdicionarCupom.jsx";
 import Figures from "./pages/Figures.jsx";
 import Roupas from "./pages/Roupas.jsx";
 import Poster from "./pages/Poster.jsx";
+import Teste from "./pages/Teste.jsx";
+import { Navigate } from "react-router";
+const ProtectedRoute = ({ children, requiredRole }) => {
+  const role = localStorage.getItem("usuarioRole");
+  if (role !== requiredRole) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
+
+export default ProtectedRoute;
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -36,11 +47,40 @@ createRoot(document.getElementById("root")).render(
         <Route path="/registrar" element={<CreateAccount />} />
         <Route path="/pagar" element={<Payment />} />
         <Route path="/dashboard" element={<MainDashBoard />} />
-        <Route path="/dbprodutos" element={<DBProdutos />} />
-        <Route path="/dbpedidos" element={<DBPedidos />} />
-        <Route path="/dbclientes" element={<DBClientes />} />
-        <Route path="/cupom" element={<AdicionarCupom />} />
-        <Route path="/info/:produtoId" element={<InfoProducts />} />
+        <Route
+          path="/dbprodutos"
+          element={
+            <ProtectedRoute requiredRole="Admin">
+              <DBProdutos />{" "}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dbpedidos"
+          element={
+            <ProtectedRoute requiredRole="Admin">
+              <DBPedidos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dbclientes"
+          element={
+            <ProtectedRoute requiredRole="Admin">
+              <DBClientes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cupom"
+          element={
+            <ProtectedRoute requiredRole="Admin">
+              <AdicionarCupom />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/info/:id" element={<InfoProducts />} />
+        <Route path="/teste" element={<Teste />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
