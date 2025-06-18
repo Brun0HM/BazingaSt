@@ -11,20 +11,19 @@ const DashboardProdutos = () => {
     imagem: "",
     estoque: "",
     categoriaId: "",
+    categoriaNome: "",
   });
   const [mensagem, setMensagem] = useState("");
+  const [categorias, setCategorias] = useState([]);
 
   // GET produtos
   const fetchProdutos = async () => {
     setErro("");
     try {
-      const response = await fetch(
-        "https://www.bazingastore.somee.com/api/Produtos",
-        {
-          method: "GET",
-          headers: { accept: "text/plain" },
-        }
-      );
+      const response = await fetch("http://localhost:5286/api/Produtos", {
+        method: "GET",
+        headers: { accept: "text/plain" },
+      });
       if (response.ok) {
         const data = await response.json();
         setProdutos(data);
@@ -38,6 +37,25 @@ const DashboardProdutos = () => {
 
   useEffect(() => {
     fetchProdutos();
+  }, []);
+
+  useEffect(() => {
+    // Buscar categorias da API ao montar o componente
+    const fetchCategorias = async () => {
+      try {
+        const response = await fetch("http://localhost:5286/api/Categorias", {
+          method: "GET",
+          headers: { accept: "application/json" },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setCategorias(data);
+        }
+      } catch (error) {
+        // Trate o erro se necessário
+      }
+    };
+    fetchCategorias();
   }, []);
 
   const handleDelete = async (id) => {
@@ -133,16 +151,22 @@ const DashboardProdutos = () => {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Categoria ID</label>
-                    <input
-                      type="text"
+                    <label className="form-label">Categoria</label>
+                    <select
                       className="form-control"
                       value={form.categoriaId}
                       required
                       onChange={(e) =>
                         setForm({ ...form, categoriaId: e.target.value })
                       }
-                    />
+                    >
+                      <option value="">Selecione uma categoria</option>
+                      {categorias.map((cat) => (
+                        <option key={cat.categoriaId} value={cat.categoriaId}>
+                          {cat.categoriaNome}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Preço</label>
@@ -244,7 +268,7 @@ const DashboardProdutos = () => {
                       </span>
                       <span className="mb-2">Estoque: {produto.estoque}</span>
                       <span className="mb-2">
-                        Categoria: {produto.categoriaId}
+                        Categoria: {produto.categoriaNome}
                       </span>
                     </div>
                     <button
