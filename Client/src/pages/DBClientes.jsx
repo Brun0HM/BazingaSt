@@ -34,8 +34,8 @@ const DBClientes = () => {
   return (
     <>
       <HeaderDS />
-      <div className="container py-5">
-        <h2 className="mb-4 text-center">Dashboard de Clientes</h2>
+      <div className="container card mt-5 py-3">
+        <h2 className="mb-4 text-center fw-bold text-danger">Dashboard de Clientes</h2>
         {erro && <div className="alert alert-danger text-center">{erro}</div>}
         {loading ? (
           <div className="text-center">Carregando...</div>
