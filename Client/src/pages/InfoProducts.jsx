@@ -1,15 +1,20 @@
-import React from "react";
+import React, { use } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/Footer";
 import ProdutoInfo from "../components/ProdutoInfo/ProdutoInfo";
 import Cardegorias from "../components/Cardegorias/Cardegoria";
 import { useState, useEffect } from "react";
-
+import { useParams } from "react-router";
 
 const InfoProducts = () => {
-  const [produtos, setProdutos] = useState([]);
+  const { id } = useParams();
+  const [infoProduto, setInfoProduto] = useState([]);
   const [erro, setErro] = useState("");
+  const [produtos, setProdutos] = useState([]);
 
+  useEffect(() => {
+    console.log(infoProduto);
+  }, [infoProduto]);
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
@@ -33,19 +38,43 @@ const InfoProducts = () => {
     fetchProdutos();
   }, []);
 
+  useEffect(() => {
+    const fetchProduto = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5286/api/Produtos/${id}`,
+          {
+            method: "GET",
+            headers: { accept: "text/plain" },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setInfoProduto(data);
+        } else {
+          setErro("Erro ao buscar produto.");
+        }
+      } catch (error) {
+        setErro("Erro de conexão com a API.");
+      }
+    };
+    fetchProduto();
+  }, [id]);
+
   return (
     <>
       <Header />
       <div className="pt-0 pt-md-5 pb-5 bg-white d-flex flex-column justify-content-center">
         <div className=" mb-5 mb-5 pb-5 col-10 container">
-          <ProdutoInfo />
+          <ProdutoInfo produto={infoProduto} />
         </div>
+
         <div className=" d-flex flex-column align-items-center">
           <h2 className="fw-bold mt-g-5">Produtos Relacionados</h2>
           <div className="container">
             <div className="d-flex flex-wrap">
               {produtos.map((produto) => (
-                <Cardegorias key={produto.id} produto={produto} />
+                <Cardegorias key={produto.produtoId} produto={produto} />
               ))}
               {produtos.length === 0 && !erro && (
                 <div className="col-12 text-center text-muted py-5">

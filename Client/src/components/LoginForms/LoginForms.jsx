@@ -6,6 +6,7 @@ const LoginForms = ({ onRedirect }) => {
   const [password, setPassword] = useState("");
   const [mensagem, setMensagem] = useState("");
   const navigate = useNavigate();
+  const [carrinhoId, setCarrinhoId] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,42 +26,86 @@ const LoginForms = ({ onRedirect }) => {
         data = await response.json();
       }
 
-      //pesquisar nos cadastros pelo e-mail ou outro item e fazer a logica de capturar as informações
-
-      //condicional - se não tiver nada na role user - aplica a role, se já tiver não faz nada
-      //PUT do USerID
       if (response.ok) {
         setMensagem("Login realizado com sucesso!");
         localStorage.setItem("usuarioEmail", email);
 
-        // 1. Buscar usuário pelo email
         try {
-          const userId = data && data.id;
+          // 1. Buscar usuário pelo email
           const userResponse = await fetch(
-            `https://www.bazingastore.somee.com/api/Usuarios/meu-id`,
+            `http://localhost:5286/api/Usuarios/por-email?email=${encodeURIComponent(
+              email
+            )}`,
             {
               method: "GET",
-              headers: { accept: "application/json" },
+              headers: { accept: "*/*" },
             }
           );
           if (userResponse.ok) {
-            const usuarios = await userResponse.json();
-            const usuario = Array.isArray(usuarios) ? usuarios[0] : usuarios;
-            if (usuario) {
-              // 2. Verificar se possui role
-              if (!usuario.role || usuario.role.length === 0) {
-                // 3. Atualizar role para "user"
-                await fetch(
-                  `https://www.bazingastore.somee.com/api/Usuarios/${usuario.id}`,
+            const usuario = await userResponse.json();
+            // 2. Verificar se possui role
+            if (!usuario.roles || usuario.roles.length === 0) {
+              await fetch(`http://localhost:5286/api/Auth/role/${usuario.id}`, {
+                method: "PUT",
+                headers: {
+                  accept: "*/*",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify("user"),
+              });
+            }
+            localStorage.setItem("usuarioRole", usuario.roles);
+
+            // 3. Verificar se já existe carrinho para o usuário
+            const carrinhosResponse = await fetch(
+              "http://localhost:5286/api/Carrinhos",
+              {
+                method: "GET",
+                headers: { accept: "text/plain" },
+              }
+            );
+            if (carrinhosResponse.ok) {
+              const carrinhos = await carrinhosResponse.json();
+              const existeCarrinho = carrinhos.some(
+                (c) => c.usuarioId === usuario.id
+              );
+              if (!existeCarrinho) {
+                // Cria novo carrinho vazio para o usuário
+                const createResponse = await fetch(
+                  "http://localhost:5286/api/Carrinhos",
                   {
-                    method: "PUT",
+                    method: "POST",
                     headers: {
-                      accept: "application/json",
+                      accept: "text/plain",
                       "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ ...usuario, role: ["user"] }),
+                    body: JSON.stringify({
+                      usuarioId: usuario.id,
+                      itens: [],
+                      total: 0,
+                    }),
                   }
                 );
+
+                if (createResponse.ok) {
+                  const novoCarrinho = await createResponse.json();
+                  // Armazena o id do carrinho no localStorage
+                  localStorage.setItem(
+                    "carrinhoId",
+                    novoCarrinho.carrinhoId || novoCarrinho.id
+                  );
+                }
+              } else {
+                // Se já existe, armazena o id do carrinho existente
+                const carrinhoExistente = carrinhos.find(
+                  (c) => c.usuarioId === usuario.id
+                );
+                if (carrinhoExistente) {
+                  localStorage.setItem(
+                    "carrinhoId",
+                    carrinhoExistente.carrinhoId || carrinhoExistente.id
+                  );
+                }
               }
             }
           }

@@ -9,21 +9,27 @@ const Cart = () => {
   const [erro, setErro] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // Recupera o id do usuário logado e o id do carrinho do usuário logado
+  const usuarioId = localStorage.getItem("usuarioId");
+  const carrinhoId = localStorage.getItem("carrinhoId");
+
   const fetchCarrinho = async () => {
     setLoading(true);
     setErro("");
     try {
-      const response = await fetch(
-        `https://www.bazingastore.somee.com/api/CarrinhoItems/${idCarrinho}`,
-        {
-          method: "GET",
-          headers: { accept: "text/plain" },
-        }
-      );
+      const response = await fetch("http://localhost:5286/api/CarrinhoItems", {
+        method: "GET",
+        headers: { accept: "text/plain" },
+      });
       if (response.ok) {
         const data = await response.json();
-        setItensCarrinho(data);
-        console.log(data);
+        // Filtra apenas os itens do carrinho do usuário logado pelo carrinhoId
+        const itensUsuario = data.filter(
+          (item) =>
+            item.carrinhoId === carrinhoId ||
+            (item.carrinho && item.carrinho.carrinhoId === carrinhoId)
+        );
+        setItensCarrinho(itensUsuario);
       } else {
         setErro("Erro ao buscar itens do carrinho.");
       }
@@ -54,22 +60,23 @@ const Cart = () => {
                 {erro && (
                   <div className="alert alert-danger text-center">{erro}</div>
                 )}
-
-                {itensCarrinho.length === 0 ? (
-                  <div className="text-center py-5 fs-3 text-muted">
-                    Carrinho vazio
-                  </div>
-                ) : (
-                  itensCarrinho.map((item, idx) => (
-                    <div key={item.carrinhoItemId || item.id || idx}>
-                      <ItemCarrinho
-                        item={item}
-                        onRemover={removerItem}
-                        onAlterarQuantidade={fetchCarrinho}
-                      />
+                <div className="overflow-y-scroll scrolbar" style={{ height: "70vh"}}>
+                  {itensCarrinho.length === 0 ? (
+                    <div className="text-center py-5 fs-3 text-muted">
+                      Carrinho vazio
                     </div>
-                  ))
-                )}
+                  ) : (
+                    itensCarrinho.map((item, idx) => (
+                      <div key={item.carrinhoItemId || item.id || idx}>
+                        <ItemCarrinho
+                          item={item}
+                          onRemover={removerItem}
+                          onAlterarQuantidade={fetchCarrinho}
+                        />
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
             <div className="col-12 col-md-4">

@@ -19,7 +19,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
-  PointElement, 
+  PointElement,
   LineElement,
   Title,
   Tooltip,
